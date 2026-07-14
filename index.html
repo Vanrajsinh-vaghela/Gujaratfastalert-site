@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="gu">
 <head>
-    <!-- Premium Google SEO Meta Tags for High Ranking -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gujarat Fast Alert - OJAS Bharti 2026, GPSC, GSSSB Recruitment & Exam Updates</title>
@@ -11,19 +10,15 @@
     <meta name="author" content="Vanrajsinh Vaghela">
     <meta name="robots" content="index, follow">
     
-    <!-- Open Graph / Facebook SEO -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://gujaratfastalert.in/">
     <meta property="og:title" content="Gujarat Fast Alert - OJAS Bharti 2026 & Govt Jobs Updates">
     <meta property="og:description" content="Get instant updates for Gujarat Govt Exams, OJAS Online Forms, Admit Cards, Answer Keys, and Results.">
     
-    <!-- Google AdSense Activation -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5297812051188062" crossorigin="anonymous"></script>
     
-    <!-- Tailwind CSS for Modern Responsive UI -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Firebase Core SDK & Realtime Database -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
@@ -62,19 +57,17 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col items-center">
 
-    <!-- 1. LIVE BREAKING ALERTS TICKER -->
     <div class="w-full bg-[#e67e22] text-white py-2 text-xs md:text-sm font-bold overflow-hidden shadow-sm z-50">
         <div class="w-full flex items-center max-w-6xl mx-auto px-4">
             <span class="bg-red-600 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mr-3 shrink-0 animate-pulse">BREAKING</span>
             <div class="overflow-hidden relative w-full h-5">
-                <div class="marquee-text absolute font-medium">
-                    🚨 📌 OJAS Bharti 2026, GPSC, GSSSB, Police Constable, and Clerk Exam Latest updates are Live now! 🔥 | 📚 Premium PDF & Solved Old Question Papers Store is active! Join Telegram Boost now!
+                <div class="marquee-text absolute font-medium" id="marqueeAlertText">
+                    🚨 📌 OJAS Bharti 2026, GPSC, GSSSB, Police Constable, and Clerk Exam Latest updates are Live now! 🔥 | Loading live server ticker...
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 2. QUICK REDIRECT LINKS NAVIGATION -->
     <div class="w-full bg-[#2c3e50] py-3 px-4 shadow-md z-40">
         <div class="max-w-xl mx-auto flex flex-col items-center">
             <button onclick="toggleQuickDropdown()" class="w-full bg-[#34495e] text-white py-2.5 px-4 rounded-lg text-sm font-semibold flex justify-between items-center border border-[#4f5d73] hover:bg-[#3d566e] transition">
@@ -95,9 +88,8 @@
         </div>
     </div>
 
-    <!-- 3. BRAND LOGO AND SIGNATURE AREA -->
     <div class="text-center py-8 px-4 w-full max-w-2xl">
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900" id="mainSiteTitle">
             Gujarat <span class="text-[#2b5797]">Fast Alert</span>
         </h1>
         <div class="mt-2.5">
@@ -110,7 +102,6 @@
         </p>
     </div>
 
-    <!-- 4. ACTIVE SOCIAL CONNECT BUTTONS -->
     <div class="w-full max-w-md grid grid-cols-2 gap-3 px-4 mb-6">
         <a href="https://chat.whatsapp.com/GzJp20xZJN134J7EC" target="_blank" class="bg-[#25D366] text-white py-3 px-4 rounded-xl text-xs md:text-sm font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition">
             💬 Join WhatsApp
@@ -120,14 +111,12 @@
         </a>
     </div>
 
-    <!-- 5. INTERACTIVE SMART MENU TRIGGER -->
     <div class="w-full max-w-md px-4 mb-6">
         <button onclick="toggleSidebarMenu()" class="w-full bg-slate-950 text-white py-3.5 px-6 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:bg-slate-900 transition">
             <span>☰ View Menu & Subpages</span>
         </button>
     </div>
 
-    <!-- 6. SLIDING MENU DRAWER (SIDEBAR) -->
     <div id="sidebarOverlay" onclick="toggleSidebarMenu()" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] transition-opacity"></div>
     <div id="sidebarMenu" class="fixed top-0 -left-[300px] w-[280px] h-full bg-white shadow-2xl z-[101] transition-all duration-300 flex flex-col">
         <div class="bg-[#2b5797] text-white p-5 flex justify-between items-center">
@@ -157,7 +146,6 @@
         </div>
     </div>
 
-    <!-- 7. HIGH-CONVERTING VIP PROMO STORE CARD -->
     <div class="w-full max-w-md px-4 mb-6">
         <div class="premium-shine relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-5 border-l-4 border-[#e67e22] shadow-lg">
             <span class="absolute top-4 right-4 bg-[#e67e22] text-white font-extrabold text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider pulse-badge">PREMIUM STORE</span>
@@ -176,7 +164,6 @@
         </div>
     </div>
 
-    <!-- 8. SMART REDIRECT NAVIGATION GRID (8 BOXES) -->
     <div class="w-full max-w-md px-4 mb-8">
         <div class="grid grid-cols-4 gap-2">
             <div onclick="filterCategory('latest-jobs', 'Latest Jobs 📋')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-latest-jobs">
@@ -214,21 +201,19 @@
         </div>
     </div>
 
-    <!-- 9. PORTAL FEED SECTION -->
     <div class="w-full max-w-6xl px-4 grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
         
         <div class="hidden lg:block lg:col-span-3">
-            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm text-center">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Advertisements</p>
-                <div class="h-96 bg-slate-50 rounded-lg flex items-center justify-center border border-dashed border-slate-200">
-                    <span class="text-xs text-slate-400">Ad Space Link</span>
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm text-center sticky top-4">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Sponsored Links</p>
+                <div class="min-h-[400px] bg-slate-50 rounded-lg flex flex-col items-center justify-center border border-dashed border-slate-200 p-2">
+                    <span class="text-xs text-slate-400 font-bold">[AdSense Sidebar Vertical Unit]</span>
                 </div>
             </div>
         </div>
 
         <div class="lg:col-span-6 space-y-6 flex flex-col items-center">
             
-            <!-- DYNAMIC CLOUD INTERACTIVE VIEWER -->
             <div id="filterViewBlock" class="hidden w-full bg-[#fffcf7] border-2 border-[#e67e22] rounded-xl overflow-hidden shadow-md">
                 <div class="bg-[#e67e22] text-white p-3.5 px-5 font-bold text-sm flex justify-between items-center">
                     <span id="filterViewTitle">Category Matches</span>
@@ -237,10 +222,20 @@
                 <div id="filter-content-target" class="p-4 divide-y divide-slate-100"></div>
             </div>
 
-            <!-- DYNAMIC BLOCKS LOADED VIA FIREBASE DATABASE -->
+            <div class="w-full bg-white p-2 rounded-xl border text-center shadow-sm">
+                <div class="bg-slate-50 py-3 rounded text-[11px] font-bold text-slate-400 tracking-wide">[💰 GOOGLE ADSENSE TOP FEED RESPONSIVE AD SLOT]</div>
+            </div>
+
             <div class="w-full bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                <div class="bg-gradient-to-r from-blue-700 to-blue-800 text-white py-4 px-5 font-extrabold">🔔 All Latest Important Updates</div>
+                <div class="bg-gradient-to-r from-blue-700 to-blue-800 text-white py-4 px-5 font-extrabold flex justify-between items-center">
+                    <span>🔔 All Latest Important Updates</span>
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-ping"></span>
+                </div>
                 <div id="important-container" class="p-5 space-y-4 text-left">Loading live server feed...</div>
+            </div>
+
+            <div class="w-full bg-white p-2 rounded-xl border text-center shadow-sm">
+                <div class="bg-slate-50 py-3 rounded text-[11px] font-bold text-slate-400 tracking-wide">[💰 GOOGLE ADSENSE MID STREAM IN-FEED AD SLOT]</div>
             </div>
 
             <div class="w-full bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
@@ -248,7 +243,6 @@
                 <div id="gujarat-container" class="p-5 space-y-3 text-left">Loading...</div>
             </div>
 
-            <!-- SMART INTEGRATED TOOLS -->
             <div class="w-full bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm p-5" id="salary-tool">
                 <h3 class="text-base font-black tracking-wide border-b pb-3 flex items-center gap-2 text-slate-900">🧮 Salary & Age Calculators</h3>
                 <div class="space-y-4 mt-3">
@@ -304,27 +298,37 @@
         </div>
 
         <div class="hidden lg:block lg:col-span-3">
-            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm text-center">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Advertisements</p>
-                <div class="h-96 bg-slate-50 rounded-lg flex items-center justify-center border border-dashed border-slate-200">
-                    <span class="text-xs text-slate-400">Ad Space Link</span>
+            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm text-center sticky top-4">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Advertisements</p>
+                <div class="min-h-[400px] bg-slate-50 rounded-lg flex flex-col items-center justify-center border border-dashed border-slate-200 p-2">
+                    <span class="text-xs text-slate-400 font-bold">[AdSense Sidebar Vertical Unit]</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SEMANTIC SEO FOOTER COMPILATION BLOCK FOR HIGH INDEXING -->
     <section class="hidden">
         <h2>Gujarat Educational Keywords & Job Indexes Covered</h2>
         <p>OJAS Bharti 2026, GPSC Recruitment, GSSSB Recruitment, Revenue Talati Bharti, Police Bharti Gujarat, PSI Bharti, Constable Bharti, Forest Guard Bharti, Junior Clerk Bharti, Senior Clerk Bharti, Bin Sachivalay Bharti, Gram Sevak Bharti, Panchayat Bharti, Health Department Bharti, Staff Nurse Bharti, AMC Recruitment, VMC Recruitment, SMC Recruitment, GSECL Recruitment, UGVCL Recruitment, PGVCL Recruitment, DGVCL Recruitment, GETCO Recruitment, GSRTC Recruitment, Gujarat High Court Recruitment, Collector Office Recruitment, Class 3 Recruitment, Class 1-2 Recruitment, OJAS Call Letter, OJAS Hall Ticket, GPSC Admit Card, GSSSB Admit Card, Talati Admit Card, Police Admit Card, Exam Date Gujarat, GPSC Calendar, GSSSB Exam Date, Answer Key Gujarat, Syllabus PDF, Previous Year Paper, Current Affairs PDF, GK Questions, Reasoning Questions, Maths Questions, English Questions, Gujarati Grammar, OJAS Result, GPSC Result, GSSSB Result, Talati Result, Merit List, Cut Off Marks, Document Verification, Score Card, Gujarat Government Jobs, Rozgaar Samachar, OJAS Login, OJAS Registration, Online Form, Last Date, Notification PDF, Age Limit, Qualification, Salary, Vacancy Details, Apply Online, How to Apply, Important Dates, Official Notification, Exam News, Latest Bharti News, Sarkari Naukri Gujarat, Gujarat Exam News.</p>
     </section>
 
-    <footer class="w-full bg-slate-900 text-slate-400 py-8 px-6 text-xs text-center border-t border-slate-800">
-        <p class="font-bold text-slate-200 mb-2">© 2026-27, Vanrajsinh Vaghela ®</p>
-        <p class="opacity-75 max-w-2xl mx-auto">⚠️ Disclaimer: This site is an independent portal and not affiliated with OJAS or any government agency. Information compiled is for reference only.</p>
+    <footer class="w-full bg-slate-900 text-slate-400 py-10 px-6 text-xs text-center border-t border-slate-800">
+        <p class="font-bold text-slate-200 text-sm mb-2">© 2026-27, Vanrajsinh Vaghela ®</p>
+        <p class="opacity-75 max-w-2xl mx-auto mb-6">⚠️ Disclaimer: This site is an independent educational news portal and is not affiliated with OJAS, GPSC, GSSSB or any government recruitment organization. Information compiled here is purely for student assistance.</p>
+        
+        <div class="flex flex-wrap justify-center gap-4 text-slate-300 font-bold tracking-wide border-t border-slate-800 pt-5 max-w-md mx-auto">
+            <a href="./about.html" class="hover:text-orange-500 transition">About Us</a>
+            <span>|</span>
+            <a href="./contact.html" class="hover:text-orange-500 transition">Contact Us</a>
+            <span>|</span>
+            <a href="./privacy.html" class="hover:text-orange-500 transition">Privacy Policy</a>
+            <span>|</span>
+            <a href="./disclaimer.html" class="hover:text-orange-500 transition">Disclaimer</a>
+        </div>
     </footer>
 
     <script>
+        // Active system cloud connection configurations
         const firebaseConfig = {
             apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
             authDomain: "gujarat-fast-alert.firebaseapp.com",
@@ -337,6 +341,27 @@
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+
+        // REAL-TIME SYSTEM ENGINE FOR GLOBAL SETTINGS SYNC WITH DATABASE
+        function syncGlobalSettings() {
+            database.ref('settings').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    // Update breaking news alert line ticker text dynamically
+                    if(data.headerNotice) {
+                        document.getElementById('marqueeAlertText').innerText = data.headerNotice;
+                    }
+                    // Update main browser header window title and dynamic page logo
+                    if(data.siteTitle) {
+                        document.title = data.siteTitle + " - OJAS Bharti & Govt Jobs Updates";
+                        // Keep stylized Fast Alert element span tags active
+                        let stylizedTitle = data.siteTitle.includes("Fast Alert") ? 
+                            data.siteTitle.replace("Fast Alert", '<span class="text-[#2b5797]">Fast Alert</span>') : data.siteTitle;
+                        document.getElementById('mainSiteTitle').innerHTML = stylizedTitle;
+                    }
+                }
+            });
+        }
 
         function toggleSidebarMenu() {
             const sb = document.getElementById('sidebarMenu');
@@ -372,7 +397,7 @@
         }
 
         function listenCategory(catName, containerId, type) {
-            database.ref('posts/' + catName).orderByChild('timestamp').on('value', (snapshot) => {
+            database.ref('posts/' + catName).orderByChild('timestamp').limitToLast(15).on('value', (snapshot) => {
                 const container = document.getElementById(containerId);
                 container.innerHTML = '';
                 let posts = [];
@@ -380,11 +405,11 @@
                 if(posts.length === 0) { container.innerHTML = '<p class="text-xs text-slate-400 font-medium">No live entries yet.</p>'; return; }
                 posts.forEach((post) => {
                     if(type === 'important') {
-                        container.innerHTML += `<div class="p-3 bg-slate-50 border border-slate-100 rounded-xl flex items-start gap-2"><span class="bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black">${post.tag || 'NEW'}</span><a href="${post.link}" target="_blank" class="text-xs font-bold hover:text-blue-700">${post.title}</a></div>`;
+                        container.innerHTML += `<div class="p-3 bg-slate-50 border border-slate-100 rounded-xl flex items-start gap-2"><span class="bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black tracking-wider shrink-0">${post.tag || 'NEW'}</span><a href="${post.link}" target="_blank" class="text-xs font-bold hover:text-blue-700 leading-normal">${post.title}</a></div>`;
                     } else if(type === 'gujarat') {
-                        container.innerHTML += `<div class="p-1.5 text-xs font-bold border-b border-slate-100"><a href="${post.link}" target="_blank">❖ ${post.title} (${post.meta || ''})</a></div>`;
+                        container.innerHTML += `<div class="p-2.5 text-xs font-bold border-b border-slate-100 hover:bg-slate-50 transition"><a href="${post.link}" target="_blank" class="block text-blue-900">❖ ${post.title} <span class="text-orange-600 font-medium ml-1">(${post.meta || 'Click Here'})</span></a></div>`;
                     } else if(type === 'news') {
-                        container.innerHTML += `<div class="p-3 text-xs font-bold border-b"><a href="${post.link}" target="_blank">${post.title}</a><span class="block text-[10px] text-slate-400 mt-1">📅 ${post.meta || ''}</span></div>`;
+                        container.innerHTML += `<div class="p-3.5 text-xs font-bold border-b hover:bg-slate-50 transition"><a href="${post.link}" target="_blank" class="text-slate-900 hover:text-blue-700 block mb-1">${post.title}</a><span class="block text-[10px] text-slate-400 font-bold">📅 Updated: ${post.meta || 'Latest'}</span></div>`;
                     }
                 });
             });
@@ -396,13 +421,15 @@
             document.getElementById('filterViewTitle').innerText = displayTitle;
             fb.classList.remove('hidden');
             fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            database.ref('posts/' + categorySlug).orderByChild('timestamp').once('value', (snapshot) => {
+            tc.innerHTML = '<p class="text-xs text-slate-400 p-4">Syncing grid database streams...</p>';
+            
+            database.ref('posts/' + categorySlug).orderByChild('timestamp').limitToLast(25).once('value', (snapshot) => {
                 tc.innerHTML = '';
                 let matches = [];
                 snapshot.forEach((childSnapshot) => { matches.unshift(childSnapshot.val()); });
-                if(matches.length === 0) { tc.innerHTML = '<p class="text-xs text-rose-500 p-4">No posts under this filter.</p>'; return; }
+                if(matches.length === 0) { tc.innerHTML = '<p class="text-xs text-rose-500 font-bold p-4">No active entries found under this section model.</p>'; return; }
                 matches.forEach((post) => {
-                    tc.innerHTML += `<div class="py-2 flex items-center gap-2"><span class="bg-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded">${post.tag || 'ALERT'}</span><a href="${post.link}" target="_blank" class="text-xs font-bold text-blue-900">${post.title}</a></div>`;
+                    tc.innerHTML += `<div class="py-3 flex items-start gap-2 border-b border-slate-50"><span class="bg-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black shrink-0">${post.tag || 'ALERT'}</span><a href="${post.link}" target="_blank" class="text-xs font-bold text-blue-900 hover:text-orange-600 leading-normal">${post.title} <span class="text-slate-400 font-medium text-[10px] ml-1">[${post.meta || 'View'}]</span></a></div>`;
                 });
             });
         }
@@ -440,6 +467,7 @@
         }
 
         window.onload = function() {
+            syncGlobalSettings(); // Start background dynamic monitor listener
             listenCategory('important', 'important-container', 'important');
             listenCategory('gujarat', 'gujarat-container', 'gujarat');
             listenCategory('news', 'news-container', 'news');
