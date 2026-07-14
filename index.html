@@ -4,25 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>India & Gujarat Fast Alert - All India Educational News & Govt Jobs</title>
-    <style>
-        /* બેઝિક રીસેટ અને ગ્લોબલ ફોન્ટ્સ */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; padding-bottom: 0; }
+    
+    <!-- OneSignal Push Notification -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "YOUR_ONESIGNAL_APP_ID_HERE", 
+          safari_web_id: "optional_safari_id",
+          notifyButton: { enable: true },
+        });
+      });
+    </script>
 
-        /* ૧. બ્રેકિંગ ન્યૂઝ ટિકર (Breaking News) */
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f4f6f9; color: #333; padding-bottom: 0; }
         .breaking-news-container { background: #1e3a5f; color: white; display: flex; align-items: center; font-size: 13px; height: 35px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .breaking-title { background: #d9534f; color: white; font-weight: bold; padding: 0 15px; height: 100%; display: flex; align-items: center; white-space: nowrap; text-transform: uppercase; z-index: 2; position: relative; }
         .breaking-ticker { flex: 1; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; }
         .breaking-ticker marquee { font-weight: 500; padding-left: 10px; }
-
-        /* ૨. હેડર અને બ્રાન્ડિંગ (નવું બ્લેક પ્રીમિયમ બેજ) */
         .header { text-align: center; padding: 30px 15px; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .logo-title { font-size: 26px; font-weight: 800; color: #0d355a; text-decoration: none; display: inline-block; }
         .logo-title span { color: #2b6cb0; }
         .author-tag { display: inline-block; background: #111827; color: #ffffff; font-weight: bold; padding: 8px 18px; border-radius: 20px; font-size: 13px; margin: 12px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.15); letter-spacing: 0.5px; }
         .subtitle { font-size: 14px; color: #718096; max-width: 500px; margin: 0 auto; line-height: 1.4; font-weight: 500; }
-
-        /* ૩. સોશિયલ મીડિયા અને ઈમેલ કન્ટેનર */
         .contact-container { max-width: 500px; margin: 0 auto; padding: 15px 15px 5px 15px; display: flex; flex-direction: column; gap: 10px; }
         .social-buttons { display: flex; gap: 12px; }
         .btn { flex: 1; border-radius: 8px; padding: 12px; text-align: center; text-decoration: none; color: white; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
@@ -30,71 +37,52 @@
         .btn-whatsapp { background-color: #25D366; }
         .btn-telegram { background-color: #0088cc; }
         .btn-email { background-color: #ea4335; width: 100%; flex: none; }
-
-        /* મેઈન કન્ટેનર અને સેક્શન હેડિંગ્સ */
         .main-container { max-width: 600px; margin: 0 auto; padding: 10px; }
         .section-title { font-size: 16px; font-weight: 700; color: #1a202c; padding: 15px 5px 5px 5px; margin-top: 15px; border-bottom: 2px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; }
         .view-all-link { font-size: 12px; color: #2b6cb0; text-decoration: none; font-weight: 600; }
-
-        /* ૪. તમામ કેટેગરીઝ ગ્રીડ લેઆઉટ */
         .category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px 0; }
         .category-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 4px; text-align: center; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s ease; }
         .category-card:active { transform: scale(0.95); background: #edf2f7; }
         .category-icon { font-size: 24px; margin-bottom: 6px; }
         .category-title { font-size: 11px; color: #2d3748; font-weight: 600; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-
-        /* ૫. લેટેસ્ટ જોબ્સ અને આર્ટિકલ્સ લિસ્ટ લેઆઉટ */
         .content-list { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 5px; margin-top: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .list-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 10px; text-decoration: none; color: #2d3748; border-bottom: 1px solid #edf2f7; transition: background 0.2s; }
         .list-item:last-child { border-bottom: none; }
         .list-item:hover, .list-item:active { background: #f7fafc; }
-        .item-text { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .badge-new { background: #e53e3e; color: white; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; }
+        .item-text { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; line-height: 1.4; overflow: hidden; }
+        .badge-new { background: #e53e3e; color: white; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; margin-left: 5px; }
         .arrow-icon { color: #a0aec0; font-size: 14px; }
-
-        /* ૬. પ્રીમિયમ બુક્સ સેક્શન */
         .premium-box { background: #1a2639; color: white; border-radius: 16px; padding: 20px; margin: 25px 0 15px 0; position: relative; border-left: 5px solid #f6ad55; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .premium-badge { position: absolute; top: 15px; right: 15px; background: #ed8936; color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .premium-badge { position: absolute; top: 15px; right: 15px; background: #ed8936; color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
         .premium-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .premium-desc { font-size: 13px; color: #cbd5e0; line-height: 1.5; margin-bottom: 15px; max-width: 85%; }
-        .premium-btn { background: white; color: #1a2639; font-weight: 700; text-align: center; text-decoration: none; padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background 0.2s; }
-        .premium-btn:active { background: #edf2f7; }
-
-        /* ૭. ફૂટર (Footer) */
-        .footer { background: #0d355a; color: #cbd5e0; text-align: center; padding: 25px 15px; margin-top: 40px; font-size: 13px; line-height: 1.6; }
+        .premium-btn { background: white; color: #1a2639; font-weight: 700; text-align: center; text-decoration: none; padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
+        .footer { background: #0d355a; color: #cbd5e0; text-align: center; padding: 25px 15px; margin-top: 40px; font-size: 13px; }
         .footer-links { margin-bottom: 12px; }
-        .footer-links a { color: #ffffff; text-decoration: none; margin: 0 10px; font-weight: 500; }
-        .footer-links a:hover { text-decoration: underline; }
-        .footer-credit { font-size: 11px; color: #a0aec0; margin-top: 8px; }
-
-        /* મોટી સ્ક્રીન માટે ઓટો-લેઆઉટ */
+        .footer-links a { color: #ffffff; text-decoration: none; margin: 0 10px; }
         @media (min-width: 768px) {
             .main-container { max-width: 1000px; }
             .category-grid { grid-template-columns: repeat(6, 1fr); gap: 15px; }
             .category-title { font-size: 13px; }
-            .category-icon { font-size: 28px; }
             .breaking-news-container { max-width: 1000px; margin: 0 auto; border-radius: 0 0 8px 8px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ૧. બ્રેકિંગ ન્યૂઝ ટિકર -->
     <div class="breaking-news-container">
         <div class="breaking-title">BREAKING</div>
         <div class="breaking-ticker">
-            <marquee behavior="scroll" direction="left" scrollamount="5">🔥 SSC, Railway, Bank, UPSC & State Exams Latest updates are Live now! | 📌 દેશભરની તમામ સરકારી નોકરીઓ અને યોજનાઓની માહિતી એક જ જગ્યાએ</marquee>
+            <marquee behavior="scroll" direction="left" scrollamount="5">🔥 SSC, Railway, Bank, UPSC & State Exams Latest updates are Live now!</marquee>
         </div>
     </div>
 
-    <!-- ૨. હેડર અને બ્રાન્ડિંગ વિભાગ -->
     <div class="header">
         <a href="/" class="logo-title">India & Gujarat <span>Fast Alert</span></a>
         <div><div class="author-tag">BY VANRAJSINH VAGHELA 👑</div></div>
         <p class="subtitle">India & Gujarat's No. 01 Private Educational News, Govt Jobs & Utility Portal</p>
     </div>
 
-    <!-- ૩. સોશિયલ મીડિયા અને ઈમેલ બટન્સ (ટેલિગ્રામ લિંક ફિક્સ) -->
     <div class="contact-container">
         <div class="social-buttons">
             <a href="https://whatsapp.com/channel/0029VbDRw2SBqbr1248X841c" target="_blank" class="btn btn-whatsapp">💬 Join WhatsApp</a>
@@ -103,203 +91,91 @@
         <a href="mailto:gujaratfastalert@gmail.com" class="btn btn-email">📧 Email Us (સંપર્ક કરો)</a>
     </div>
 
-    <!-- મુખ્ય કન્ટેનર શરૂ થાય છે -->
     <div class="main-container">
-
-        <!-- ૪. તમામ કેટેગરી ગ્રીડ -->
-        
-        <!-- વિભાગ ૧ -->
+        <!-- Categories Sections -->
         <div class="section-title">🎓 ઓલ ઇન્ડિયા શિક્ષણ અને સરકારી નોકરી</div>
         <div class="category-grid">
-            <a href="/category/govt-jobs.html" class="category-card">
-                <span class="category-icon">💼</span>
-                <span class="category-title">Govt Jobs</span>
-            </a>
-            <a href="/category/syllabus.html" class="category-card">
-                <span class="category-icon">📋</span>
-                <span class="category-title">Syllabus</span>
-            </a>
-            <a href="/category/answer-key.html" class="category-card">
-                <span class="category-icon">🔑</span>
-                <span class="category-title">Answer Key</span>
-            </a>
-            <a href="/category/result.html" class="category-card">
-                <span class="category-icon">🏆</span>
-                <span class="category-title">Result</span>
-            </a>
-            <a href="/category/admit-card.html" class="category-card">
-                <span class="category-icon">🎟️</span>
-                <span class="category-title">Admit Card</span>
-            </a>
-            <a href="/category/previous-papers.html" class="category-card">
-                <span class="category-icon">📝</span>
-                <span class="category-title">Prev. Papers</span>
-            </a>
-            <a href="/category/scholarship.html" class="category-card">
-                <span class="category-icon">🎓</span>
-                <span class="category-title">Scholarship</span>
-            </a>
-            <a href="/category/education-news.html" class="category-card">
-                <span class="category-icon">📰</span>
-                <span class="category-title">Edu News</span>
-            </a>
+            <a href="/category/govt-jobs.html" class="category-card"><span class="category-icon">💼</span><span class="category-title">Govt Jobs</span></a>
+            <a href="/category/syllabus.html" class="category-card"><span class="category-icon">📋</span><span class="category-title">Syllabus</span></a>
+            <a href="/category/answer-key.html" class="category-card"><span class="category-icon">🔑</span><span class="category-title">Answer Key</span></a>
+            <a href="/category/result.html" class="category-card"><span class="category-icon">🏆</span><span class="category-title">Result</span></a>
+            <a href="/category/admit-card.html" class="category-card"><span class="category-icon">🎟️</span><span class="category-title">Admit Card</span></a>
+            <a href="/category/previous-papers.html" class="category-card"><span class="category-icon">📝</span><span class="category-title">Prev. Papers</span></a>
+            <a href="/category/scholarship.html" class="category-card"><span class="category-icon">🎓</span><span class="category-title">Scholarship</span></a>
+            <a href="/category/education-news.html" class="category-card"><span class="category-icon">📰</span><span class="category-title">Edu News</span></a>
         </div>
 
-        <!-- વિભાગ ૨ -->
         <div class="section-title">🏛️ કેન્દ્ર અને રાજ્ય સરકારની યોજનાઓ</div>
         <div class="category-grid">
-            <a href="/category/yojana.html" class="category-card">
-                <span class="category-icon">🏛️</span>
-                <span class="category-title">સરકારી યોજના</span>
-            </a>
-            <a href="/category/current-affairs.html" class="category-card">
-                <span class="category-icon">📅</span>
-                <span class="category-title">Current Affairs</span>
-            </a>
-            <a href="/category/gujarati-news.html" class="category-card">
-                <span class="category-icon">🗣️</span>
-                <span class="category-title">Gujarati News</span>
-            </a>
+            <a href="/category/yojana.html" class="category-card"><span class="category-icon">🏛️</span><span class="category-title">સરકારી યોજના</span></a>
+            <a href="/category/current-affairs.html" class="category-card"><span class="category-icon">📅</span><span class="category-title">Current Affairs</span></a>
+            <a href="/category/gujarati-news.html" class="category-card"><span class="category-icon">🗣️</span><span class="category-title">Gujarati News</span></a>
         </div>
 
-        <!-- વિભાગ ૩ -->
         <div class="section-title">🛠️ ઉપયોગી ગાઈડ અને કેલ્ક્યુલેટર</div>
         <div class="category-grid">
-            <a href="/category/how-to-guides.html" class="category-card">
-                <span class="category-icon">ℹ️</span>
-                <span class="category-title">How-to Guides</span>
-            </a>
-            <a href="/category/calculators.html" class="category-card">
-                <span class="category-icon">🧮</span>
-                <span class="category-title">Calculators</span>
-            </a>
-            <a href="/category/finance.html" class="category-card">
-                <span class="category-icon">💰</span>
-                <span class="category-title">Finance & Tax</span>
-            </a>
+            <a href="/category/how-to-guides.html" class="category-card"><span class="category-icon">ℹ️</span><span class="category-title">How-to Guides</span></a>
+            <a href="/category/calculators.html" class="category-card"><span class="category-icon">🧮</span><span class="category-title">Calculators</span></a>
+            <a href="/category/finance.html" class="category-card"><span class="category-icon">💰</span><span class="category-title">Finance & Tax</span></a>
         </div>
 
-        <!-- વિભાગ ૪ (બિલ પેમેન્ટ સર્વિસ) -->
         <div class="section-title">⚡ ઓનલાઈન બિલ પેમેન્ટ</div>
         <div class="category-grid">
-            <a href="https://www.ugvcl.com/webportal/index.php" target="_blank" class="category-card">
-                <span class="category-icon">💡</span>
-                <span class="category-title">UGVCL Bill</span>
-            </a>
-            <a href="https://www.gujaratgas.com/quick-pay/" target="_blank" class="category-card">
-                <span class="category-icon">🔥</span>
-                <span class="category-title">Gujarat Gas</span>
-            </a>
-            <a href="https://www.pgvcl.com/" target="_blank" class="category-card">
-                <span class="category-icon">⚡</span>
-                <span class="category-title">PGVCL Bill</span>
-            </a>
-            <a href="https://www.mgvcl.com/" target="_blank" class="category-card">
-                <span class="category-icon">🔌</span>
-                <span class="category-title">MGVCL Bill</span>
-            </a>
+            <a href="https://www.ugvcl.com/webportal/index.php" target="_blank" class="category-card"><span class="category-icon">💡</span><span class="category-title">UGVCL Bill</span></a>
+            <a href="https://www.gujaratgas.com/quick-pay/" target="_blank" class="category-card"><span class="category-icon">🔥</span><span class="category-title">Gujarat Gas</span></a>
+            <a href="https://www.pgvcl.com/" target="_blank" class="category-card"><span class="category-icon">⚡</span><span class="category-title">PGVCL Bill</span></a>
+            <a href="https://www.mgvcl.com/" target="_blank" class="category-card"><span class="category-icon">🔌</span><span class="category-title">MGVCL Bill</span></a>
         </div>
 
-        <!-- વિભાગ ૫ -->
         <div class="section-title">📺 મનોરંજન અને ટેકનોલોજી</div>
         <div class="category-grid">
-            <a href="/category/tech-news.html" class="category-card">
-                <span class="category-icon">🤖</span>
-                <span class="category-title">Tech News</span>
-            </a>
-            <a href="/category/movie-reviews.html" class="category-card">
-                <span class="category-icon">🍿</span>
-                <span class="category-title">Movie & OTT</span>
-            </a>
-            <a href="/category/web-series.html" class="category-card">
-                <span class="category-icon">🎬</span>
-                <span class="category-title">Web Series</span>
-            </a>
-            <a href="/category/auto.html" class="category-card">
-                <span class="category-icon">🚗</span>
-                <span class="category-title">Auto News</span>
-            </a>
-            <a href="/category/cricket.html" class="category-card">
-                <span class="category-icon">🏏</span>
-                <span class="category-title">Cricket / IPL</span>
-            </a>
-            <a href="/category/health-tips.html" class="category-card">
-                <span class="category-icon">🍏</span>
-                <span class="category-title">Health Tips</span>
-            </a>
-            <a href="/category/wishes-quotes.html" class="category-card">
-                <span class="category-icon">🎉</span>
-                <span class="category-title">Wishes & Quotes</span>
-            </a>
+            <a href="/category/tech-news.html" class="category-card"><span class="category-icon">🤖</span><span class="category-title">Tech News</span></a>
+            <a href="/category/movie-reviews.html" class="category-card"><span class="category-icon">🍿</span><span class="category-title">Movie & OTT</span></a>
+            <a href="/category/web-series.html" class="category-card"><span class="category-icon">🎬</span><span class="category-title">Web Series</span></a>
+            <a href="/category/auto.html" class="category-card"><span class="category-icon">🚗</span><span class="category-title">Auto News</span></a>
+            <a href="/category/cricket.html" class="category-card"><span class="category-icon">🏏</span><span class="category-title">Cricket / IPL</span></a>
+            <a href="/category/health-tips.html" class="category-card"><span class="category-icon">🍏</span><span class="category-title">Health Tips</span></a>
+            <a href="/category/wishes-quotes.html" class="category-card"><span class="category-icon">🎉</span><span class="category-title">Wishes & Quotes</span></a>
         </div>
 
-
-        <!-- ૫. LATEST JOBS -->
+        <!-- ૫. LATEST JOBS LIST -->
         <div class="section-title">
             <span>🔥 ઓલ ઇન્ડિયા લેટેસ્ટ સરકારી નોકરીઓ</span>
             <a href="/category/govt-jobs.html" class="view-all-link">બધું જુઓ →</a>
         </div>
         <div class="content-list">
-            <a href="#" class="list-item">
-                <span class="item-text">📌 SSC GD Constable નવી બમ્પર ભરતી ની જાહેરાત</span>
-                <span class="badge-new">New</span>
-            </a>
+            <!--START_JOBS-->
+            <a href="#" class="list-item"><span class="item-text">📌 SSC GD Constable નવી બમ્પર ભરતી ની જાહેરાત</span><span class="badge-new">New</span></a>
             <a href="#" class="list-item"><span class="item-text">💼 RRB Railway NTPC વિવિધ જગ્યાઓ માટે નોટિફિકેશન</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 GSSSB ક્લાર્ક અને હેડ ક્લાર્ક ભરતી લેટેસ્ટ પરીક્ષા અપડેટસ</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 IBPS Bank Clerk અને PO ની નવી ખાલી જગ્યાઓ</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 UPSC Civil Services (IAS/IPS) ઓનલાઈન રજીસ્ટ્રેશન</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 ઇન્ડિયન આર્મી (Agniveer) નવી ભરતી રેલી શેડ્યૂલ</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 GPSC વર્ગ-૧ અને વર્ગ-૨ ઓફિશિયલ ભરતી કેલેન્ડર</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 SSC CGL દેશભરની કેન્દ્રિય નોકરીઓ માટે ફોર્મ શરૂ</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 ઇન્ડિયન પોસ્ટલ વિભાગ (Post Office) જીડીએસ ભરતી</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 એસબીઆઈ (SBI) જુનિયર એસોસિએટ નવી સીધી ભરતી</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 GSSSB ક્લાર્ક ભરતી લેટેસ્ટ પરીક્ષા અપડેટસ</span><span class="arrow-icon">➔</span></a>
+            <!--END_JOBS-->
         </div>
 
-
-        <!-- ૬. LATEST ARTICLES -->
+        <!-- ૬. LATEST ARTICLES LIST -->
         <div class="section-title">
             <span>📰 દેશભરની લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</span>
             <a href="/category/education-news.html" class="view-all-link">બધું જુઓ →</a>
         </div>
         <div class="content-list">
-            <a href="#" class="list-item">
-                <span class="item-text">🎓 પીએમ સ્કોલરશિપ યોજના (PM Scholarship) ઓનલાઈન ફોર્મ પ્રોસેસ</span>
-                <span class="badge-new">New</span>
-            </a>
-            <a href="#" class="list-item"><span class="item-text">🏛️ પીએમ કિસાન સન્માન નિધિ યોજના નવો હપ્તો કઈ રીતે ચેક કરવો?</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">ℹ️ નવું આધાકાર્ડ અને પાનકાર્ડ ઓનલાઈન લિંક કરવાની સરળ રીત</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">🧮 EMI અને SIP Calculator નો ઉપયોગ કરીને રોકાણ ગણો</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">🍿 આ અઠવાડિયે નેટફ્લિક્સ અને પ્રાઇમ પર કઈ નવી વેબ સિરીઝ આવશે?</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">🚗 બજેટ ફ્રેન્ડલી નવી ટોપ-૫ ફેમિલી કાર જે ભારતમાં લોન્ચ થઈ</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">🤖 વ્હોટ્સએપ અને એઆઈ (AI) ના નવા સિક્રેટ ફિચર્સ વિષે જાણો</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💰 મ્યુચ્યુઅલ ફંડ અને SIP રોકાણ ટેક્સ બચત ગાઇડન્સ</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">🍏 સદાબહાર હેલ્ધી રહેવા માટે ઉપયોગી હેલ્થ ટિપ્સ</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">🎉 ઓલ ઇન્ડિયા ફેસ્ટિવલ વિશ લિસ્ટ અને સુંદર ક્વોટ્સ</span><span class="arrow-icon">➔</span></a>
+            <!--START_ARTICLES-->
+            <a href="#" class="list-item"><span class="item-text">🎓 પીએમ સ્કોલરશિપ યોજના ઓનલાઈન ફોર્મ પ્રોસેસ</span><span class="badge-new">New</span></a>
+            <a href="#" class="list-item"><span class="item-text">🏛️ પીએમ કિસાન સન્માન નિધિ યોજના નવો હપ્તો</span><span class="arrow-icon">➔</span></a>
+            <!--END_ARTICLES-->
         </div>
 
-
-        <!-- ૭. PREMIUM BOOKS SECTION -->
         <div class="premium-box">
             <div class="premium-badge">PREMIUM STORE</div>
             <h3 class="premium-title">📚 Paid Books & Study Materials</h3>
-            <p class="premium-desc">Get dynamic Telegram access to VIP competitive exam books, short tricks notes, previous year question papers, and official answer keys.</p>
-            <a href="#" class="premium-btn">⚡ Order PDFs / Premium Materials ➔</a>
+            <p class="premium-desc">Get dynamic Telegram access to VIP competitive exam books.</p>
+            <a href="#" class="premium-btn">⚡ Order PDFs ➔</a>
         </div>
-
     </div>
-    <!-- મુખ્ય કન્ટેનર પૂરું થાય છે -->
 
-
-    <!-- ૮. ફૂટર વિભાગ -->
     <div class="footer">
         <div class="footer-links">
-            <a href="/">Home</a> | 
-            <a href="mailto:gujaratfastalert@gmail.com">Contact Us</a> | 
-            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/">Home</a> | <a href="mailto:gujaratfastalert@gmail.com">Contact Us</a> | <a href="/privacy-policy.html">Privacy Policy</a>
         </div>
         <p>© 2026 India & Gujarat Fast Alert. All Rights Reserved.</p>
-        <p class="footer-credit">Developed with ❤️ for Students of India</p>
     </div>
-
 </body>
 </html>
