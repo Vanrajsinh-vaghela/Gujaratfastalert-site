@@ -3,179 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>India & Gujarat Fast Alert - All India Educational News & Govt Jobs</title>
-    
-    <!-- OneSignal Push Notification -->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-      window.OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
-        OneSignal.init({
-          appId: "YOUR_ONESIGNAL_APP_ID_HERE", 
-          safari_web_id: "optional_safari_id",
-          notifyButton: { enable: true },
-        });
-      });
-    </script>
-
+    <title>Gujarat Fast Alert - Simple Form Admin</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #f4f6f9; color: #333; padding-bottom: 0; }
-        .breaking-news-container { background: #1e3a5f; color: white; display: flex; align-items: center; font-size: 13px; height: 35px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .breaking-title { background: #d9534f; color: white; font-weight: bold; padding: 0 15px; height: 100%; display: flex; align-items: center; white-space: nowrap; text-transform: uppercase; z-index: 2; position: relative; }
-        .breaking-ticker { flex: 1; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; }
-        .breaking-ticker marquee { font-weight: 500; padding-left: 10px; }
-        .header { text-align: center; padding: 30px 15px; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo-title { font-size: 26px; font-weight: 800; color: #0d355a; text-decoration: none; display: inline-block; }
-        .logo-title span { color: #2b6cb0; }
-        .author-tag { display: inline-block; background: #111827; color: #ffffff; font-weight: bold; padding: 8px 18px; border-radius: 20px; font-size: 13px; margin: 12px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.15); letter-spacing: 0.5px; }
-        .subtitle { font-size: 14px; color: #718096; max-width: 500px; margin: 0 auto; line-height: 1.4; font-weight: 500; }
-        .contact-container { max-width: 500px; margin: 0 auto; padding: 15px 15px 5px 15px; display: flex; flex-direction: column; gap: 10px; }
-        .social-buttons { display: flex; gap: 12px; }
-        .btn { flex: 1; border-radius: 8px; padding: 12px; text-align: center; text-decoration: none; color: white; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .btn:active { transform: scale(0.98); }
-        .btn-whatsapp { background-color: #25D366; }
-        .btn-telegram { background-color: #0088cc; }
-        .btn-email { background-color: #ea4335; width: 100%; flex: none; }
-        .main-container { max-width: 600px; margin: 0 auto; padding: 10px; }
-        .section-title { font-size: 16px; font-weight: 700; color: #1a202c; padding: 15px 5px 5px 5px; margin-top: 15px; border-bottom: 2px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; }
-        .view-all-link { font-size: 12px; color: #2b6cb0; text-decoration: none; font-weight: 600; }
-        .category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px 0; }
-        .category-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 4px; text-align: center; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s ease; }
-        .category-card:active { transform: scale(0.95); background: #edf2f7; }
-        .category-icon { font-size: 24px; margin-bottom: 6px; }
-        .category-title { font-size: 11px; color: #2d3748; font-weight: 600; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .content-list { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 5px; margin-top: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .list-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 10px; text-decoration: none; color: #2d3748; border-bottom: 1px solid #edf2f7; transition: background 0.2s; }
-        .list-item:last-child { border-bottom: none; }
-        .list-item:hover, .list-item:active { background: #f7fafc; }
-        .item-text { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; line-height: 1.4; overflow: hidden; }
-        .badge-new { background: #e53e3e; color: white; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; margin-left: 5px; }
-        .arrow-icon { color: #a0aec0; font-size: 14px; }
-        .premium-box { background: #1a2639; color: white; border-radius: 16px; padding: 20px; margin: 25px 0 15px 0; position: relative; border-left: 5px solid #f6ad55; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .premium-badge { position: absolute; top: 15px; right: 15px; background: #ed8936; color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
-        .premium-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .premium-desc { font-size: 13px; color: #cbd5e0; line-height: 1.5; margin-bottom: 15px; max-width: 85%; }
-        .premium-btn { background: white; color: #1a2639; font-weight: 700; text-align: center; text-decoration: none; padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
-        .footer { background: #0d355a; color: #cbd5e0; text-align: center; padding: 25px 15px; margin-top: 40px; font-size: 13px; }
-        .footer-links { margin-bottom: 12px; }
-        .footer-links a { color: #ffffff; text-decoration: none; margin: 0 10px; }
-        @media (min-width: 768px) {
-            .main-container { max-width: 1000px; }
-            .category-grid { grid-template-columns: repeat(6, 1fr); gap: 15px; }
-            .category-title { font-size: 13px; }
-            .breaking-news-container { max-width: 1000px; margin: 0 auto; border-radius: 0 0 8px 8px; }
-        }
+        body { background: #f3f4f6; padding: 20px; color: #333; }
+        .admin-box { max-width: 900px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h2 { color: #0d355a; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; }
+        input[type="text"], input[type="password"], select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+        .btn { background: #0d355a; color: white; border: none; padding: 12px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .btn:hover { background: #1a4975; }
+        .btn-success { background: #25D366; width: 100%; margin-top: 20px; font-size: 16px; }
+        .btn-success:hover { background: #1ebd59; }
+        .status { margin-top: 15px; padding: 10px; border-radius: 6px; font-weight: bold; display: none; text-align: center; }
+        .success { background: #def7ec; color: #03543f; }
+        .error { background: #fde8e8; color: #9b1c1c; }
+        .row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .row .form-group { flex: 1; }
+        .item-row { display: flex; gap: 10px; align-items: center; background: #f9fafb; padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #e5e7eb; }
+        .item-row input { flex: 1; }
+        .item-row label { margin-bottom: 0; white-space: nowrap; }
+        .list-section { margin-top: 25px; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .section-head { font-size: 16px; font-weight: bold; color: #2b6cb0; margin-bottom: 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="breaking-news-container">
-        <div class="breaking-title">BREAKING</div>
-        <div class="breaking-ticker">
-            <marquee behavior="scroll" direction="left" scrollamount="5">🔥 SSC, Railway, Bank, UPSC & State Exams Latest updates are Live now!</marquee>
+<div class="admin-box">
+    <h2>🚀 Live Link & Post Manager (No Code Editor)</h2>
+    
+    <!-- ગિટહબ લોગીન -->
+    <div class="row">
+        <div class="form-group">
+            <label>GitHub Username / Repo Name</label>
+            <input type="text" id="repo" placeholder="દા.ત. vanrajsinh/gujaratfastalert">
+        </div>
+        <div class="form-group">
+            <label>GitHub Personal Access Token (PAT)</label>
+            <input type="password" id="token" placeholder="તમારો ગુપ્ત ghp_ ટોકન પેસ્ટ કરો">
         </div>
     </div>
 
-    <div class="header">
-        <a href="/" class="logo-title">India & Gujarat <span>Fast Alert</span></a>
-        <div><div class="author-tag">BY VANRAJSINH VAGHELA 👑</div></div>
-        <p class="subtitle">India & Gujarat's No. 01 Private Educational News, Govt Jobs & Utility Portal</p>
+    <button type="button" class="btn" onclick="loadHomepageData()">સાઇટનો લાઇવ કન્ટેન્ટ લોડ કરો 📥</button>
+    <div id="status-msg" class="status"></div>
+
+    <!-- લાઇવ ડેટા એડિટ ફોર્મ્સ -->
+    <div id="editor-form" style="display: none;">
+        
+        <!-- ૧. સરકારી નોકરી લિસ્ટ -->
+        <div class="list-section">
+            <div class="section-head">🔥 લેટેસ્ટ સરકારી નોકરીઓ (Jobs List)</div>
+            <div id="jobs-container"></div>
+            <button type="button" class="btn" style="background:#4a5568; padding:6px 12px; margin-top:5px; font-size:12px;" onclick="addRow('jobs-container')">+ નવી લાઈન ઉમેરો</button>
+        </div>
+
+        <!-- ૨. આર્ટિકલ્સ લિસ્ટ -->
+        <div class="list-section">
+            <div class="section-head">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ (Articles List)</div>
+            <div id="articles-container"></div>
+            <button type="button" class="btn" style="background:#4a5568; padding:6px 12px; margin-top:5px; font-size:12px;" onclick="addRow('articles-container')">+ નવી લાઈન ઉમેરો</button>
+        </div>
+
+        <button type="button" class="btn btn-success" onclick="saveDataToGitHub()">ફેરફારો લાઇવ પબ્લિશ કરો 💾</button>
     </div>
+</div>
 
-    <div class="contact-container">
-        <div class="social-buttons">
-            <a href="https://whatsapp.com/channel/0029VbDRw2SBqbr1248X841c" target="_blank" class="btn btn-whatsapp">💬 Join WhatsApp</a>
-            <a href="https://t.me/gujaratfastalert" target="_blank" class="btn btn-telegram">✈️ Join Telegram</a>
-        </div>
-        <a href="mailto:gujaratfastalert@gmail.com" class="btn btn-email">📧 Email Us (સંપર્ક કરો)</a>
-    </div>
+<script>
+    let originalHtmlContent = "";
+    let fileSha = "";
 
-    <div class="main-container">
-        <!-- Categories Sections -->
-        <div class="section-title">🎓 ઓલ ઇન્ડિયા શિક્ષણ અને સરકારી નોકરી</div>
-        <div class="category-grid">
-            <a href="/category/govt-jobs.html" class="category-card"><span class="category-icon">💼</span><span class="category-title">Govt Jobs</span></a>
-            <a href="/category/syllabus.html" class="category-card"><span class="category-icon">📋</span><span class="category-title">Syllabus</span></a>
-            <a href="/category/answer-key.html" class="category-card"><span class="category-icon">🔑</span><span class="category-title">Answer Key</span></a>
-            <a href="/category/result.html" class="category-card"><span class="category-icon">🏆</span><span class="category-title">Result</span></a>
-            <a href="/category/admit-card.html" class="category-card"><span class="category-icon">🎟️</span><span class="category-title">Admit Card</span></a>
-            <a href="/category/previous-papers.html" class="category-card"><span class="category-icon">📝</span><span class="category-title">Prev. Papers</span></a>
-            <a href="/category/scholarship.html" class="category-card"><span class="category-icon">🎓</span><span class="category-title">Scholarship</span></a>
-            <a href="/category/education-news.html" class="category-card"><span class="category-icon">📰</span><span class="category-title">Edu News</span></a>
-        </div>
+    // સાઇટનો ડેટા ગિટહબમાંથી ખેંચીને ફોર્મ બનાવવું
+    async function loadHomepageData() {
+        const repo = document.getElementById('repo').value;
+        const token = document.getElementById('token').value;
+        if(!repo || !token) { showStatus("કૃપા કરીને પહેલા Repo અને Token ભરો!", "error"); return; }
 
-        <div class="section-title">🏛️ કેન્દ્ર અને રાજ્ય સરકારની યોજનાઓ</div>
-        <div class="category-grid">
-            <a href="/category/yojana.html" class="category-card"><span class="category-icon">🏛️</span><span class="category-title">સરકારી યોજના</span></a>
-            <a href="/category/current-affairs.html" class="category-card"><span class="category-icon">📅</span><span class="category-title">Current Affairs</span></a>
-            <a href="/category/gujarati-news.html" class="category-card"><span class="category-icon">🗣️</span><span class="category-title">Gujarati News</span></a>
-        </div>
+        showStatus("સાઇટ પરથી ડેટા લોડ થઈ રહ્યો છે...", "success");
 
-        <div class="section-title">🛠️ ઉપયોગી ગાઈડ અને કેલ્ક્યુલેટર</div>
-        <div class="category-grid">
-            <a href="/category/how-to-guides.html" class="category-card"><span class="category-icon">ℹ️</span><span class="category-title">How-to Guides</span></a>
-            <a href="/category/calculators.html" class="category-card"><span class="category-icon">🧮</span><span class="category-title">Calculators</span></a>
-            <a href="/category/finance.html" class="category-card"><span class="category-icon">💰</span><span class="category-title">Finance & Tax</span></a>
-        </div>
+        try {
+            const response = await fetch(`https://api.github.com/repos/${repo}/contents/index.html`, {
+                headers: { 'Authorization': `token ${token}` }
+            });
+            if(!response.ok) { showStatus("index.html ફાઇલ ન મળી!", "error"); return; }
+            
+            const data = await response.json();
+            fileSha = data.sha;
+            originalHtmlContent = decodeURIComponent(escape(atob(data.content)));
 
-        <div class="section-title">⚡ ઓનલાઈન બિલ પેમેન્ટ</div>
-        <div class="category-grid">
-            <a href="https://www.ugvcl.com/webportal/index.php" target="_blank" class="category-card"><span class="category-icon">💡</span><span class="category-title">UGVCL Bill</span></a>
-            <a href="https://www.gujaratgas.com/quick-pay/" target="_blank" class="category-card"><span class="category-icon">🔥</span><span class="category-title">Gujarat Gas</span></a>
-            <a href="https://www.pgvcl.com/" target="_blank" class="category-card"><span class="category-icon">⚡</span><span class="category-title">PGVCL Bill</span></a>
-            <a href="https://www.mgvcl.com/" target="_blank" class="category-card"><span class="category-icon">🔌</span><span class="category-title">MGVCL Bill</span></a>
-        </div>
+            // ડેટા પાર્સ કરીને ફોર્મમાં ભરવો
+            parseAndFill('jobs', '<!--START_JOBS-->', '<!--END_JOBS-->', 'jobs-container');
+            parseAndFill('articles', '<!--START_ARTICLES-->', '<!--END_ARTICLES-->', 'articles-container');
 
-        <div class="section-title">📺 મનોરંજન અને ટેકનોલોજી</div>
-        <div class="category-grid">
-            <a href="/category/tech-news.html" class="category-card"><span class="category-icon">🤖</span><span class="category-title">Tech News</span></a>
-            <a href="/category/movie-reviews.html" class="category-card"><span class="category-icon">🍿</span><span class="category-title">Movie & OTT</span></a>
-            <a href="/category/web-series.html" class="category-card"><span class="category-icon">🎬</span><span class="category-title">Web Series</span></a>
-            <a href="/category/auto.html" class="category-card"><span class="category-icon">🚗</span><span class="category-title">Auto News</span></a>
-            <a href="/category/cricket.html" class="category-card"><span class="category-icon">🏏</span><span class="category-title">Cricket / IPL</span></a>
-            <a href="/category/health-tips.html" class="category-card"><span class="category-icon">🍏</span><span class="category-title">Health Tips</span></a>
-            <a href="/category/wishes-quotes.html" class="category-card"><span class="category-icon">🎉</span><span class="category-title">Wishes & Quotes</span></a>
-        </div>
+            document.getElementById('editor-form').style.display = 'block';
+            showStatus("ડેટા સફળતાપૂર્વક લોડ થઈ ગયો છે! હવે તમે નીચે ફેરફાર કરી શકો છો.", "success");
+        } catch(e) {
+            showStatus("ડેટા લોડ કરવામાં કંઈક પ્રોબ્લેમ થયો!", "error");
+        }
+    }
 
-        <!-- ૫. LATEST JOBS LIST -->
-        <div class="section-title">
-            <span>🔥 ઓલ ઇન્ડિયા લેટેસ્ટ સરકારી નોકરીઓ</span>
-            <a href="/category/govt-jobs.html" class="view-all-link">બધું જુઓ →</a>
-        </div>
-        <div class="content-list">
-            <!--START_JOBS-->
-            <a href="#" class="list-item"><span class="item-text">📌 SSC GD Constable નવી બમ્પર ભરતી ની જાહેરાત</span><span class="badge-new">New</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 RRB Railway NTPC વિવિધ જગ્યાઓ માટે નોટિફિકેશન</span><span class="arrow-icon">➔</span></a>
-            <a href="#" class="list-item"><span class="item-text">💼 GSSSB ક્લાર્ક ભરતી લેટેસ્ટ પરીક્ષા અપડેટસ</span><span class="arrow-icon">➔</span></a>
-            <!--END_JOBS-->
-        </div>
+    // HTML માંથી લિંક અને નામ જુદા પાડીને બોક્સ બનાવવા
+    function parseAndFill(type, startMarker, endMarker, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+        
+        const parts = originalHtmlContent.split(startMarker);
+        if(parts.length < 2) return;
+        const subParts = parts[1].split(endMarker);
+        const listHtml = subParts[0].trim();
 
-        <!-- ૬. LATEST ARTICLES LIST -->
-        <div class="section-title">
-            <span>📰 દેશભરની લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</span>
-            <a href="/category/education-news.html" class="view-all-link">બધું જુઓ →</a>
-        </div>
-        <div class="content-list">
-            <!--START_ARTICLES-->
-            <a href="#" class="list-item"><span class="item-text">🎓 પીએમ સ્કોલરશિપ યોજના ઓનલાઈન ફોર્મ પ્રોસેસ</span><span class="badge-new">New</span></a>
-            <a href="#" class="list-item"><span class="item-text">🏛️ પીએમ કિસાન સન્માન નિધિ યોજના નવો હપ્તો</span><span class="arrow-icon">➔</span></a>
-            <!--END_ARTICLES-->
-        </div>
+        // <a> ટેગ્સ માંથી ડેટા કાઢવા માટે ટેમ્પરરી ડિવ
+        const div = document.createElement('div');
+        div.innerHTML = listHtml;
+        const links = div.getElementsByTagName('a');
 
-        <div class="premium-box">
-            <div class="premium-badge">PREMIUM STORE</div>
-            <h3 class="premium-title">📚 Paid Books & Study Materials</h3>
-            <p class="premium-desc">Get dynamic Telegram access to VIP competitive exam books.</p>
-            <a href="#" class="premium-btn">⚡ Order PDFs ➔</a>
-        </div>
-    </div>
+        if(links.length === 0) {
+            for(let i=0; i<3; i++) addRow(containerId); // જો ખાલી હોય તો ૩ રો આપોઆપ આપવી
+            return;
+        }
 
-    <div class="footer">
-        <div class="footer-links">
-            <a href="/">Home</a> | <a href="mailto:gujaratfastalert@gmail.com">Contact Us</a> | <a href="/privacy-policy.html">Privacy Policy</a>
-        </div>
-        <p>© 2026 India & Gujarat Fast Alert. All Rights Reserved.</p>
-    </div>
+        for(let link of links) {
+            const url = link.getAttribute('href') || '#';
+            const textSpan = link.querySelector('.item-text');
+            const title = textSpan ? textSpan.innerText : link.innerText;
+            const hasBadge = link.querySelector('.badge-new') ? true : false;
+            addRow(containerId, title, url, hasBadge);
+        }
+    }
+
+    // નવી ડાયરેક્ટ લિંકની રો ઉમેરવી
+    function addRow(containerId, title="", url="", hasBadge=false) {
+        const container = document.getElementById(containerId);
+        const row = document.createElement('div');
+        row.className = 'item-row';
+        row.innerHTML = `
+            <input type="text" class="item-title" placeholder="લખાણ / Title (દા.ત. GSSSB નવી ભરતી)" value="${title}">
+            <input type="text" class="item-url" placeholder="ડાયરેક્ટ લિંક / URL (દા.ત. /category/jobs.html)" value="${url}">
+            <label><input type="checkbox" class="item-badge" ${hasBadge ? 'checked' : ''}> New Badge</label>
+            <button type="button" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold; margin-left:5px;" onclick="this.parentElement.remove()">✕</button>
+        `;
+        container.appendChild(row);
+    }
+
+    // બોક્સના ડેટામાંથી પાછો HTML કોડ બનાવીને ગિટહબ પર મોકલવો
+    async function saveDataToGitHub() {
+        const repo = document.getElementById('repo').value;
+        const token = document.getElementById('token').value;
+
+        showStatus("તમારા ફેરફારો લાઇવ પબ્લિશ થઈ રહ્યા છે...", "success");
+
+        const jobsHtml = generateHtmlFromContainer('jobs-container');
+        const articlesHtml = generateHtmlFromContainer('articles-container');
+
+        // નવી લિંક્સને જૂના કોડમાં પ્લગ કરવી
+        let updatedHtml = replaceBetween(originalHtmlContent, '<!--START_JOBS-->', '<!--END_JOBS-->', "\n" + jobsHtml + "\n            ");
+        updatedHtml = replaceBetween(updatedHtml, '<!--START_ARTICLES-->', '<!--END_ARTICLES-->', "\n" + articlesHtml + "\n            ");
+
+        const base64Content = btoa(unescape(encodeURIComponent(updatedHtml)));
+
+        try {
+            const response = await fetch(`https://api.github.com/repos/${repo}/contents/index.html`, {
+                method: 'PUT',
+                headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: "Admin Panel: Updated Homepage Links",
+                    content: base64Content,
+                    sha: fileSha
+                })
+            });
+
+            if(response.ok) {
+                const resData = await response.json();
+                fileSha = resData.content.sha;
+                originalHtmlContent = updatedHtml; // લોકલ સ્ટેટ અપડેટ
+                showStatus("🎉 બધી લિંક્સ કોડિંગ વગર લાઇવ પબ્લિશ થઈ ગઈ છે! હવે ક્લાઉડફ્લેર ક્લિયર કરી દો.", "success");
+            } else {
+                showStatus("સેવ કરવામાં એરર આવી! ટોકન તપાસો.", "error");
+            }
+        } catch(e) {
+            showStatus("ગિટહબ સર્વર કનેક્શન ફેલ!", "error");
+        }
+    }
+
+    function generateHtmlFromContainer(containerId) {
+        const container = document.getElementById(containerId);
+        const rows = container.getElementsByClassName('item-row');
+        let html = "";
+        for(let row of rows) {
+            const title = row.querySelector('.item-title').value.trim();
+            const url = row.querySelector('.item-url').value.trim();
+            const badge = row.querySelector('.item-badge').checked;
+            
+            if(!title) continue; // જો ટાઇટલ ખાલી હોય તો લાઇન સ્કીપ કરવી
+            
+            if(badge) {
+                html += `            <a href="${url || '#'}" class="list-item"><span class="item-text">📌 ${title}</span><span class="badge-new">New</span></a>\n`;
+            } else {
+                html += `            <a href="${url || '#'}" class="list-item"><span class="item-text">💼 ${title}</span><span class="arrow-icon">➔</span></a>\n`;
+            }
+        }
+        return html.trim();
+    }
+
+    function replaceBetween(origin, start, end, insertion) {
+        const parts = origin.split(start);
+        const subParts = parts[1].split(end);
+        return parts[0] + start + insertion + end + subParts[1];
+    }
+
+    function showStatus(msg, type) {
+        const el = document.getElementById('status-msg');
+        el.innerText = msg;
+        el.className = `status ${type}`;
+        el.style.display = 'block';
+    }
+</script>
+
 </body>
 </html>
