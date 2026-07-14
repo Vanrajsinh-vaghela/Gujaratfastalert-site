@@ -3,476 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gujarat Fast Alert - OJAS Bharti 2026, GPSC, GSSSB Recruitment & Exam Updates</title>
-    
-    <meta name="description" content="Gujarat Fast Alert by Vanrajsinh Vaghela is Gujarat's No. 01 Educational News Portal. Get fastest updates on OJAS Bharti 2026, GPSC Recruitment, GSSSB, Police Bharti, Constable, PSI, Revenue Talati, Junior Clerk, Old Question Papers, Answer Keys, Exam Calendar, and Admit Cards.">
-    <meta name="keywords" content="OJAS Bharti 2026, GPSC Recruitment, GSSSB Recruitment, Revenue Talati Bharti, Police Bharti Gujarat, PSI Bharti, Constable Bharti, Forest Guard Bharti, Junior Clerk Bharti, Bin Sachivalay Bharti, OJAS Call Letter, Answer Key Gujarat, Syllabus PDF, Previous Year Paper, Rozgaar Samachar, Gujarat Government Jobs, Sarkari Naukri Gujarat">
-    <meta name="author" content="Vanrajsinh Vaghela">
-    <meta name="robots" content="index, follow">
-    
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gujaratfastalert.in/">
-    <meta property="og:title" content="Gujarat Fast Alert - OJAS Bharti 2026 & Govt Jobs Updates">
-    <meta property="og:description" content="Get instant updates for Gujarat Govt Exams, OJAS Online Forms, Admit Cards, Answer Keys, and Results.">
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5297812051188062" crossorigin="anonymous"></script>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    
+    <title>India & Gujarat Fast Alert - All India Educational News & Govt Jobs</title>
     <style>
-        body { background-color: #f8fafc; -webkit-tap-highlight-color: transparent; }
-        .brand-bg-blue { background-color: #2b5797; }
-        .brand-bg-orange { background-color: #e67e22; }
-        
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        .marquee-text {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 22s linear infinite;
-        }
-        .marquee-text:hover { animation-play-state: paused; }
+        /* બેઝિક રીસેટ અને ગ્લોબલ ફોન્ટ્સ */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; padding-bottom: 0; }
 
-        .premium-shine::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
-            transform: rotate(30deg); animation: shineEffect 4s infinite;
-        }
-        @keyframes shineEffect {
-            0% { transform: translate(-30%, -30%) rotate(30deg); }
-            100% { transform: translate(130%, 130%) rotate(30deg); }
-        }
-        .pulse-badge { animation: pulseAnim 1.6s infinite; }
-        @keyframes pulseAnim {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-            100% { transform: scale(1); }
+        /* ૧. બ્રેકિંગ ન્યૂઝ ટિકર (Breaking News) */
+        .breaking-news-container { background: #1e3a5f; color: white; display: flex; align-items: center; font-size: 13px; height: 35px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .breaking-title { background: #d9534f; color: white; font-weight: bold; padding: 0 15px; height: 100%; display: flex; align-items: center; white-space: nowrap; text-transform: uppercase; z-index: 2; position: relative; }
+        .breaking-ticker { flex: 1; overflow: hidden; white-space: nowrap; position: relative; display: flex; align-items: center; }
+        .breaking-ticker marquee { font-weight: 500; padding-left: 10px; }
+
+        /* ૨. હેડર અને બ્રાન્ડિંગ (નવું બ્લેક પ્રીમિયમ બેજ) */
+        .header { text-align: center; padding: 30px 15px; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo-title { font-size: 26px; font-weight: 800; color: #0d355a; text-decoration: none; display: inline-block; }
+        .logo-title span { color: #2b6cb0; }
+        .author-tag { display: inline-block; background: #111827; color: #ffffff; font-weight: bold; padding: 8px 18px; border-radius: 20px; font-size: 13px; margin: 12px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.15); letter-spacing: 0.5px; }
+        .subtitle { font-size: 14px; color: #718096; max-width: 500px; margin: 0 auto; line-height: 1.4; font-weight: 500; }
+
+        /* ૩. સોશિયલ મીડિયા અને ઈમેલ કન્ટેનર */
+        .contact-container { max-width: 500px; margin: 0 auto; padding: 15px 15px 5px 15px; display: flex; flex-direction: column; gap: 10px; }
+        .social-buttons { display: flex; gap: 12px; }
+        .btn { flex: 1; border-radius: 8px; padding: 12px; text-align: center; text-decoration: none; color: white; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .btn:active { transform: scale(0.98); }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-telegram { background-color: #0088cc; }
+        .btn-email { background-color: #ea4335; width: 100%; flex: none; }
+
+        /* મેઈન કન્ટેનર અને સેક્શન હેડિંગ્સ */
+        .main-container { max-width: 600px; margin: 0 auto; padding: 10px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #1a202c; padding: 15px 5px 5px 5px; margin-top: 15px; border-bottom: 2px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; }
+        .view-all-link { font-size: 12px; color: #2b6cb0; text-decoration: none; font-weight: 600; }
+
+        /* ૪. તમામ કેટેગરીઝ ગ્રીડ લેઆઉટ */
+        .category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px 0; }
+        .category-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 4px; text-align: center; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s ease; }
+        .category-card:active { transform: scale(0.95); background: #edf2f7; }
+        .category-icon { font-size: 24px; margin-bottom: 6px; }
+        .category-title { font-size: 11px; color: #2d3748; font-weight: 600; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* ૫. લેટેસ્ટ જોબ્સ અને આર્ટિકલ્સ લિસ્ટ લેઆઉટ */
+        .content-list { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 5px; margin-top: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .list-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 10px; text-decoration: none; color: #2d3748; border-bottom: 1px solid #edf2f7; transition: background 0.2s; }
+        .list-item:last-child { border-bottom: none; }
+        .list-item:hover, .list-item:active { background: #f7fafc; }
+        .item-text { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .badge-new { background: #e53e3e; color: white; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; }
+        .arrow-icon { color: #a0aec0; font-size: 14px; }
+
+        /* ૬. પ્રીમિયમ બુક્સ સેક્શન */
+        .premium-box { background: #1a2639; color: white; border-radius: 16px; padding: 20px; margin: 25px 0 15px 0; position: relative; border-left: 5px solid #f6ad55; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .premium-badge { position: absolute; top: 15px; right: 15px; background: #ed8936; color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .premium-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .premium-desc { font-size: 13px; color: #cbd5e0; line-height: 1.5; margin-bottom: 15px; max-width: 85%; }
+        .premium-btn { background: white; color: #1a2639; font-weight: 700; text-align: center; text-decoration: none; padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background 0.2s; }
+        .premium-btn:active { background: #edf2f7; }
+
+        /* ૭. ફૂટર (Footer) */
+        .footer { background: #0d355a; color: #cbd5e0; text-align: center; padding: 25px 15px; margin-top: 40px; font-size: 13px; line-height: 1.6; }
+        .footer-links { margin-bottom: 12px; }
+        .footer-links a { color: #ffffff; text-decoration: none; margin: 0 10px; font-weight: 500; }
+        .footer-links a:hover { text-decoration: underline; }
+        .footer-credit { font-size: 11px; color: #a0aec0; margin-top: 8px; }
+
+        /* મોટી સ્ક્રીન માટે ઓટો-લેઆઉટ */
+        @media (min-width: 768px) {
+            .main-container { max-width: 1000px; }
+            .category-grid { grid-template-columns: repeat(6, 1fr); gap: 15px; }
+            .category-title { font-size: 13px; }
+            .category-icon { font-size: 28px; }
+            .breaking-news-container { max-width: 1000px; margin: 0 auto; border-radius: 0 0 8px 8px; }
         }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col items-center">
+<body>
 
-    <div class="w-full bg-[#e67e22] text-white py-2 text-xs md:text-sm font-bold overflow-hidden shadow-sm z-50">
-        <div class="w-full flex items-center max-w-6xl mx-auto px-4">
-            <span class="bg-red-600 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mr-3 shrink-0 animate-pulse">BREAKING</span>
-            <div class="overflow-hidden relative w-full h-5">
-                <div class="marquee-text absolute font-medium" id="marqueeAlertText">
-                    🚨 📌 OJAS Bharti 2026, GPSC, GSSSB, Police Constable, and Clerk Exam Latest updates are Live now! 🔥 | Loading live server ticker...
-                </div>
-            </div>
+    <!-- ૧. બ્રેકિંગ ન્યૂઝ ટિકર -->
+    <div class="breaking-news-container">
+        <div class="breaking-title">BREAKING</div>
+        <div class="breaking-ticker">
+            <marquee behavior="scroll" direction="left" scrollamount="5">🔥 SSC, Railway, Bank, UPSC & State Exams Latest updates are Live now! | 📌 દેશભરની તમામ સરકારી નોકરીઓ અને યોજનાઓની માહિતી એક જ જગ્યાએ</marquee>
         </div>
     </div>
 
-    <div class="w-full bg-[#2c3e50] py-3 px-4 shadow-md z-40">
-        <div class="max-w-xl mx-auto flex flex-col items-center">
-            <button onclick="toggleQuickDropdown()" class="w-full bg-[#34495e] text-white py-2.5 px-4 rounded-lg text-sm font-semibold flex justify-between items-center border border-[#4f5d73] hover:bg-[#3d566e] transition">
-                <span class="flex items-center gap-2">⚡ Quick Redirect Links</span>
-                <span id="quickArrow" class="text-xs">▼</span>
-            </button>
-            <div id="quickDropdown" class="hidden w-full bg-white border border-slate-200 rounded-lg mt-2 shadow-xl overflow-hidden">
-                <a href="#salary-tool" onclick="scrollToElement('salary-tool')" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 border-b border-slate-100 font-semibold flex justify-between">
-                    <span>💼 Govt Job Salary Calculator</span>
-                    <span class="text-xs text-orange-500 font-bold">Try Now!</span>
-                </a>
-                <a href="#age-tool" onclick="scrollToElement('age-tool')" class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 border-b border-slate-100 font-semibold">🎂 Age Eligibility Calculator</a>
-                <a href="https://telegram.me/boost/gujaratfastalert" target="_blank" class="block px-4 py-3 text-sm hover:bg-slate-50 font-semibold text-emerald-600 flex justify-between">
-                    <span>📚 Buy Paid Study Materials (Telegram)</span>
-                    <span class="bg-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded-full pulse-badge">VIP</span>
-                </a>
-            </div>
+    <!-- ૨. હેડર અને બ્રાન્ડિંગ વિભાગ -->
+    <div class="header">
+        <a href="/" class="logo-title">India & Gujarat <span>Fast Alert</span></a>
+        <div><div class="author-tag">BY VANRAJSINH VAGHELA 👑</div></div>
+        <p class="subtitle">India & Gujarat's No. 01 Private Educational News, Govt Jobs & Utility Portal</p>
+    </div>
+
+    <!-- ૩. સોશિયલ મીડિયા અને ઈમેલ બટન્સ (ટેલિગ્રામ લિંક ફિક્સ) -->
+    <div class="contact-container">
+        <div class="social-buttons">
+            <a href="https://whatsapp.com/channel/0029VbDRw2SBqbr1248X841c" target="_blank" class="btn btn-whatsapp">💬 Join WhatsApp</a>
+            <a href="https://t.me/gujaratfastalert" target="_blank" class="btn btn-telegram">✈️ Join Telegram</a>
         </div>
+        <a href="mailto:gujaratfastalert@gmail.com" class="btn btn-email">📧 Email Us (સંપર્ક કરો)</a>
     </div>
 
-    <div class="text-center py-8 px-4 w-full max-w-2xl">
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900" id="mainSiteTitle">
-            Gujarat <span class="text-[#2b5797]">Fast Alert</span>
-        </h1>
-        <div class="mt-2.5">
-            <span class="text-xs md:text-sm font-bold text-[#e67e22] uppercase tracking-widest bg-orange-100 px-4 py-1.5 rounded-full border border-orange-200">
-                By Vanrajsinh Vaghela 👑
-            </span>
-        </div>
-        <p class="text-xs text-slate-500 mt-4 font-medium tracking-wide">
-            Gujarat's No. 01 Private Educational News & Utility Portal
-        </p>
-    </div>
+    <!-- મુખ્ય કન્ટેનર શરૂ થાય છે -->
+    <div class="main-container">
 
-    <div class="w-full max-w-md grid grid-cols-2 gap-3 px-4 mb-6">
-        <a href="https://chat.whatsapp.com/GzJp20xZJN134J7EC" target="_blank" class="bg-[#25D366] text-white py-3 px-4 rounded-xl text-xs md:text-sm font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition">
-            💬 Join WhatsApp
-        </a>
-        <a href="https://telegram.me/gujaratfastalert" target="_blank" class="bg-[#0088cc] text-white py-3 px-4 rounded-xl text-xs md:text-sm font-bold text-center flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition">
-            ✈ Join Telegram Channel
-        </a>
-    </div>
-
-    <div class="w-full max-w-md px-4 mb-6">
-        <button onclick="toggleSidebarMenu()" class="w-full bg-slate-950 text-white py-3.5 px-6 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md hover:bg-slate-900 transition">
-            <span>☰ View Menu & Subpages</span>
-        </button>
-    </div>
-
-    <div id="sidebarOverlay" onclick="toggleSidebarMenu()" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] transition-opacity"></div>
-    <div id="sidebarMenu" class="fixed top-0 -left-[300px] w-[280px] h-full bg-white shadow-2xl z-[101] transition-all duration-300 flex flex-col">
-        <div class="bg-[#2b5797] text-white p-5 flex justify-between items-center">
-            <h3 class="font-extrabold tracking-wide">Vanraj's Fast Alert Menu</h3>
-            <button onclick="toggleSidebarMenu()" class="text-2xl font-bold">&times;</button>
-        </div>
-        <div class="overflow-y-auto flex-1 py-4">
-            <a href="#" onclick="toggleSidebarMenu(); filterCategory('latest-jobs', 'Latest Jobs 📋')" class="flex items-center gap-3 px-6 py-4 hover:bg-slate-50 border-b border-slate-100 font-bold text-slate-700">
-                <span>📋</span> Latest Jobs
-            </a>
-            <a href="#" onclick="toggleSidebarMenu(); filterCategory('result', 'Exam Results 🏆')" class="flex items-center gap-3 px-6 py-4 hover:bg-slate-50 border-b border-slate-100 font-bold text-slate-700">
-                <span>🏆</span> Exam Results
-            </a>
-            <a href="#" onclick="toggleSidebarMenu(); filterCategory('admit-card', 'Admit Cards 🎟️')" class="flex items-center gap-3 px-6 py-4 hover:bg-slate-50 border-b border-slate-100 font-bold text-slate-700">
-                <span>🎟️</span> Admit Cards
-            </a>
-            <a href="#salary-tool" onclick="toggleSidebarMenu(); scrollToElement('salary-tool')" class="flex items-center gap-3 px-6 py-4 hover:bg-slate-50 border-b border-slate-100 font-bold text-blue-700">
-                <span>🧮</span> Job Salary Calculator
-            </a>
-            <a href="#age-tool" onclick="toggleSidebarMenu(); scrollToElement('age-tool')" class="flex items-center gap-3 px-6 py-4 hover:bg-slate-50 border-b border-slate-100 font-bold text-slate-700">
-                <span>🎂</span> Age Eligibility Calculator
-            </a>
-            <a href="https://telegram.me/boost/gujaratfastalert" target="_blank" class="flex items-center gap-3 px-6 py-4 hover:bg-slate-50 border-b border-slate-100 font-bold text-orange-600">
-                <span>💎</span> VIP Telegram PDF Store
-                <span class="ml-auto text-[9px] bg-red-500 text-white px-2 py-0.5 rounded-full pulse-badge">PAID</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="w-full max-w-md px-4 mb-6">
-        <div class="premium-shine relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-5 border-l-4 border-[#e67e22] shadow-lg">
-            <span class="absolute top-4 right-4 bg-[#e67e22] text-white font-extrabold text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider pulse-badge">PREMIUM STORE</span>
-            <h4 class="text-lg font-black tracking-wide flex items-center gap-2">
-                📚 Paid Books & Study Materials
-            </h4>
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-                Get dynamic Telegram access to VIP competitive exam books, short tricks notes, previous year question papers, and official answer keys.
-            </p>
-            <div class="mt-4">
-                <a href="https://telegram.me/boost/gujaratfastalert" target="_blank" class="w-full bg-white text-slate-950 hover:bg-slate-100 py-3 px-4 rounded-xl text-xs font-black flex items-center justify-center gap-2 shadow-md transition transform hover:-translate-y-0.5">
-                    <span>⚡ Order PDFs / Premium Materials</span>
-                    <span>➔</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="w-full max-w-md px-4 mb-8">
-        <div class="grid grid-cols-4 gap-2">
-            <div onclick="filterCategory('latest-jobs', 'Latest Jobs 📋')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-latest-jobs">
-                <span class="text-lg">📋</span>
-                <span class="text-[10px] font-black text-slate-700 leading-tight">Latest Jobs</span>
-            </div>
-            <div onclick="filterCategory('result', 'Exam Results 🏆')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-result">
-                <span class="text-lg">🏆</span>
-                <span class="text-[10px] font-black text-slate-700 leading-tight">Results</span>
-            </div>
-            <div onclick="filterCategory('admit-card', 'Admit Cards 🎟️')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-admit-card">
-                <span class="text-lg">🎟️</span>
-                <span class="text-[10px] font-black text-slate-700 leading-tight">Admit Card</span>
-            </div>
-            <div onclick="filterCategory('samachar', 'Educational News 📰')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-samachar">
-                <span class="text-lg">📰</span>
-                <span class="text-[10px] font-black text-slate-700 leading-tight">Samachar</span>
-            </div>
-            <div onclick="filterCategory('calendar', 'Exam Calendar 📅')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-calendar">
-                <span class="text-lg">📅</span>
-                <span class="text-[10px] font-black text-slate-700 leading-tight">Calendar</span>
-            </div>
-            <div onclick="filterCategory('prev-paper', 'Old Question Papers 📄')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-prev-paper">
-                <span class="text-lg">📄</span>
-                <span class="text-[10px] font-black text-slate-700 leading-tight">Prev. Paper</span>
-            </div>
-            <div onclick="filterCategory('gujarat-jobs', 'Gujarat Gov Jobs 🏛️')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-gujarat-jobs">
-                <span class="text-lg">🏛️</span>
-                <span class="text-[10px] font-black text-slate-700 leading-tight">Guj. Jobs</span>
-            </div>
-            <div onclick="filterCategory('answer-key', 'Official Answer Keys 🔑')" class="bg-white border border-slate-200 rounded-xl p-3 text-center cursor-pointer shadow-sm hover:border-[#e67e22] hover:bg-orange-50/50 transition flex flex-col items-center justify-center gap-1.5" id="btn-answer-key">
-                <span class="text-lg">🔑</span>
-                <span class="text-[10px] font-black text-slate-700 leading-tight">Answer Key</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="w-full max-w-6xl px-4 grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+        <!-- ૪. તમામ કેટેગરી ગ્રીડ -->
         
-        <div class="hidden lg:block lg:col-span-3">
-            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm text-center sticky top-4">
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Sponsored Links</p>
-                <div class="min-h-[400px] bg-slate-50 rounded-lg flex flex-col items-center justify-center border border-dashed border-slate-200 p-2">
-                    <span class="text-xs text-slate-400 font-bold">[AdSense Sidebar Vertical Unit]</span>
-                </div>
-            </div>
+        <!-- વિભાગ ૧ -->
+        <div class="section-title">🎓 ઓલ ઇન્ડિયા શિક્ષણ અને સરકારી નોકરી</div>
+        <div class="category-grid">
+            <a href="/category/govt-jobs.html" class="category-card">
+                <span class="category-icon">💼</span>
+                <span class="category-title">Govt Jobs</span>
+            </a>
+            <a href="/category/syllabus.html" class="category-card">
+                <span class="category-icon">📋</span>
+                <span class="category-title">Syllabus</span>
+            </a>
+            <a href="/category/answer-key.html" class="category-card">
+                <span class="category-icon">🔑</span>
+                <span class="category-title">Answer Key</span>
+            </a>
+            <a href="/category/result.html" class="category-card">
+                <span class="category-icon">🏆</span>
+                <span class="category-title">Result</span>
+            </a>
+            <a href="/category/admit-card.html" class="category-card">
+                <span class="category-icon">🎟️</span>
+                <span class="category-title">Admit Card</span>
+            </a>
+            <a href="/category/previous-papers.html" class="category-card">
+                <span class="category-icon">📝</span>
+                <span class="category-title">Prev. Papers</span>
+            </a>
+            <a href="/category/scholarship.html" class="category-card">
+                <span class="category-icon">🎓</span>
+                <span class="category-title">Scholarship</span>
+            </a>
+            <a href="/category/education-news.html" class="category-card">
+                <span class="category-icon">📰</span>
+                <span class="category-title">Edu News</span>
+            </a>
         </div>
 
-        <div class="lg:col-span-6 space-y-6 flex flex-col items-center">
-            
-            <div id="filterViewBlock" class="hidden w-full bg-[#fffcf7] border-2 border-[#e67e22] rounded-xl overflow-hidden shadow-md">
-                <div class="bg-[#e67e22] text-white p-3.5 px-5 font-bold text-sm flex justify-between items-center">
-                    <span id="filterViewTitle">Category Matches</span>
-                    <button onclick="closeFilterView()" class="bg-black/15 text-white px-2.5 py-0.5 rounded text-xs hover:bg-black/30">Close [X]</button>
-                </div>
-                <div id="filter-content-target" class="p-4 divide-y divide-slate-100"></div>
-            </div>
-
-            <div class="w-full bg-white p-2 rounded-xl border text-center shadow-sm">
-                <div class="bg-slate-50 py-3 rounded text-[11px] font-bold text-slate-400 tracking-wide">[💰 GOOGLE ADSENSE TOP FEED RESPONSIVE AD SLOT]</div>
-            </div>
-
-            <div class="w-full bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                <div class="bg-gradient-to-r from-blue-700 to-blue-800 text-white py-4 px-5 font-extrabold flex justify-between items-center">
-                    <span>🔔 All Latest Important Updates</span>
-                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-ping"></span>
-                </div>
-                <div id="important-container" class="p-5 space-y-4 text-left">Loading live server feed...</div>
-            </div>
-
-            <div class="w-full bg-white p-2 rounded-xl border text-center shadow-sm">
-                <div class="bg-slate-50 py-3 rounded text-[11px] font-bold text-slate-400 tracking-wide">[💰 GOOGLE ADSENSE MID STREAM IN-FEED AD SLOT]</div>
-            </div>
-
-            <div class="w-full bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                <div class="bg-slate-900 text-white py-4 px-5 font-extrabold">🏛️ Active Gujarat Jobs</div>
-                <div id="gujarat-container" class="p-5 space-y-3 text-left">Loading...</div>
-            </div>
-
-            <div class="w-full bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm p-5" id="salary-tool">
-                <h3 class="text-base font-black tracking-wide border-b pb-3 flex items-center gap-2 text-slate-900">🧮 Salary & Age Calculators</h3>
-                <div class="space-y-4 mt-3">
-                    <div class="p-1 bg-slate-100 rounded-lg flex text-xs font-bold">
-                        <button onclick="switchCalcMode('salary')" id="btn-calc-salary" class="w-1/2 py-2 rounded-md bg-white text-slate-950 shadow-sm text-center">💼 7th Pay Salary</button>
-                        <button onclick="switchCalcMode('age')" id="btn-calc-age" class="w-1/2 py-2 rounded-md text-slate-500 text-center">🎂 Age Eligibility</button>
-                    </div>
-
-                    <div id="salary-calc-sub" class="space-y-4">
-                        <select id="salaryGrade" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs font-bold outline-none" onchange="calculateSalary()">
-                            <option value="class3-clerk">Class 3 Clerk / Bin Sachivalay (Fix Pay: 26,000)</option>
-                            <option value="talati">Talati / Mantri / Gram Sevak (Fix Pay: 26,000)</option>
-                            <option value="police-constable">Police Constable / Jail Sipahi (Fix Pay: 26,000)</option>
-                            <option value="asi-psi">ASI / PSI Rank Structure</option>
-                            <option value="custom">Regular 7th Pay Scale Matrix</option>
-                        </select>
-                        <div id="customPayBlock" class="hidden">
-                            <input type="number" id="basicPayInput" value="19900" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold" oninput="calculateSalary()">
-                        </div>
-                        <div id="daBlock" class="hidden grid grid-cols-2 gap-2">
-                            <input type="number" id="daInput" value="50" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold" oninput="calculateSalary()">
-                            <select id="hraLocation" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold" onchange="calculateSalary()">
-                                <option value="9">Rural Area (9%)</option><option value="18">Town (18%)</option><option value="27">Metro (27%)</option>
-                            </select>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-xl border flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] font-bold text-slate-400 block">ESTIMATED IN-HAND SALARY</span>
-                                <span class="text-2xl font-black text-emerald-600" id="totalSalaryResult">₹ 26,000</span>
-                            </div>
-                            <span class="text-[10px] font-bold text-[#e67e22] bg-orange-50 px-3 py-1 rounded-full" id="salaryStatusNote">Fixed Pay</span>
-                        </div>
-                    </div>
-
-                    <div id="age-calc-sub" class="hidden space-y-4">
-                        <div class="grid grid-cols-2 gap-2" id="age-tool">
-                            <input type="date" id="dobInput" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold" onchange="calculateAge()">
-                            <input type="date" id="cutoffInput" value="2026-07-14" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold" onchange="calculateAge()">
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-xl text-center">
-                            <span class="text-[30px] font-black text-blue-900 block" id="ageResultText">0 Years</span>
-                            <span class="text-xs text-slate-500 font-semibold block" id="ageDetailSubText">Enter details.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                <div class="bg-slate-900 text-white py-4 px-5 font-extrabold">📰 Latest Educational News</div>
-                <div id="news-container" class="divide-y divide-slate-100">Loading...</div>
-            </div>
-
+        <!-- વિભાગ ૨ -->
+        <div class="section-title">🏛️ કેન્દ્ર અને રાજ્ય સરકારની યોજનાઓ</div>
+        <div class="category-grid">
+            <a href="/category/yojana.html" class="category-card">
+                <span class="category-icon">🏛️</span>
+                <span class="category-title">સરકારી યોજના</span>
+            </a>
+            <a href="/category/current-affairs.html" class="category-card">
+                <span class="category-icon">📅</span>
+                <span class="category-title">Current Affairs</span>
+            </a>
+            <a href="/category/gujarati-news.html" class="category-card">
+                <span class="category-icon">🗣️</span>
+                <span class="category-title">Gujarati News</span>
+            </a>
         </div>
 
-        <div class="hidden lg:block lg:col-span-3">
-            <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm text-center sticky top-4">
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Advertisements</p>
-                <div class="min-h-[400px] bg-slate-50 rounded-lg flex flex-col items-center justify-center border border-dashed border-slate-200 p-2">
-                    <span class="text-xs text-slate-400 font-bold">[AdSense Sidebar Vertical Unit]</span>
-                </div>
-            </div>
+        <!-- વિભાગ ૩ -->
+        <div class="section-title">🛠️ ઉપયોગી ગાઈડ અને કેલ્ક્યુલેટર</div>
+        <div class="category-grid">
+            <a href="/category/how-to-guides.html" class="category-card">
+                <span class="category-icon">ℹ️</span>
+                <span class="category-title">How-to Guides</span>
+            </a>
+            <a href="/category/calculators.html" class="category-card">
+                <span class="category-icon">🧮</span>
+                <span class="category-title">Calculators</span>
+            </a>
+            <a href="/category/finance.html" class="category-card">
+                <span class="category-icon">💰</span>
+                <span class="category-title">Finance & Tax</span>
+            </a>
         </div>
+
+        <!-- વિભાગ ૪ (બિલ પેમેન્ટ સર્વિસ) -->
+        <div class="section-title">⚡ ઓનલાઈન બિલ પેમેન્ટ</div>
+        <div class="category-grid">
+            <a href="https://www.ugvcl.com/webportal/index.php" target="_blank" class="category-card">
+                <span class="category-icon">💡</span>
+                <span class="category-title">UGVCL Bill</span>
+            </a>
+            <a href="https://www.gujaratgas.com/quick-pay/" target="_blank" class="category-card">
+                <span class="category-icon">🔥</span>
+                <span class="category-title">Gujarat Gas</span>
+            </a>
+            <a href="https://www.pgvcl.com/" target="_blank" class="category-card">
+                <span class="category-icon">⚡</span>
+                <span class="category-title">PGVCL Bill</span>
+            </a>
+            <a href="https://www.mgvcl.com/" target="_blank" class="category-card">
+                <span class="category-icon">🔌</span>
+                <span class="category-title">MGVCL Bill</span>
+            </a>
+        </div>
+
+        <!-- વિભાગ ૫ -->
+        <div class="section-title">📺 મનોરંજન અને ટેકનોલોજી</div>
+        <div class="category-grid">
+            <a href="/category/tech-news.html" class="category-card">
+                <span class="category-icon">🤖</span>
+                <span class="category-title">Tech News</span>
+            </a>
+            <a href="/category/movie-reviews.html" class="category-card">
+                <span class="category-icon">🍿</span>
+                <span class="category-title">Movie & OTT</span>
+            </a>
+            <a href="/category/web-series.html" class="category-card">
+                <span class="category-icon">🎬</span>
+                <span class="category-title">Web Series</span>
+            </a>
+            <a href="/category/auto.html" class="category-card">
+                <span class="category-icon">🚗</span>
+                <span class="category-title">Auto News</span>
+            </a>
+            <a href="/category/cricket.html" class="category-card">
+                <span class="category-icon">🏏</span>
+                <span class="category-title">Cricket / IPL</span>
+            </a>
+            <a href="/category/health-tips.html" class="category-card">
+                <span class="category-icon">🍏</span>
+                <span class="category-title">Health Tips</span>
+            </a>
+            <a href="/category/wishes-quotes.html" class="category-card">
+                <span class="category-icon">🎉</span>
+                <span class="category-title">Wishes & Quotes</span>
+            </a>
+        </div>
+
+
+        <!-- ૫. LATEST JOBS -->
+        <div class="section-title">
+            <span>🔥 ઓલ ઇન્ડિયા લેટેસ્ટ સરકારી નોકરીઓ</span>
+            <a href="/category/govt-jobs.html" class="view-all-link">બધું જુઓ →</a>
+        </div>
+        <div class="content-list">
+            <a href="#" class="list-item">
+                <span class="item-text">📌 SSC GD Constable નવી બમ્પર ભરતી ની જાહેરાત</span>
+                <span class="badge-new">New</span>
+            </a>
+            <a href="#" class="list-item"><span class="item-text">💼 RRB Railway NTPC વિવિધ જગ્યાઓ માટે નોટિફિકેશન</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 GSSSB ક્લાર્ક અને હેડ ક્લાર્ક ભરતી લેટેસ્ટ પરીક્ષા અપડેટસ</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 IBPS Bank Clerk અને PO ની નવી ખાલી જગ્યાઓ</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 UPSC Civil Services (IAS/IPS) ઓનલાઈન રજીસ્ટ્રેશન</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 ઇન્ડિયન આર્મી (Agniveer) નવી ભરતી રેલી શેડ્યૂલ</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 GPSC વર્ગ-૧ અને વર્ગ-૨ ઓફિશિયલ ભરતી કેલેન્ડર</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 SSC CGL દેશભરની કેન્દ્રિય નોકરીઓ માટે ફોર્મ શરૂ</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 ઇન્ડિયન પોસ્ટલ વિભાગ (Post Office) જીડીએસ ભરતી</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💼 એસબીઆઈ (SBI) જુનિયર એસોસિએટ નવી સીધી ભરતી</span><span class="arrow-icon">➔</span></a>
+        </div>
+
+
+        <!-- ૬. LATEST ARTICLES -->
+        <div class="section-title">
+            <span>📰 દેશભરની લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</span>
+            <a href="/category/education-news.html" class="view-all-link">બધું જુઓ →</a>
+        </div>
+        <div class="content-list">
+            <a href="#" class="list-item">
+                <span class="item-text">🎓 પીએમ સ્કોલરશિપ યોજના (PM Scholarship) ઓનલાઈન ફોર્મ પ્રોસેસ</span>
+                <span class="badge-new">New</span>
+            </a>
+            <a href="#" class="list-item"><span class="item-text">🏛️ પીએમ કિસાન સન્માન નિધિ યોજના નવો હપ્તો કઈ રીતે ચેક કરવો?</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">ℹ️ નવું આધાકાર્ડ અને પાનકાર્ડ ઓનલાઈન લિંક કરવાની સરળ રીત</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">🧮 EMI અને SIP Calculator નો ઉપયોગ કરીને રોકાણ ગણો</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">🍿 આ અઠવાડિયે નેટફ્લિક્સ અને પ્રાઇમ પર કઈ નવી વેબ સિરીઝ આવશે?</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">🚗 બજેટ ફ્રેન્ડલી નવી ટોપ-૫ ફેમિલી કાર જે ભારતમાં લોન્ચ થઈ</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">🤖 વ્હોટ્સએપ અને એઆઈ (AI) ના નવા સિક્રેટ ફિચર્સ વિષે જાણો</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">💰 મ્યુચ્યુઅલ ફંડ અને SIP રોકાણ ટેક્સ બચત ગાઇડન્સ</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">🍏 સદાબહાર હેલ્ધી રહેવા માટે ઉપયોગી હેલ્થ ટિપ્સ</span><span class="arrow-icon">➔</span></a>
+            <a href="#" class="list-item"><span class="item-text">🎉 ઓલ ઇન્ડિયા ફેસ્ટિવલ વિશ લિસ્ટ અને સુંદર ક્વોટ્સ</span><span class="arrow-icon">➔</span></a>
+        </div>
+
+
+        <!-- ૭. PREMIUM BOOKS SECTION -->
+        <div class="premium-box">
+            <div class="premium-badge">PREMIUM STORE</div>
+            <h3 class="premium-title">📚 Paid Books & Study Materials</h3>
+            <p class="premium-desc">Get dynamic Telegram access to VIP competitive exam books, short tricks notes, previous year question papers, and official answer keys.</p>
+            <a href="#" class="premium-btn">⚡ Order PDFs / Premium Materials ➔</a>
+        </div>
+
+    </div>
+    <!-- મુખ્ય કન્ટેનર પૂરું થાય છે -->
+
+
+    <!-- ૮. ફૂટર વિભાગ -->
+    <div class="footer">
+        <div class="footer-links">
+            <a href="/">Home</a> | 
+            <a href="mailto:gujaratfastalert@gmail.com">Contact Us</a> | 
+            <a href="/privacy-policy.html">Privacy Policy</a>
+        </div>
+        <p>© 2026 India & Gujarat Fast Alert. All Rights Reserved.</p>
+        <p class="footer-credit">Developed with ❤️ for Students of India</p>
     </div>
 
-    <section class="hidden">
-        <h2>Gujarat Educational Keywords & Job Indexes Covered</h2>
-        <p>OJAS Bharti 2026, GPSC Recruitment, GSSSB Recruitment, Revenue Talati Bharti, Police Bharti Gujarat, PSI Bharti, Constable Bharti, Forest Guard Bharti, Junior Clerk Bharti, Senior Clerk Bharti, Bin Sachivalay Bharti, Gram Sevak Bharti, Panchayat Bharti, Health Department Bharti, Staff Nurse Bharti, AMC Recruitment, VMC Recruitment, SMC Recruitment, GSECL Recruitment, UGVCL Recruitment, PGVCL Recruitment, DGVCL Recruitment, GETCO Recruitment, GSRTC Recruitment, Gujarat High Court Recruitment, Collector Office Recruitment, Class 3 Recruitment, Class 1-2 Recruitment, OJAS Call Letter, OJAS Hall Ticket, GPSC Admit Card, GSSSB Admit Card, Talati Admit Card, Police Admit Card, Exam Date Gujarat, GPSC Calendar, GSSSB Exam Date, Answer Key Gujarat, Syllabus PDF, Previous Year Paper, Current Affairs PDF, GK Questions, Reasoning Questions, Maths Questions, English Questions, Gujarati Grammar, OJAS Result, GPSC Result, GSSSB Result, Talati Result, Merit List, Cut Off Marks, Document Verification, Score Card, Gujarat Government Jobs, Rozgaar Samachar, OJAS Login, OJAS Registration, Online Form, Last Date, Notification PDF, Age Limit, Qualification, Salary, Vacancy Details, Apply Online, How to Apply, Important Dates, Official Notification, Exam News, Latest Bharti News, Sarkari Naukri Gujarat, Gujarat Exam News.</p>
-    </section>
-
-    <footer class="w-full bg-slate-900 text-slate-400 py-10 px-6 text-xs text-center border-t border-slate-800">
-        <p class="font-bold text-slate-200 text-sm mb-2">© 2026-27, Vanrajsinh Vaghela ®</p>
-        <p class="opacity-75 max-w-2xl mx-auto mb-6">⚠️ Disclaimer: This site is an independent educational news portal and is not affiliated with OJAS, GPSC, GSSSB or any government recruitment organization. Information compiled here is purely for student assistance.</p>
-        
-        <div class="flex flex-wrap justify-center gap-4 text-slate-300 font-bold tracking-wide border-t border-slate-800 pt-5 max-w-md mx-auto">
-            <a href="./about.html" class="hover:text-orange-500 transition">About Us</a>
-            <span>|</span>
-            <a href="./contact.html" class="hover:text-orange-500 transition">Contact Us</a>
-            <span>|</span>
-            <a href="./privacy.html" class="hover:text-orange-500 transition">Privacy Policy</a>
-            <span>|</span>
-            <a href="./disclaimer.html" class="hover:text-orange-500 transition">Disclaimer</a>
-        </div>
-    </footer>
-
-    <script>
-        // Active system cloud connection configurations
-        const firebaseConfig = {
-            apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
-            authDomain: "gujarat-fast-alert.firebaseapp.com",
-            databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
-            projectId: "gujarat-fast-alert",
-            storageBucket: "gujarat-fast-alert.firebasestorage.app",
-            messagingSenderId: "395130500748",
-            appId: "1:395130500748:web:e6589f3a57812efad6ada9",
-            measurementId: "G-ZJN134J7EC"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        // REAL-TIME SYSTEM ENGINE FOR GLOBAL SETTINGS SYNC WITH DATABASE
-        function syncGlobalSettings() {
-            database.ref('settings').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if(data) {
-                    // Update breaking news alert line ticker text dynamically
-                    if(data.headerNotice) {
-                        document.getElementById('marqueeAlertText').innerText = data.headerNotice;
-                    }
-                    // Update main browser header window title and dynamic page logo
-                    if(data.siteTitle) {
-                        document.title = data.siteTitle + " - OJAS Bharti & Govt Jobs Updates";
-                        // Keep stylized Fast Alert element span tags active
-                        let stylizedTitle = data.siteTitle.includes("Fast Alert") ? 
-                            data.siteTitle.replace("Fast Alert", '<span class="text-[#2b5797]">Fast Alert</span>') : data.siteTitle;
-                        document.getElementById('mainSiteTitle').innerHTML = stylizedTitle;
-                    }
-                }
-            });
-        }
-
-        function toggleSidebarMenu() {
-            const sb = document.getElementById('sidebarMenu');
-            const ol = document.getElementById('sidebarOverlay');
-            if(sb.style.left === '0px') { sb.style.left = '-300px'; ol.classList.add('hidden'); }
-            else { sb.style.left = '0px'; ol.classList.remove('hidden'); }
-        }
-
-        function toggleQuickDropdown() {
-            const dd = document.getElementById('quickDropdown');
-            const ar = document.getElementById('quickArrow');
-            if(dd.classList.contains('hidden')) { dd.classList.remove('hidden'); ar.innerText = '▲'; }
-            else { dd.classList.add('hidden'); ar.innerText = '▼'; }
-        }
-
-        function switchCalcMode(mode) {
-            if(mode === 'salary') {
-                document.getElementById('btn-calc-salary').className = "w-1/2 py-2 rounded-md bg-white text-slate-950 shadow-sm text-center";
-                document.getElementById('btn-calc-age').className = "w-1/2 py-2 rounded-md text-slate-500 text-center";
-                document.getElementById('salary-calc-sub').classList.remove('hidden');
-                document.getElementById('age-calc-sub').classList.add('hidden');
-            } else {
-                document.getElementById('btn-calc-age').className = "w-1/2 py-2 rounded-md bg-white text-slate-950 shadow-sm text-center";
-                document.getElementById('btn-calc-salary').className = "w-1/2 py-2 rounded-md text-slate-500 text-center";
-                document.getElementById('age-calc-sub').classList.remove('hidden');
-                document.getElementById('salary-calc-sub').classList.add('hidden');
-            }
-        }
-
-        function scrollToElement(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'center' });
-            document.getElementById('quickDropdown').classList.add('hidden');
-        }
-
-        function listenCategory(catName, containerId, type) {
-            database.ref('posts/' + catName).orderByChild('timestamp').limitToLast(15).on('value', (snapshot) => {
-                const container = document.getElementById(containerId);
-                container.innerHTML = '';
-                let posts = [];
-                snapshot.forEach((childSnapshot) => { posts.unshift(childSnapshot.val()); });
-                if(posts.length === 0) { container.innerHTML = '<p class="text-xs text-slate-400 font-medium">No live entries yet.</p>'; return; }
-                posts.forEach((post) => {
-                    if(type === 'important') {
-                        container.innerHTML += `<div class="p-3 bg-slate-50 border border-slate-100 rounded-xl flex items-start gap-2"><span class="bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black tracking-wider shrink-0">${post.tag || 'NEW'}</span><a href="${post.link}" target="_blank" class="text-xs font-bold hover:text-blue-700 leading-normal">${post.title}</a></div>`;
-                    } else if(type === 'gujarat') {
-                        container.innerHTML += `<div class="p-2.5 text-xs font-bold border-b border-slate-100 hover:bg-slate-50 transition"><a href="${post.link}" target="_blank" class="block text-blue-900">❖ ${post.title} <span class="text-orange-600 font-medium ml-1">(${post.meta || 'Click Here'})</span></a></div>`;
-                    } else if(type === 'news') {
-                        container.innerHTML += `<div class="p-3.5 text-xs font-bold border-b hover:bg-slate-50 transition"><a href="${post.link}" target="_blank" class="text-slate-900 hover:text-blue-700 block mb-1">${post.title}</a><span class="block text-[10px] text-slate-400 font-bold">📅 Updated: ${post.meta || 'Latest'}</span></div>`;
-                    }
-                });
-            });
-        }
-
-        function filterCategory(categorySlug, displayTitle) {
-            const fb = document.getElementById('filterViewBlock');
-            const tc = document.getElementById('filter-content-target');
-            document.getElementById('filterViewTitle').innerText = displayTitle;
-            fb.classList.remove('hidden');
-            fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            tc.innerHTML = '<p class="text-xs text-slate-400 p-4">Syncing grid database streams...</p>';
-            
-            database.ref('posts/' + categorySlug).orderByChild('timestamp').limitToLast(25).once('value', (snapshot) => {
-                tc.innerHTML = '';
-                let matches = [];
-                snapshot.forEach((childSnapshot) => { matches.unshift(childSnapshot.val()); });
-                if(matches.length === 0) { tc.innerHTML = '<p class="text-xs text-rose-500 font-bold p-4">No active entries found under this section model.</p>'; return; }
-                matches.forEach((post) => {
-                    tc.innerHTML += `<div class="py-3 flex items-start gap-2 border-b border-slate-50"><span class="bg-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black shrink-0">${post.tag || 'ALERT'}</span><a href="${post.link}" target="_blank" class="text-xs font-bold text-blue-900 hover:text-orange-600 leading-normal">${post.title} <span class="text-slate-400 font-medium text-[10px] ml-1">[${post.meta || 'View'}]</span></a></div>`;
-                });
-            });
-        }
-
-        function closeFilterView() { document.getElementById('filterViewBlock').classList.add('hidden'); }
-
-        function calculateSalary() {
-            const grade = document.getElementById('salaryGrade').value;
-            const cBlock = document.getElementById('customPayBlock');
-            const dBlock = document.getElementById('daBlock');
-            let basicPay = 26000; let isFixPay = true;
-            let hra = parseFloat(document.getElementById('hraLocation').value);
-            let da = parseFloat(document.getElementById('daInput').value);
-
-            if (grade === 'class3-clerk' || grade === 'talati' || grade === 'police-constable') { isFixPay = true; cBlock.classList.add('hidden'); dBlock.classList.add('hidden'); }
-            else if (grade === 'asi-psi') { basicPay = 38090; isFixPay = true; cBlock.classList.add('hidden'); dBlock.classList.add('hidden'); }
-            else { isFixPay = false; cBlock.classList.remove('hidden'); dBlock.classList.remove('hidden'); basicPay = parseFloat(document.getElementById('basicPayInput').value) || 0; }
-
-            let total = 0;
-            if (isFixPay) { total = basicPay - 200; document.getElementById('salaryStatusNote').innerText = "Fixed Pay (5 Year)"; }
-            else { let daV = basicPay * (da/100); let hraV = basicPay * (hra/100); total = (basicPay + daV + hraV + 300) - ((basicPay+daV)*0.1 + 200); document.getElementById('salaryStatusNote').innerText = "7th Pay Full Scale"; }
-            document.getElementById('totalSalaryResult').innerText = '₹ ' + Math.round(total).toLocaleString('en-IN');
-        }
-
-        function calculateAge() {
-            const dobVal = document.getElementById('dobInput').value;
-            const cutVal = document.getElementById('cutoffInput').value;
-            if (!dobVal || !cutVal) return;
-            const dob = new Date(dobVal); const cut = new Date(cutVal);
-            let years = cut.getFullYear() - dob.getFullYear();
-            let months = cut.getMonth() - dob.getMonth();
-            if (months < 0) { years--; months += 12; }
-            document.getElementById('ageResultText').innerText = `${years} Years`;
-            document.getElementById('ageDetailSubText').innerText = `${months} months old on target cut-off.`;
-        }
-
-        window.onload = function() {
-            syncGlobalSettings(); // Start background dynamic monitor listener
-            listenCategory('important', 'important-container', 'important');
-            listenCategory('gujarat', 'gujarat-container', 'gujarat');
-            listenCategory('news', 'news-container', 'news');
-            calculateSalary();
-        }
-    </script>
 </body>
 </html>
