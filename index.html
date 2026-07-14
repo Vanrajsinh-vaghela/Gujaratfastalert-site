@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="gu">
 <head>
@@ -6,25 +7,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gujarat Fast Alert by Vanrajsinh Vaghela</title>
-    <!-- Firebase Core SDK & Realtime Database -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background: #fdfdfd; color: #222; padding: 0; display: flex; flex-direction: column; align-items: center; }
-        .top-stat-bar { background: #345982; color: white; width: 100%; text-align: center; padding: 8px 10px; font-size: 13px; font-weight: bold; border-bottom: 2px solid #e67e22; }
-        .quick-links-selector { background: #2c3e50; padding: 8px 10px; width: 100%; display: flex; justify-content: center; }
-        .selector-box { width: 100%; max-width: 500px; background: #34495e; color: white; padding: 8px; border-radius: 4px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #4f5d73; }
-        .brand-container { text-align: center; padding: 25px 10px 15px 10px; width: 100%; max-width: 600px; }
-        .main-logo-text { font-size: 28px; font-weight: 900; color: #1a202c; letter-spacing: -0.5px; }
-        .main-logo-text span { color: #2b5797; }
-        .owner-signature { font-size: 16px; font-weight: bold; color: #e67e22; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .sub-logo-text { font-size: 13px; color: #718096; margin-top: 6px; font-weight: 500; }
-        .black-toggle-menu { background: #000000; color: white; padding: 10px; text-align: center; width: 100%; max-width: 480px; font-weight: bold; border-radius: 4px; margin-bottom: 15px; font-size: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: #f4f6f9; color: #222; padding: 0; display: flex; flex-direction: column; align-items: center; -webkit-tap-highlight-color: transparent; }
+        
+        /* Breaking News Ticker (Top Bar) */
+        .ticker-wrap { width: 100%; background: #e67e22; color: #fff; overflow: hidden; padding: 6px 0; font-size: 13px; font-weight: bold; position: relative; }
+        .ticker { display: inline-block; white-space: nowrap; padding-left: 100%; animation: ticker 25s linear infinite; }
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
 
-        /* 8-Box Navigation Grid Styling */
+        /* Quick Links Selector with Dropdown */
+        .quick-links-selector { background: #2c3e50; padding: 10px; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 100; }
+        .selector-box { width: 100%; max-width: 500px; background: #34495e; color: white; padding: 10px 15px; border-radius: 6px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #4f5d73; cursor: pointer; transition: background 0.2s; }
+        .selector-box:hover { background: #3e5872; }
+        .quick-dropdown-menu { display: none; width: 100%; max-width: 500px; background: #ffffff; border: 1px solid #cbd5e0; border-radius: 6px; margin-top: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); overflow: hidden; }
+        .quick-dropdown-menu a { display: block; padding: 12px 15px; text-decoration: none; color: #2d3748; font-size: 13.5px; border-bottom: 1px solid #edf2f7; font-weight: 500; }
+        .quick-dropdown-menu a:hover { background: #f7fafc; color: #e67e22; }
+        .quick-dropdown-menu a:last-child { border-bottom: none; }
+
+        .brand-container { text-align: center; padding: 25px 10px 15px 10px; width: 100%; max-width: 600px; }
+        .main-logo-text { font-size: 32px; font-weight: 900; color: #1a202c; letter-spacing: -0.5px; }
+        .main-logo-text span { color: #2b5797; }
+        .owner-signature { font-size: 15px; font-weight: bold; color: #e67e22; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; background: rgba(230, 126, 34, 0.1); padding: 3px 10px; border-radius: 20px; }
+        .sub-logo-text { font-size: 13px; color: #718096; margin-top: 8px; font-weight: 500; }
+        
+        /* Interactive Toggle Menu Button */
+        .black-toggle-menu { background: #000000; color: white; padding: 12px; text-align: center; width: 100%; max-width: 480px; font-weight: bold; border-radius: 6px; margin-bottom: 15px; font-size: 16px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .black-toggle-menu:hover { background: #222; }
+
+        /* Premium Navigation Drawer / Sidebar Menu */
+        .nav-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; backdrop-filter: blur(2px); }
+        .nav-drawer { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: #ffffff; z-index: 1001; transition: left 0.3s ease; box-shadow: 4px 0 15px rgba(0,0,0,0.25); display: flex; flex-direction: column; }
+        .drawer-header { background: #2b5797; color: white; padding: 20px 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 18px; }
+        .drawer-close { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        .drawer-links { overflow-y: auto; padding: 10px 0; }
+        .drawer-link-item { display: flex; align-items: center; gap: 12px; padding: 15px 20px; text-decoration: none; color: #2d3748; font-weight: 600; font-size: 14.5px; border-bottom: 1px solid #f0f4f8; transition: background 0.2s; }
+        .drawer-link-item:hover { background: #edf2f7; color: #2b5797; }
+        .drawer-badge { background: #e53e3e; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; margin-left: auto; font-weight: bold; }
+
+        /* High-Conversion Telegram Store Banner */
+        .store-promo-card { width: 100%; max-width: 480px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(30, 60, 114, 0.2); position: relative; overflow: hidden; border-left: 5px solid #e67e22; }
+        .store-promo-card::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(30deg); animation: shine 3.5s infinite; }
+        @keyframes shine { 0% { transform: translate(-30%, -30%) rotate(30deg); } 100% { transform: translate(130%, 130%) rotate(30deg); } }
+        .store-badge { position: absolute; top: 12px; right: 12px; background: #e67e22; color: white; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        .store-title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .store-description { font-size: 12.5px; opacity: 0.9; margin-bottom: 12px; line-height: 1.4; }
+        .store-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #ffffff; color: #1e3c72; text-decoration: none; font-weight: bold; font-size: 13.5px; padding: 10px; border-radius: 6px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .store-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); background: #fdfdfd; }
+
+        /* 8-Box Navigation Grid */
         .navigation-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; max-width: 480px; margin-bottom: 20px; padding: 0 5px; }
-        .grid-item-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 5px; text-align: center; text-decoration: none; color: #2d3748; font-size: 11px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); cursor: pointer; transition: all 0.2s ease; }
+        .grid-item-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 5px; text-align: center; text-decoration: none; color: #2d3748; font-size: 11px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); cursor: pointer; transition: all 0.2s ease; }
         .grid-item-card:hover, .grid-item-card.active-filter { background: #e67e22; color: white; border-color: #e67e22; }
 
         .portal-layout-grid { display: grid; grid-template-columns: 1fr; width: 100%; max-width: 1200px; gap: 15px; }
@@ -39,7 +78,7 @@
 
         .gradient-headline-bar { background: linear-gradient(to right, #0052d4, #4364f7, #6fb1fc); color: white; padding: 12px 15px; font-weight: bold; font-size: 15px; border-radius: 4px; width: 100%; max-width: 480px; margin-top: 15px; display: flex; align-items: center; gap: 8px; }
         .gradient-content-box { background: #ffffff; border: 1px solid #cbd5e0; border-top: none; width: 100%; max-width: 480px; padding: 15px 12px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; margin-bottom: 20px; }
-        .gradient-list-item { font-size: 13px; line-height: 1.6; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; position: relative; padding-left: 18px; text-align: left; }
+        .gradient-list-item { font-size: 13.5px; line-height: 1.6; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; position: relative; padding-left: 18px; text-align: left; }
         .gradient-list-item::before { content: "❖"; position: absolute; left: 0; color: #4364f7; font-weight: bold; }
         .tag-red-bold { color: #e53e3e; font-weight: bold; margin-right: 5px; }
 
@@ -62,20 +101,37 @@
         .btn-wa { background: #25D366; }
         .btn-tg { background: #0088cc; }
 
-        .floating-whatsapp-widget { position: fixed; bottom: 80px; right: 20px; background: #25D366; width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 9999; }
+        .floating-whatsapp-widget { position: fixed; bottom: 80px; right: 20px; background: #25D366; width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999; }
         .site-disclaimer { background: #edf2f7; font-size: 11px; color: #4a5568; padding: 15px; text-align: justify; border-top: 2px solid #cbd5e0; margin-top: 30px; line-height: 1.6; width: 100%; max-width: 1200px; }
 
         @media (min-width: 900px) {
             .portal-layout-grid { grid-template-columns: 280px 1fr 280px; }
             .desktop-ad-pane { display: block; }
-            .navigation-grid, .black-toggle-menu, .gradient-headline-bar, .gradient-content-box, .classic-gov-box, .filter-view-container, .join-buttons-container { max-width: 100%; }
+            .navigation-grid, .black-toggle-menu, .gradient-headline-bar, .gradient-content-box, .classic-gov-box, .filter-view-container, .join-buttons-container, .store-promo-card { max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-stat-bar">📬 We've crossed 69 Crore Visitors, Thanks!!</div>
-    <div class="quick-links-selector"><div class="selector-box"><span>Quick Links</span><span>▼</span></div></div>
+    <div class="ticker-wrap">
+        <div class="ticker">
+            🚨 📌 Gujarat Gov Exams Latest updates, Old Question Papers, Call Letters are dynamic now! Stay Tuned. 🔥 | 📖 Premium Telegram Books & PDFs Store is now Active! Check the Link below! | 🏛️ GPSC, GSSSB, Talati & Police Constable updates.
+        </div>
+    </div>
+
+    <div class="quick-links-selector">
+        <div class="selector-box" onclick="toggleQuickLinks()">
+            <span>Quick Links</span>
+            <span id="quick-arrow">▼</span>
+        </div>
+        <div class="quick-dropdown-menu" id="quickDropdown">
+            <a href="#" onclick="filterCategory('prev-paper', 'Old Question Papers 📄')">📄 Old Question Papers</a>
+            <a href="#" onclick="filterCategory('syllabus', 'Exam Syllabus 📋')">📋 Exam Syllabus</a>
+            <a href="#" onclick="filterCategory('gpsc', 'GPSC Exclusive Updates 🏛️')">🏛️ GPSC Updates</a>
+            <a href="#" onclick="filterCategory('admit-card', 'Exam Call Letters / Admit Cards 🎟️')">🎟️ Admit Cards</a>
+            <a href="https://telegram.me/boost/gujaratfastalert" target="_blank" style="color: #e67e22; font-weight: bold;">📚 Buy Paid Study Materials (Telegram)</a>
+        </div>
+    </div>
 
     <div class="brand-container">
         <div class="main-logo-text">Gujarat <span>Fast Alert</span></div>
@@ -83,15 +139,41 @@
         <div class="sub-logo-text">Gujarat's No. 01 Private Educational News Portal</div>
     </div>
 
-    <!-- Active High-Conversion Social Connect Buttons -->
     <div class="join-buttons-container">
         <a href="https://chat.whatsapp.com/GzJp20xZJN134J7EC" target="_blank" class="join-btn btn-wa">💬 Join WhatsApp Group</a>
-        <a href="#" target="_blank" class="join-btn btn-tg">✈ Join Telegram Channel</a>
+        <a href="https://telegram.me/boost/gujaratfastalert" target="_blank" class="join-btn btn-tg">✈ Join Telegram Channel</a>
     </div>
 
-    <div class="black-toggle-menu">☰ Menu</div>
+    <div class="black-toggle-menu" onclick="toggleNavDrawer()">☰ Menu</div>
 
-    <!-- 8-Box Navigation Grid (Fully Functional Filters Setup) -->
+    <div class="store-promo-card">
+        <div class="store-badge">NEW PREMIUM</div>
+        <div class="store-title">📚 Premium Paid PDFs & Study Materials</div>
+        <div class="store-description">Get direct Access to VIP books, short tricks notes, previous solved papers & exclusive material of GSSSB, GPSC, and Police exams instantly on Telegram.</div>
+        <a href="https://telegram.me/boost/gujaratfastalert" target="_blank" class="store-btn">
+            <span>⚡ Join Paid PDF Shop on Telegram</span>
+            <span>➔</span>
+        </a>
+    </div>
+
+    <div class="nav-overlay" id="navOverlay" onclick="toggleNavDrawer()"></div>
+    <div class="nav-drawer" id="navDrawer">
+        <div class="drawer-header">
+            <span>Fast Alert Menu</span>
+            <button class="drawer-close" onclick="toggleNavDrawer()">×</button>
+        </div>
+        <div class="drawer-links">
+            <a href="#" class="drawer-link-item" onclick="toggleNavDrawer(); filterCategory('latest-jobs', 'Latest Jobs 📋')">📋 Latest Jobs</a>
+            <a href="#" class="drawer-link-item" onclick="toggleNavDrawer(); filterCategory('result', 'Exam Results 🏆')">🏆 Exam Results</a>
+            <a href="#" class="drawer-link-item" onclick="toggleNavDrawer(); filterCategory('admit-card', 'Admit Cards 🎟️')">🎟️ Admit Card</a>
+            <a href="#" class="drawer-link-item" onclick="toggleNavDrawer(); filterCategory('prev-paper', 'Old Papers 📄')">📄 Previous Papers</a>
+            <a href="#" class="drawer-link-item" onclick="toggleNavDrawer(); filterCategory('syllabus', 'Official Syllabus 📖')">📖 Exam Syllabus <span class="drawer-badge">NEW</span></a>
+            <a href="#" class="drawer-link-item" onclick="toggleNavDrawer(); filterCategory('mock-test', 'Mock Test & Quiz 📝')">📝 Mock Test / Quiz</a>
+            <a href="https://telegram.me/boost/gujaratfastalert" target="_blank" class="drawer-link-item" style="color: #e67e22;">💎 Premium Telegram Store <span class="drawer-badge" style="background:#e67e22;">PAID</span></a>
+            <a href="https://chat.whatsapp.com/GzJp20xZJN134J7EC" target="_blank" class="drawer-link-item">💬 WhatsApp Community</a>
+        </div>
+    </div>
+
     <div class="navigation-grid">
         <div onclick="filterCategory('latest-jobs', 'Latest Jobs 📋')" class="grid-item-card" id="btn-latest-jobs">Latest Jobs</div>
         <div onclick="filterCategory('result', 'Exam Results 🏆')" class="grid-item-card" id="btn-result">Result</div>
@@ -104,15 +186,11 @@
     </div>
 
     <div class="portal-layout-grid">
-        <!-- LEFT AD PANE (Cleaned) -->
         <div class="desktop-ad-pane"></div>
 
-        <!-- CENTER STREAM FEED -->
         <div class="center-feed-stream">
-            <!-- Mobile Top Ad Frame (Cleaned) -->
             <div class="mobile-top-ad-frame"></div>
 
-            <!-- DYNAMIC FILTER LIVE CONTENT VIEW CONTAINER -->
             <div class="filter-view-container" id="filterViewBlock">
                 <div class="filter-view-header">
                     <span id="filterViewTitle">Category Filter</span>
@@ -121,18 +199,15 @@
                 <div class="simple-list-padding" id="filter-content-target"></div>
             </div>
 
-            <!-- SECTION 1: IMPORTANT UPDATES -->
             <div class="gradient-headline-bar">🔔 All Latest Important Updates</div>
             <div class="gradient-content-box" id="important-container">Loading fresh updates...</div>
 
-            <!-- SECTION 2: GUJARAT JOBS -->
             <div class="classic-gov-box">
                 <div class="classic-gov-header">📋 Gujarat Jobs</div>
                 <div class="simple-list-padding" id="gujarat-container">Loading...</div>
                 <a href="#" class="black-footer-action">More Details</a>
             </div>
 
-            <!-- SECTION 3: LATEST NEWS -->
             <div class="classic-gov-box">
                 <div class="classic-gov-header">📰 Latest News & Updates</div>
                 <div id="news-container">Loading...</div>
@@ -140,14 +215,11 @@
             </div>
         </div>
 
-        <!-- RIGHT AD PANE (Cleaned) -->
         <div class="desktop-ad-pane"></div>
     </div>
 
-    <!-- Floating Dynamic Engagement Link -->
     <a href="https://chat.whatsapp.com/GzJp20xZJN134J7EC" target="_blank" class="floating-whatsapp-widget" style="color:white;font-size:30px;text-align:center;line-height:55px;text-decoration:none;">💬</a>
 
-    <!-- Premium Legal Footer Disclaimer Block -->
     <div class="site-disclaimer">
         <p style="margin-bottom: 8px;">
             <strong>© 2026-27, Vanrajsinh Vaghela ®</strong> gujaratfastalert.in™ name, brand styling, and layout configuration are registered trademarks and properties managed exclusively by Vanrajsinh Vaghela.
@@ -174,6 +246,32 @@
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+
+        // Toggle Quick Links Dropdown
+        function toggleQuickLinks() {
+            const dropdown = document.getElementById('quickDropdown');
+            const arrow = document.getElementById('quick-arrow');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+                arrow.innerText = '▼';
+            } else {
+                dropdown.style.display = 'block';
+                arrow.innerText = '▲';
+            }
+        }
+
+        // Toggle Navigation Drawer Menu
+        function toggleNavDrawer() {
+            const drawer = document.getElementById('navDrawer');
+            const overlay = document.getElementById('navOverlay');
+            if (drawer.style.left === '0px') {
+                drawer.style.left = '-280px';
+                overlay.style.display = 'none';
+            } else {
+                drawer.style.left = '0px';
+                overlay.style.display = 'block';
+            }
+        }
 
         // Standard Home Feed Sync Listener Engine
         function listenCategory(catName, containerId, type) {
@@ -249,3 +347,6 @@
     </script>
 </body>
 </html>
+
+
+```
