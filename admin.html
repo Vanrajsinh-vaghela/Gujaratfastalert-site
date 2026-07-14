@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gujarat Fast Alert - Pro Admin Panel</title>
+    <!-- Firebase Core SDK & Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .admin-box { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 480px; }
+        h2 { color: #2b5797; margin-bottom: 20px; text-align: center; font-size: 22px; }
+        label { font-weight: bold; display: block; margin-top: 12px; font-size: 14px; color: #2d3748; }
+        input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid #cbd5e0; border-radius: 4px; outline: none; font-size: 14px; }
+        button { background: #e67e22; color: white; border: none; width: 100%; padding: 13px; font-weight: bold; border-radius: 4px; margin-top: 22px; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+        button:hover { background: #d35400; }
+        .info-note { background: #ebf8ff; color: #2b6cb0; border-left: 4px solid #3182ce; padding: 10px; font-size: 12px; margin-top: 10px; border-radius: 4px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-box">
+        <h2>🚀 Vanrajsinh Pro Control Panel</h2>
+        
+        <label>1. Select Feed Location / Category Grid:</label>
+        <select id="jobCategory">
+            <!-- Main Standard Streams -->
+            <option value="important">🔔 Home Page - Top Important Stream</option>
+            <option value="gujarat">📋 Home Page - Center Gujarat Jobs Box</option>
+            <option value="news">📰 Home Page - Bottom Latest News Box</option>
+            
+            <!-- Upgraded 8-Box Interactive Filter Slugs -->
+            <option value="latest-jobs">⭐ 8-Box Grid Element: Latest Jobs</option>
+            <option value="result">🏆 8-Box Grid Element: Result</option>
+            <option value="admit-card">🎟️ 8-Box Grid Element: Admit Card</option>
+            <option value="samachar">📰 8-Box Grid Element: Samachar</option>
+            <option value="calendar">📅 8-Box Grid Element: Calendar</option>
+            <option value="prev-paper">📄 8-Box Grid Element: Prev. Paper</option>
+            <option value="gujarat-jobs">🏛️ 8-Box Grid Element: Gujarat Jobs</option>
+            <option value="answer-key">🔑 8-Box Grid Element: Answer Key</option>
+        </select>
+        <div class="info-note">Tip: Agar aap chahte hain ki post "Result" button dabane par dikhe, toh list se "8-Box Grid Element: Result" select karke hi post karein!</div>
+
+        <label>2. Tag / Board Name (e.g. GSSSB, GPSC, TET, NEW):</label>
+        <input type="text" id="jobTag" placeholder="GSSSB Jobs >>">
+
+        <label>3. Post Main Headline Text (Gujarati/English):</label>
+        <input type="text" id="jobTitle" placeholder="Bharti / Exam Result nu naam likho...">
+
+        <label>4. Meta Info / Sub-Text / Last Date:</label>
+        <input type="text" id="jobMeta" placeholder="Last Date: 31-08-2026 ya Click Here">
+
+        <label>5. Destination Redirection URL (PDF or Website Link):</label>
+        <input type="url" id="jobLink" placeholder="https://...">
+
+        <button onclick="publishPost()">🔥 Push Live to Gujaratfastalert.in</button>
+    </div>
+
+    <script>
+        // Exact active system cloud connection keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
+            authDomain: "gujarat-fast-alert.firebaseapp.com",
+            databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
+            projectId: "gujarat-fast-alert",
+            storageBucket: "gujarat-fast-alert.firebasestorage.app",
+            messagingSenderId: "395130500748",
+            appId: "1:395130500748:web:e6589f3a57812efad6ada9",
+            measurementId: "G-ZJN134J7EC"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function publishPost() {
+            const category = document.getElementById('jobCategory').value;
+            const tag = document.getElementById('jobTag').value;
+            const title = document.getElementById('jobTitle').value;
+            const meta = document.getElementById('jobMeta').value;
+            const link = document.getElementById('jobLink').value;
+
+            if(!title || !link) { alert("Error: Title ane Link lakhvu khub jaroori che!"); return; }
+
+            const newPostRef = database.ref('posts/' + category).push();
+            newPostRef.set({
+                tag: tag,
+                title: title,
+                meta: meta,
+                link: link,
+                timestamp: Date.now()
+            }).then(() => {
+                alert("Mubarak ho Vanrajsinh bhai! Post gujaratfastalert.in par 1-Second ma LIVE thai gayi che. 🎉");
+                document.getElementById('jobTitle').value = '';
+                document.getElementById('jobMeta').value = '';
+                document.getElementById('jobLink').value = '';
+            });
+        }
+    </script>
+</body>
+</html>
