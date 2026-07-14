@@ -12,8 +12,8 @@
         h2 { color: #2b5797; margin-bottom: 15px; text-align: center; font-size: 20px; margin-top: 5px; }
         
         /* Tabs Styling for Mobile */
-        .tab-container { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #cbd5e0; }
-        .tab-btn { background: none; border: none; padding: 10px; font-weight: bold; font-size: 14px; cursor: pointer; color: #718096; width: 33.33%; text-align: center; outline: none; }
+        .tab-container { display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #cbd5e0; }
+        .tab-btn { background: none; border: none; padding: 10px 5px; font-weight: bold; font-size: 12px; cursor: pointer; color: #718096; width: 25%; text-align: center; outline: none; }
         .tab-btn.active { color: #2b5797; border-bottom: 3px solid #2b5797; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -28,14 +28,13 @@
         .btn-blue { background: #2b5797; }
         .btn-blue:hover { background: #1a365d; }
         .btn-red { background: #e53e3e; }
+        .btn-green { background: #27ae60; }
         
         .info-note { background: #ebf8ff; color: #2b6cb0; border-left: 4px solid #3182ce; padding: 10px; font-size: 12px; margin-top: 10px; border-radius: 4px; line-height: 1.4; }
         
         /* Post Manager Items styling */
         .post-list { margin-top: 15px; max-height: 350px; overflow-y: auto; border: 1px solid #e2e8f0; padding: 10px; border-radius: 4px; }
         .post-item { background: #f7fafc; padding: 10px; border-radius: 4px; margin-bottom: 8px; border-left: 4px solid #4a5568; display: flex; flex-direction: column; gap: 5px; font-size: 13px; }
-        .post-item-title { font-weight: bold; color: #2d3748; }
-        .post-item-meta { color: #718096; font-size: 11px; }
         .post-actions { display: flex; gap: 10px; margin-top: 5px; }
         .action-btn { padding: 6px 12px; font-size: 11px; border-radius: 3px; cursor: pointer; border: none; font-weight: bold; color: white; width: auto; margin-top: 0; }
         .edit-btn { background: #3182ce; }
@@ -51,6 +50,7 @@
             <button class="tab-btn active" onclick="switchTab('post-tab')">📝 POST</button>
             <button class="tab-btn" onclick="switchTab('manage-tab')">⚙️ MANAGE</button>
             <button class="tab-btn" onclick="switchTab('settings-tab')">📢 SETTINGS</button>
+            <button class="tab-btn" onclick="switchTab('editor-tab')">💻 EDITOR</button>
         </div>
 
         <div id="post-tab" class="tab-content active">
@@ -61,7 +61,6 @@
                 <option value="important">🔔 Home Page - Top Important Stream</option>
                 <option value="gujarat">📋 Home Page - Center Gujarat Jobs Box</option>
                 <option value="news">📰 Home Page - Bottom Latest News Box</option>
-
                 <option value="latest-jobs">⭐ 8-Box Grid Element: Latest Jobs</option>
                 <option value="result">🏆 8-Box Grid Element: Result</option>
                 <option value="admit-card">🎟️ 8-Box Grid Element: Admit Card</option>
@@ -93,12 +92,11 @@
 
         <div id="manage-tab" class="tab-content">
             <h3 style="color: #2b5797; font-size: 16px; margin: 0 0 10px 0;">Edit / Delete Live Posts</h3>
-            
             <label>Select Category to view posts:</label>
             <select id="manageCategory" onchange="loadCategoryPosts()">
-                <option value="important">🔔 Home Page - Top Important Stream</option>
-                <option value="gujarat">📋 Home Page - Center Gujarat Jobs Box</option>
-                <option value="news">📰 Home Page - Bottom Latest News Box</option>
+                <option value="important">🔔 Top Important Stream</option>
+                <option value="gujarat">📋 Center Gujarat Jobs Box</option>
+                <option value="news">📰 Bottom Latest News Box</option>
                 <option value="latest-jobs">⭐ Grid Element: Latest Jobs</option>
                 <option value="result">🏆 Grid Element: Result</option>
                 <option value="admit-card">🎟️ Grid Element: Admit Card</option>
@@ -108,28 +106,34 @@
                 <option value="gujarat-jobs">🏛️ Grid Element: Gujarat Jobs</option>
                 <option value="answer-key">🔑 Grid Element: Answer Key</option>
             </select>
-
-            <div class="post-list" id="postsList">
-                <div style="text-align: center; color: #718096; padding: 20px;">Category select karke load karein...</div>
-            </div>
+            <div class="post-list" id="postsList"></div>
         </div>
 
         <div id="settings-tab" class="tab-content">
             <h3 style="color: #2b5797; font-size: 16px; margin: 0 0 10px 0;">Website Global Settings</h3>
-            
             <label>📢 Header Marquee Ticker (Regular Alert text):</label>
-            <textarea id="headerNotice" rows="3" placeholder="Yahan jo likhoge wo website ke top par chalega..."></textarea>
-            
-            <label>🌐 Website Title (If you want to change):</label>
-            <input type="text" id="siteTitleSetting" placeholder="Gujarat Fast Alert">
-
+            <textarea id="headerNotice" rows="3"></textarea>
+            <label>🌐 Website Title:</label>
+            <input type="text" id="siteTitleSetting">
             <button class="btn-blue" onclick="saveGlobalSettings()">💾 Save Website Settings</button>
+        </div>
+
+        <div id="editor-tab" class="tab-content">
+            <h3 style="color: #2b5797; font-size: 16px; margin: 0 0 5px 0;">💻 Premium HTML Page Editor</h3>
+            <div class="info-note">Yahan text badlein, niche dynamic live mobile preview dekhein aur direct copy karein!</div>
+            
+            <label>Edit Code Window:</label>
+            <textarea id="htmlCodeInput" rows="12" style="font-family: monospace; font-size: 12px; background: #2d3748; color: #cbd5e0;" oninput="updateHtmlPreview()"></textarea>
+            
+            <button class="btn-green" onclick="copyHtmlCode()">📋 Copy Updated HTML Code</button>
+            
+            <label style="margin-top: 15px; color: #e67e22;">📱 Live Mobile Screen Preview:</label>
+            <iframe id="htmlPreviewFrame" style="width: 100%; min-height: 250px; border: 2px dashed #cbd5e0; background: white; margin-top: 5px; border-radius: 4px;"></iframe>
         </div>
 
     </div>
 
     <script>
-        // Exact active system cloud connection keys
         const firebaseConfig = {
             apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
             authDomain: "gujarat-fast-alert.firebaseapp.com",
@@ -143,168 +147,165 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Page load triggers
+        // Default template layout for easy editing inside the browser
+        const defaultTemplate = `<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 10px; margin: 0; }
+        .box { background: white; padding: 15px; border-radius: 8px; max-width: 100%; box-sizing: border-box; }
+        h1 { color: #d35400; font-size: 18px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+        th, td { border: 1px solid #cbd5e0; padding: 8px; text-align: left; }
+        th { background: #2b5797; color: white; }
+        .btn { display: block; background: #e67e22; color: white; text-align: center; padding: 10px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 13px; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>🚨 GSSSB Bharti 2026 Details</h1>
+    <p>નવી ભરતી અંગેની સંપૂર્ણ વિગતવાર માહિતી નીચે કોષ્ટકમા આપેલ છે.</p>
+    
+    <div style="background:#eee; text-align:center; padding:10px; font-size:11px; margin:10px 0;">[ADSENSE DISPLAY AD]</div>
+
+    <table>
+        <tr><th>વિગત</th><th>માહિતી</th></tr>
+        <tr><td><b>બોર્ડ નામ</b></td><td>GSSSB</td></tr>
+        <tr><td><b>છેલ્લી તારીખ</b></td><td>18-07-2026</td></tr>
+        <tr><td><b>પગાર ધોરણ</b></td><td>રૂ. 40,800/-</td></tr>
+    </table>
+
+    <div style="background:#eee; text-align:center; padding:10px; font-size:11px; margin:10px 0;">[ADSENSE LINK AD]</div>
+
+    <a href="https://ojas.gujarat.gov.in" class="btn" target="_blank">💻 ઓનલાઈન અરજી કરવા અહીં ક્લિક કરો</a>
+</div>
+</body>
+</html>`;
+
         window.onload = function() {
             loadGlobalSettings();
-            loadCategoryPosts(); // Load initial category on page open
+            loadCategoryPosts();
+            document.getElementById('htmlCodeInput').value = defaultTemplate;
+            updateHtmlPreview();
         };
 
-        // Tab Switching logic
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
 
-        // Publish or Update logic
+        // Live Preview engine inside code section
+        function updateHtmlPreview() {
+            const code = document.getElementById('htmlCodeInput').value;
+            const iframe = document.getElementById('htmlPreviewFrame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(code);
+            doc.close();
+        }
+
+        function copyHtmlCode() {
+            const codeText = document.getElementById('htmlCodeInput');
+            codeText.select();
+            codeText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            alert("Superb! HTML Code copy ho gaya hai. Ab aap ise direct GitHub me paste kar sakte hain. 📋");
+        }
+
         function publishPost() {
             const category = document.getElementById('jobCategory').value;
             const tag = document.getElementById('jobTag').value;
             const title = document.getElementById('jobTitle').value;
             const meta = document.getElementById('jobMeta').value;
             const link = document.getElementById('jobLink').value;
-            
             const editingPostId = document.getElementById('editingPostId').value;
             const oldCategory = document.getElementById('editingCategory').value;
 
             if(!title || !link) { alert("Error: Title ane Link lakhvu khub jaroori che!"); return; }
 
             if(editingPostId) {
-                // UPDATE MODE
                 if (oldCategory !== category) {
-                    // Category badal di hai, toh purani category se delete karke nayi me push karenge
                     database.ref('posts/' + oldCategory + '/' + editingPostId).remove();
-                    const newPostRef = database.ref('posts/' + category).push();
-                    newPostRef.set({
-                        tag: tag,
-                        title: title,
-                        meta: meta,
-                        link: link,
-                        timestamp: Date.now()
-                    });
+                    database.ref('posts/' + category).push().set({ tag, title, meta, link, timestamp: Date.now() });
                 } else {
-                    // Same category hai toh bas update kar do
-                    database.ref('posts/' + category + '/' + editingPostId).update({
-                        tag: tag,
-                        title: title,
-                        meta: meta,
-                        link: link
-                    });
+                    database.ref('posts/' + category + '/' + editingPostId).update({ tag, title, meta, link });
                 }
-                alert("Zabardast! Post successfully EDIT/UPDATE ho gayi hai. 🎉");
+                alert("Post successfully EDIT/UPDATE ho gayi hai. 🎉");
                 cancelEditing();
                 loadCategoryPosts();
             } else {
-                // NEW POST PUBLISH MODE
-                const newPostRef = database.ref('posts/' + category).push();
-                newPostRef.set({
-                    tag: tag,
-                    title: title,
-                    meta: meta,
-                    link: link,
-                    timestamp: Date.now()
-                }).then(() => {
-                    alert("Mubarak ho Vanrajsinh bhai! Post 1-Second ma LIVE thai gayi che. 🎉");
+                database.ref('posts/' + category).push().set({ tag, title, meta, link, timestamp: Date.now() }).then(() => {
+                    alert("Post 1-Second ma LIVE thai gayi che. 🎉");
                     clearForm();
                 });
             }
         }
 
-        // Fetch Posts list for editing/deleting
         function loadCategoryPosts() {
             const category = document.getElementById('manageCategory').value;
             const listDiv = document.getElementById('postsList');
-            listDiv.innerHTML = '<div style="text-align: center; color: #718096; padding: 20px;">Posts fetch ho rahi hain...</div>';
-
+            listDiv.innerHTML = 'Fetching...';
             database.ref('posts/' + category).once('value', (snapshot) => {
                 listDiv.innerHTML = '';
                 const data = snapshot.val();
-                if(!data) {
-                    listDiv.innerHTML = '<div style="text-align: center; color: #718096; padding: 20px;">Is category me koi posts nahi mili.</div>';
-                    return;
-                }
-
-                // Render latest posts on top
-                const keys = Object.keys(data).reverse();
-                keys.forEach(key => {
+                if(!data) { listDiv.innerHTML = 'No posts found.'; return; }
+                Object.keys(data).reverse().forEach(key => {
                     const post = data[key];
                     const item = document.createElement('div');
                     item.className = 'post-item';
                     item.innerHTML = `
-                        <div class="post-item-title">${post.title}</div>
-                        <div class="post-item-meta">Tag: ${post.tag || 'None'} | Meta: ${post.meta || 'None'}</div>
+                        <div><b>${post.title}</b></div>
                         <div class="post-actions">
                             <button class="action-btn edit-btn" onclick="startEditing('${key}', '${category}', ${JSON.stringify(post).replace(/"/g, '&quot;')})">✏️ Edit</button>
                             <button class="action-btn delete-btn" onclick="deletePost('${key}', '${category}')">🗑️ Delete</button>
-                        </div>
-                    `;
+                        </div>`;
                     listDiv.appendChild(item);
                 });
             });
         }
 
-        // Populate Form for Editing
         function startEditing(id, category, post) {
             document.getElementById('editingPostId').value = id;
             document.getElementById('editingCategory').value = category;
-            
             document.getElementById('jobCategory').value = category;
             document.getElementById('jobTag').value = post.tag || '';
             document.getElementById('jobTitle').value = post.title || '';
             document.getElementById('jobMeta').value = post.meta || '';
             document.getElementById('jobLink').value = post.link || '';
-
             document.getElementById('form-action-title').innerText = "✏️ Editing Live Post Model";
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerText = "💾 Save Changes Live";
-            submitBtn.className = "btn-blue";
+            document.getElementById('submitBtn').innerText = "💾 Save Changes Live";
+            document.getElementById('submitBtn').className = "btn-blue";
             document.getElementById('cancelEditBtn').style.display = 'block';
-
-            // Switch view to Tab 1
             switchTab('post-tab');
-            document.querySelectorAll('.tab-btn')[0].classList.add('active');
-            document.querySelectorAll('.tab-btn')[1].classList.remove('active');
         }
 
-        // Cancel Edit Mode
         function cancelEditing() {
             document.getElementById('editingPostId').value = '';
             document.getElementById('editingCategory').value = '';
             clearForm();
-            
             document.getElementById('form-action-title').innerText = "Add New Live Update";
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerText = "🔥 Push Live to Gujaratfastalert.in";
-            submitBtn.className = "btn-orange";
+            document.getElementById('submitBtn').innerText = "🔥 Push Live to Gujaratfastalert.in";
+            document.getElementById('submitBtn').className = "btn-orange";
             document.getElementById('cancelEditBtn').style.display = 'none';
         }
 
-        // Delete Post logic
         function deletePost(id, category) {
-            if(confirm("Dhyan se Vanrajsinh bhai! Kya aap sach me is post ko Delete karna chahte hain?")) {
-                database.ref('posts/' + category + '/' + id).remove().then(() => {
-                    alert("Post successfully deleted.");
-                    loadCategoryPosts();
-                });
+            if(confirm("Kya aap sach me delete karna chahte hain?")) {
+                database.ref('posts/' + category + '/' + id).remove().then(() => { loadCategoryPosts(); });
             }
         }
 
-        // Save Globals (Header ticker notice & site title)
         function saveGlobalSettings() {
-            const notice = document.getElementById('headerNotice').value;
-            const title = document.getElementById('siteTitleSetting').value;
-
             database.ref('settings').set({
-                headerNotice: notice,
-                siteTitle: title
-            }).then(() => {
-                alert("Great! Website Settings save ho gayi hain aur automatic updates apply ho chuki hain. 👍");
-            });
+                headerNotice: document.getElementById('headerNotice').value,
+                siteTitle: document.getElementById('siteTitleSetting').value
+            }).then(() => { alert("Settings saved! 👍"); });
         }
 
-        // Fetch Settings on load
         function loadGlobalSettings() {
             database.ref('settings').once('value', (snapshot) => {
                 const data = snapshot.val();
@@ -316,10 +317,8 @@
         }
 
         function clearForm() {
-            document.getElementById('jobTitle').value = '';
-            document.getElementById('jobMeta').value = '';
-            document.getElementById('jobLink').value = '';
-            document.getElementById('jobTag').value = '';
+            document.getElementById('jobTitle').value = ''; document.getElementById('jobMeta').value = '';
+            document.getElementById('jobLink').value = ''; document.getElementById('jobTag').value = '';
         }
     </script>
 </body>
