@@ -4,57 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gujarat Fast Alert - Pro Admin Panel</title>
-    <!-- Firebase Core SDK & Realtime Database -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .admin-box { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 480px; }
-        h2 { color: #2b5797; margin-bottom: 20px; text-align: center; font-size: 22px; }
-        label { font-weight: bold; display: block; margin-top: 12px; font-size: 14px; color: #2d3748; }
-        input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid #cbd5e0; border-radius: 4px; outline: none; font-size: 14px; }
-        button { background: #e67e22; color: white; border: none; width: 100%; padding: 13px; font-weight: bold; border-radius: 4px; margin-top: 22px; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
-        button:hover { background: #d35400; }
+        body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 15px; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        .admin-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 500px; box-sizing: border-box; }
+        h2 { color: #2b5797; margin-bottom: 15px; text-align: center; font-size: 20px; margin-top: 5px; }
+        
+        /* Tabs Styling for Mobile */
+        .tab-container { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #cbd5e0; }
+        .tab-btn { background: none; border: none; padding: 10px; font-weight: bold; font-size: 14px; cursor: pointer; color: #718096; width: 33.33%; text-align: center; outline: none; }
+        .tab-btn.active { color: #2b5797; border-bottom: 3px solid #2b5797; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        label { font-weight: bold; display: block; margin-top: 12px; font-size: 13px; color: #2d3748; }
+        input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid #cbd5e0; border-radius: 4px; outline: none; font-size: 14px; box-sizing: border-box; }
+        
+        /* Button Colors */
+        button { color: white; border: none; width: 100%; padding: 13px; font-weight: bold; border-radius: 4px; margin-top: 15px; cursor: pointer; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-orange { background: #e67e22; }
+        .btn-orange:hover { background: #d35400; }
+        .btn-blue { background: #2b5797; }
+        .btn-blue:hover { background: #1a365d; }
+        .btn-red { background: #e53e3e; }
+        
         .info-note { background: #ebf8ff; color: #2b6cb0; border-left: 4px solid #3182ce; padding: 10px; font-size: 12px; margin-top: 10px; border-radius: 4px; line-height: 1.4; }
+        
+        /* Post Manager Items styling */
+        .post-list { margin-top: 15px; max-height: 350px; overflow-y: auto; border: 1px solid #e2e8f0; padding: 10px; border-radius: 4px; }
+        .post-item { background: #f7fafc; padding: 10px; border-radius: 4px; margin-bottom: 8px; border-left: 4px solid #4a5568; display: flex; flex-direction: column; gap: 5px; font-size: 13px; }
+        .post-item-title { font-weight: bold; color: #2d3748; }
+        .post-item-meta { color: #718096; font-size: 11px; }
+        .post-actions { display: flex; gap: 10px; margin-top: 5px; }
+        .action-btn { padding: 6px 12px; font-size: 11px; border-radius: 3px; cursor: pointer; border: none; font-weight: bold; color: white; width: auto; margin-top: 0; }
+        .edit-btn { background: #3182ce; }
+        .delete-btn { background: #e53e3e; }
     </style>
 </head>
 <body>
 
     <div class="admin-box">
         <h2>🚀 Vanrajsinh Pro Control Panel</h2>
-        
-        <label>1. Select Feed Location / Category Grid:</label>
-        <select id="jobCategory">
-            <!-- Main Standard Streams -->
-            <option value="important">🔔 Home Page - Top Important Stream</option>
-            <option value="gujarat">📋 Home Page - Center Gujarat Jobs Box</option>
-            <option value="news">📰 Home Page - Bottom Latest News Box</option>
+
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('post-tab')">📝 POST</button>
+            <button class="tab-btn" onclick="switchTab('manage-tab')">⚙️ MANAGE</button>
+            <button class="tab-btn" onclick="switchTab('settings-tab')">📢 SETTINGS</button>
+        </div>
+
+        <div id="post-tab" class="tab-content active">
+            <h3 id="form-action-title" style="color: #2b5797; font-size: 16px; margin: 0;">Add New Live Update</h3>
             
-            <!-- Upgraded 8-Box Interactive Filter Slugs -->
-            <option value="latest-jobs">⭐ 8-Box Grid Element: Latest Jobs</option>
-            <option value="result">🏆 8-Box Grid Element: Result</option>
-            <option value="admit-card">🎟️ 8-Box Grid Element: Admit Card</option>
-            <option value="samachar">📰 8-Box Grid Element: Samachar</option>
-            <option value="calendar">📅 8-Box Grid Element: Calendar</option>
-            <option value="prev-paper">📄 8-Box Grid Element: Prev. Paper</option>
-            <option value="gujarat-jobs">🏛️ 8-Box Grid Element: Gujarat Jobs</option>
-            <option value="answer-key">🔑 8-Box Grid Element: Answer Key</option>
-        </select>
-        <div class="info-note">Tip: Agar aap chahte hain ki post "Result" button dabane par dikhe, toh list se "8-Box Grid Element: Result" select karke hi post karein!</div>
+            <label>1. Select Feed Location / Category Grid:</label>
+            <select id="jobCategory">
+                <option value="important">🔔 Home Page - Top Important Stream</option>
+                <option value="gujarat">📋 Home Page - Center Gujarat Jobs Box</option>
+                <option value="news">📰 Home Page - Bottom Latest News Box</option>
 
-        <label>2. Tag / Board Name (e.g. GSSSB, GPSC, TET, NEW):</label>
-        <input type="text" id="jobTag" placeholder="GSSSB Jobs >>">
+                <option value="latest-jobs">⭐ 8-Box Grid Element: Latest Jobs</option>
+                <option value="result">🏆 8-Box Grid Element: Result</option>
+                <option value="admit-card">🎟️ 8-Box Grid Element: Admit Card</option>
+                <option value="samachar">📰 8-Box Grid Element: Samachar</option>
+                <option value="calendar">📅 8-Box Grid Element: Calendar</option>
+                <option value="prev-paper">📄 8-Box Grid Element: Prev. Paper</option>
+                <option value="gujarat-jobs">🏛️ 8-Box Grid Element: Gujarat Jobs</option>
+                <option value="answer-key">🔑 8-Box Grid Element: Answer Key</option>
+            </select>
 
-        <label>3. Post Main Headline Text (Gujarati/English):</label>
-        <input type="text" id="jobTitle" placeholder="Bharti / Exam Result nu naam likho...">
+            <label>2. Tag / Board Name (e.g. GSSSB, GPSC, TET, NEW):</label>
+            <input type="text" id="jobTag" placeholder="GSSSB Jobs >>">
 
-        <label>4. Meta Info / Sub-Text / Last Date:</label>
-        <input type="text" id="jobMeta" placeholder="Last Date: 31-08-2026 ya Click Here">
+            <label>3. Post Main Headline Text (Gujarati/English):</label>
+            <input type="text" id="jobTitle" placeholder="Bharti / Exam Result nu naam likho...">
 
-        <label>5. Destination Redirection URL (PDF or Website Link):</label>
-        <input type="url" id="jobLink" placeholder="https://...">
+            <label>4. Meta Info / Sub-Text / Last Date:</label>
+            <input type="text" id="jobMeta" placeholder="Last Date: 31-08-2026 ya Click Here">
 
-        <button onclick="publishPost()">🔥 Push Live to Gujaratfastalert.in</button>
+            <label>5. Destination Redirection URL (PDF or Website Link):</label>
+            <input type="url" id="jobLink" placeholder="https://...">
+
+            <input type="hidden" id="editingPostId" value="">
+            <input type="hidden" id="editingCategory" value="">
+
+            <button id="submitBtn" class="btn-orange" onclick="publishPost()">🔥 Push Live to Gujaratfastalert.in</button>
+            <button id="cancelEditBtn" class="btn-red" style="display:none; margin-top:10px;" onclick="cancelEditing()">Cancel Edit Mode</button>
+        </div>
+
+        <div id="manage-tab" class="tab-content">
+            <h3 style="color: #2b5797; font-size: 16px; margin: 0 0 10px 0;">Edit / Delete Live Posts</h3>
+            
+            <label>Select Category to view posts:</label>
+            <select id="manageCategory" onchange="loadCategoryPosts()">
+                <option value="important">🔔 Home Page - Top Important Stream</option>
+                <option value="gujarat">📋 Home Page - Center Gujarat Jobs Box</option>
+                <option value="news">📰 Home Page - Bottom Latest News Box</option>
+                <option value="latest-jobs">⭐ Grid Element: Latest Jobs</option>
+                <option value="result">🏆 Grid Element: Result</option>
+                <option value="admit-card">🎟️ Grid Element: Admit Card</option>
+                <option value="samachar">📰 Grid Element: Samachar</option>
+                <option value="calendar">📅 Grid Element: Calendar</option>
+                <option value="prev-paper">📄 Grid Element: Prev. Paper</option>
+                <option value="gujarat-jobs">🏛️ Grid Element: Gujarat Jobs</option>
+                <option value="answer-key">🔑 Grid Element: Answer Key</option>
+            </select>
+
+            <div class="post-list" id="postsList">
+                <div style="text-align: center; color: #718096; padding: 20px;">Category select karke load karein...</div>
+            </div>
+        </div>
+
+        <div id="settings-tab" class="tab-content">
+            <h3 style="color: #2b5797; font-size: 16px; margin: 0 0 10px 0;">Website Global Settings</h3>
+            
+            <label>📢 Header Marquee Ticker (Regular Alert text):</label>
+            <textarea id="headerNotice" rows="3" placeholder="Yahan jo likhoge wo website ke top par chalega..."></textarea>
+            
+            <label>🌐 Website Title (If you want to change):</label>
+            <input type="text" id="siteTitleSetting" placeholder="Gujarat Fast Alert">
+
+            <button class="btn-blue" onclick="saveGlobalSettings()">💾 Save Website Settings</button>
+        </div>
+
     </div>
 
     <script>
@@ -72,28 +143,183 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // Page load triggers
+        window.onload = function() {
+            loadGlobalSettings();
+            loadCategoryPosts(); // Load initial category on page open
+        };
+
+        // Tab Switching logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Publish or Update logic
         function publishPost() {
             const category = document.getElementById('jobCategory').value;
             const tag = document.getElementById('jobTag').value;
             const title = document.getElementById('jobTitle').value;
             const meta = document.getElementById('jobMeta').value;
             const link = document.getElementById('jobLink').value;
+            
+            const editingPostId = document.getElementById('editingPostId').value;
+            const oldCategory = document.getElementById('editingCategory').value;
 
             if(!title || !link) { alert("Error: Title ane Link lakhvu khub jaroori che!"); return; }
 
-            const newPostRef = database.ref('posts/' + category).push();
-            newPostRef.set({
-                tag: tag,
-                title: title,
-                meta: meta,
-                link: link,
-                timestamp: Date.now()
-            }).then(() => {
-                alert("Mubarak ho Vanrajsinh bhai! Post gujaratfastalert.in par 1-Second ma LIVE thai gayi che. 🎉");
-                document.getElementById('jobTitle').value = '';
-                document.getElementById('jobMeta').value = '';
-                document.getElementById('jobLink').value = '';
+            if(editingPostId) {
+                // UPDATE MODE
+                if (oldCategory !== category) {
+                    // Category badal di hai, toh purani category se delete karke nayi me push karenge
+                    database.ref('posts/' + oldCategory + '/' + editingPostId).remove();
+                    const newPostRef = database.ref('posts/' + category).push();
+                    newPostRef.set({
+                        tag: tag,
+                        title: title,
+                        meta: meta,
+                        link: link,
+                        timestamp: Date.now()
+                    });
+                } else {
+                    // Same category hai toh bas update kar do
+                    database.ref('posts/' + category + '/' + editingPostId).update({
+                        tag: tag,
+                        title: title,
+                        meta: meta,
+                        link: link
+                    });
+                }
+                alert("Zabardast! Post successfully EDIT/UPDATE ho gayi hai. 🎉");
+                cancelEditing();
+                loadCategoryPosts();
+            } else {
+                // NEW POST PUBLISH MODE
+                const newPostRef = database.ref('posts/' + category).push();
+                newPostRef.set({
+                    tag: tag,
+                    title: title,
+                    meta: meta,
+                    link: link,
+                    timestamp: Date.now()
+                }).then(() => {
+                    alert("Mubarak ho Vanrajsinh bhai! Post 1-Second ma LIVE thai gayi che. 🎉");
+                    clearForm();
+                });
+            }
+        }
+
+        // Fetch Posts list for editing/deleting
+        function loadCategoryPosts() {
+            const category = document.getElementById('manageCategory').value;
+            const listDiv = document.getElementById('postsList');
+            listDiv.innerHTML = '<div style="text-align: center; color: #718096; padding: 20px;">Posts fetch ho rahi hain...</div>';
+
+            database.ref('posts/' + category).once('value', (snapshot) => {
+                listDiv.innerHTML = '';
+                const data = snapshot.val();
+                if(!data) {
+                    listDiv.innerHTML = '<div style="text-align: center; color: #718096; padding: 20px;">Is category me koi posts nahi mili.</div>';
+                    return;
+                }
+
+                // Render latest posts on top
+                const keys = Object.keys(data).reverse();
+                keys.forEach(key => {
+                    const post = data[key];
+                    const item = document.createElement('div');
+                    item.className = 'post-item';
+                    item.innerHTML = `
+                        <div class="post-item-title">${post.title}</div>
+                        <div class="post-item-meta">Tag: ${post.tag || 'None'} | Meta: ${post.meta || 'None'}</div>
+                        <div class="post-actions">
+                            <button class="action-btn edit-btn" onclick="startEditing('${key}', '${category}', ${JSON.stringify(post).replace(/"/g, '&quot;')})">✏️ Edit</button>
+                            <button class="action-btn delete-btn" onclick="deletePost('${key}', '${category}')">🗑️ Delete</button>
+                        </div>
+                    `;
+                    listDiv.appendChild(item);
+                });
             });
+        }
+
+        // Populate Form for Editing
+        function startEditing(id, category, post) {
+            document.getElementById('editingPostId').value = id;
+            document.getElementById('editingCategory').value = category;
+            
+            document.getElementById('jobCategory').value = category;
+            document.getElementById('jobTag').value = post.tag || '';
+            document.getElementById('jobTitle').value = post.title || '';
+            document.getElementById('jobMeta').value = post.meta || '';
+            document.getElementById('jobLink').value = post.link || '';
+
+            document.getElementById('form-action-title').innerText = "✏️ Editing Live Post Model";
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "💾 Save Changes Live";
+            submitBtn.className = "btn-blue";
+            document.getElementById('cancelEditBtn').style.display = 'block';
+
+            // Switch view to Tab 1
+            switchTab('post-tab');
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.querySelectorAll('.tab-btn')[1].classList.remove('active');
+        }
+
+        // Cancel Edit Mode
+        function cancelEditing() {
+            document.getElementById('editingPostId').value = '';
+            document.getElementById('editingCategory').value = '';
+            clearForm();
+            
+            document.getElementById('form-action-title').innerText = "Add New Live Update";
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "🔥 Push Live to Gujaratfastalert.in";
+            submitBtn.className = "btn-orange";
+            document.getElementById('cancelEditBtn').style.display = 'none';
+        }
+
+        // Delete Post logic
+        function deletePost(id, category) {
+            if(confirm("Dhyan se Vanrajsinh bhai! Kya aap sach me is post ko Delete karna chahte hain?")) {
+                database.ref('posts/' + category + '/' + id).remove().then(() => {
+                    alert("Post successfully deleted.");
+                    loadCategoryPosts();
+                });
+            }
+        }
+
+        // Save Globals (Header ticker notice & site title)
+        function saveGlobalSettings() {
+            const notice = document.getElementById('headerNotice').value;
+            const title = document.getElementById('siteTitleSetting').value;
+
+            database.ref('settings').set({
+                headerNotice: notice,
+                siteTitle: title
+            }).then(() => {
+                alert("Great! Website Settings save ho gayi hain aur automatic updates apply ho chuki hain. 👍");
+            });
+        }
+
+        // Fetch Settings on load
+        function loadGlobalSettings() {
+            database.ref('settings').once('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    document.getElementById('headerNotice').value = data.headerNotice || '';
+                    document.getElementById('siteTitleSetting').value = data.siteTitle || '';
+                }
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('jobTitle').value = '';
+            document.getElementById('jobMeta').value = '';
+            document.getElementById('jobLink').value = '';
+            document.getElementById('jobTag').value = '';
         }
     </script>
 </body>
