@@ -59,10 +59,10 @@
 
         <!-- Modern Micro Tabs Grid -->
         <div class="grid grid-cols-4 gap-1.5 p-1 bg-slate-100 rounded-xl mb-6">
-            <button class="tab-btn active text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('post-tab')">📝 POST</button>
-            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('manage-tab')">⚙️ MANAGE</button>
-            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('settings-tab')">📢 CONFIG</button>
-            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('editor-tab')">💻 EDITOR</button>
+            <button class="tab-btn active text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('post-tab', this)">📝 POST</button>
+            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('manage-tab', this)">⚙️ MANAGE</button>
+            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('settings-tab', this)">📢 CONFIG</button>
+            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('editor-tab', this)">💻 EDITOR</button>
         </div>
 
         <!-- 1. POST TAB -->
@@ -225,7 +225,7 @@
         function checkAdminPin() {
             if(document.getElementById('adminPinInput').value === MY_SECRET_PIN) {
                 document.getElementById('pinScreen').style.display = 'none';
-                document.getElementById('mainAdminBox').style.classList.remove('hidden');
+                document.getElementById('mainAdminBox').classList.remove('hidden');
                 loadGlobalSettings(); loadCategoryPosts();
             } else {
                 alert("❌ Invalid Pin Security Authorization!");
@@ -233,11 +233,11 @@
             }
         }
 
-        function switchTab(tabId) {
+        function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            if(event) event.currentTarget.classList.add('active');
+            if(btn) btn.classList.add('active');
         }
 
         function publishPost() {
