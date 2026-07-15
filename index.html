@@ -12,7 +12,7 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gujarat Fast Alert </title>
+    <title>Gujarat Fast Alert</title>
     
     <meta name="description" content="Gujarat Fast Alert by Vanrajsinh Vaghela. Get fastest updates on OJAS Bharti 2026, GPSC, GSSSB, Police Bharti, Answer Keys, and Results.">
     <meta name="author" content="Vanrajsinh Vaghela">
@@ -37,12 +37,13 @@
             <span class="bg-red-600 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mr-3 shrink-0 animate-pulse">BREAKING</span>
             <div class="overflow-hidden relative w-full h-5">
                 <div class="marquee-text absolute font-medium" id="marqueeAlertText">
-                    🚨 Loading live updates...
+                    🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે...
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- 1. ફેરફાર: અહીં ફક્ત Gujarat Fast Alert જ રાખ્યું છે -->
     <div class="text-center pt-6 pb-4 px-4 w-full max-w-2xl">
         <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900" id="mainSiteTitle">
             Gujarat <span class="text-[#2b5797]">Fast Alert</span>
@@ -171,30 +172,31 @@
     <script>
         let siteData = {};
 
-        // Fetch unified posts.json hosted on GitHub alongside index.html
         async function fetchLiveUpdates() {
             try {
-                const response = await fetch('./posts.json?t=' + new Date().getTime()); // Anti-cache query string
+                const response = await fetch('./posts.json?t=' + new Date().getTime());
                 siteData = await response.json();
                 
                 // Load global settings
                 if(siteData.settings) {
-                    if(siteData.settings.headerNotice) {
+                    // 4. ફેરફાર: જો નોટિસ ખાલી હોય તો ડિફોલ્ટ મેસેજ બતાવે
+                    if(siteData.settings.headerNotice && siteData.settings.headerNotice.trim() !== "") {
                         document.getElementById('marqueeAlertText').innerText = siteData.settings.headerNotice;
+                    } else {
+                        document.getElementById('marqueeAlertText').innerText = "🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે! નવી અપડેટ્સ ટૂંક સમયમાં મૂકવામાં આવશે.";
                     }
-                    if(siteData.settings.siteTitle) {
-                        document.title = siteData.settings.siteTitle;
-                        let stylizedTitle = siteData.settings.siteTitle.includes("Fast Alert") ? siteData.settings.siteTitle.replace("Fast Alert", '<span class="text-[#2b5797]">Fast Alert</span>') : siteData.settings.siteTitle;
-                        document.getElementById('mainSiteTitle').innerHTML = stylizedTitle;
-                    }
+                    
+                    // 1. ફેરફાર: ટાઇટલ હંમેશા ફક્ત "Gujarat Fast Alert" જ રહેશે
+                    document.getElementById('mainSiteTitle').innerHTML = 'Gujarat <span class="text-[#2b5797]">Fast Alert</span>';
+                    document.title = "Gujarat Fast Alert";
                 }
 
-                // Render lists
                 renderMainList('latest-jobs-list', 'latest-jobs-list-container');
                 renderMainList('articles-list', 'articles-list-container');
             } catch (error) {
                 console.error("Error reading data file:", error);
-                document.getElementById('latest-jobs-list-container').innerHTML = '<p class="p-4 text-center font-normal text-rose-500">Error sync mapping files.</p>';
+                document.getElementById('latest-jobs-list-container').innerHTML = '<p class="p-4 text-center font-normal text-slate-400">કોઈ નવી અપડેટ નથી.</p>';
+                document.getElementById('articles-list-container').innerHTML = '<p class="p-4 text-center font-normal text-slate-400">કોઈ નવી અપડેટ નથી.</p>';
             }
         }
 
@@ -202,7 +204,13 @@
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             const posts = siteData[catName] || [];
-            if(posts.length === 0) { container.innerHTML = '<p class="p-4 text-center font-normal text-slate-400">No active posts.</p>'; return; }
+            
+            // 2 અને 3. ફેરફાર: જો લિસ્ટમાં કઈ ન હોય તો "કોઈ નવી અપડેટ નથી" એવું દેખાશે
+            if(posts.length === 0) { 
+                container.innerHTML = '<p class="p-4 text-center font-normal text-slate-400">કોઈ નવી અપડેટ નથી.</p>'; 
+                return; 
+            }
+            
             posts.forEach((post) => {
                 container.innerHTML += `
                     <div class="p-3 flex justify-between items-center hover:bg-slate-50 transition">
@@ -224,7 +232,7 @@
             tc.innerHTML = '';
             
             const matches = siteData[categorySlug] || [];
-            if(matches.length === 0) { tc.innerHTML = '<p class="text-xs text-rose-500 p-2 font-normal">Is grid section me abhi koi active post nahi h.</p>'; return; }
+            if(matches.length === 0) { tc.innerHTML = '<p class="text-xs text-rose-500 p-2 font-normal">આ સેક્શનમાં અત્યારે કોઈ માહિતી નથી.</p>'; return; }
             matches.forEach((post) => {
                 tc.innerHTML += `
                     <div class="py-2.5 flex items-start gap-2 text-xs">
