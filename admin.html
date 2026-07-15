@@ -3,250 +3,375 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gujarat Fast Alert - Direct Admin Panel</title>
+    <title>Gujarat Fast Alert - Pro Admin Panel</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background: #f3f4f6; padding: 20px; color: #333; }
-        .admin-box { max-width: 900px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        h2 { color: #0d355a; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; }
-        input[type="text"], input[type="password"], select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
-        .btn { background: #0d355a; color: white; border: none; padding: 12px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 14px; }
-        .btn:hover { background: #1a4975; }
-        .btn-success { background: #25D366; width: 100%; margin-top: 20px; font-size: 16px; }
-        .btn-success:hover { background: #1ebd59; }
-        .status { margin-top: 15px; padding: 10px; border-radius: 6px; font-weight: bold; text-align: center; }
-        .success { background: #def7ec; color: #03543f; }
-        .error { background: #fde8e8; color: #9b1c1c; }
-        .item-row { display: flex; gap: 10px; align-items: center; background: #f9fafb; padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #e5e7eb; }
-        .item-row input { flex: 1; }
-        .item-row label { margin-bottom: 0; white-space: nowrap; }
-        .list-section { margin-top: 25px; background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
-        .section-head { font-size: 16px; font-weight: bold; color: #2b6cb0; margin-bottom: 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
-        #token-setup { background: #fff3cd; padding: 20px; border-radius: 8px; border: 1px solid #ffeeba; margin-bottom: 20px; }
+        body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 15px; display: flex; flex-direction: column; align-items: center; margin: 0; min-height: 100vh; justify-content: center; }
+        .admin-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 500px; box-sizing: border-box; }
+        h2 { color: #2b5797; margin-bottom: 15px; text-align: center; font-size: 20px; margin-top: 5px; }
+        
+        /* Tabs Styling for Mobile */
+        .tab-container { display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #cbd5e0; }
+        .tab-btn { background: none; border: none; padding: 10px 5px; font-weight: bold; font-size: 11px; cursor: pointer; color: #718096; width: 25%; text-align: center; outline: none; }
+        .tab-btn.active { color: #2b5797; border-bottom: 3px solid #2b5797; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        label { font-weight: bold; display: block; margin-top: 12px; font-size: 13px; color: #2d3748; }
+        input, select, textarea { width: 100%; padding: 11px; margin-top: 5px; border: 1px solid #cbd5e0; border-radius: 4px; outline: none; font-size: 14px; box-sizing: border-box; }
+        optgroup { font-weight: bold; color: #2b5797; background: #fff; }
+        
+        /* Button Colors */
+        button { color: white; border: none; width: 100%; padding: 13px; font-weight: bold; border-radius: 4px; margin-top: 15px; cursor: pointer; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-orange { background: #e67e22; }
+        .btn-orange:hover { background: #d35400; }
+        .btn-blue { background: #2b5797; }
+        .btn-blue:hover { background: #1a365d; }
+        .btn-red { background: #e53e3e; }
+        .btn-green { background: #27ae60; }
+        
+        .info-note { background: #ebf8ff; color: #2b6cb0; border-left: 4px solid #3182ce; padding: 10px; font-size: 12px; margin-top: 10px; border-radius: 4px; line-height: 1.4; }
+        
+        /* Post Manager Items styling */
+        .post-list { margin-top: 15px; max-height: 350px; overflow-y: auto; border: 1px solid #e2e8f0; padding: 10px; border-radius: 4px; }
+        .post-item { background: #f7fafc; padding: 10px; border-radius: 4px; margin-bottom: 8px; border-left: 4px solid #4a5568; display: flex; flex-direction: column; gap: 5px; font-size: 13px; }
+        .post-actions { display: flex; gap: 10px; margin-top: 5px; }
+        .action-btn { padding: 6px 12px; font-size: 11px; border-radius: 3px; cursor: pointer; border: none; font-weight: bold; color: white; width: auto; margin-top: 0; }
+        .edit-btn { background: #3182ce; }
+        .delete-btn { background: #e53e3e; }
     </style>
 </head>
 <body>
 
-<div class="admin-box">
-    <h2>
-        <span>🚀 Fast Alert - ડાયરેક્ટ મેનેજર</span>
-        <button type="button" class="btn" style="background:#6b7280; padding:5px 10px; font-size:11px;" onclick="resetToken()">ટોકન બદલો 🔑</button>
-    </h2>
-    
-    <!-- ફર્સ્ટ ટાઈમ ટોકન સેટઅપ (ફક્ત પહેલી જ વાર દેખાશે) -->
-    <div id="token-setup" style="display: none;">
-        <div class="form-group">
-            <label style="color: #856404;">⚠️ પહેલી વાર સેટઅપ: તમારો GitHub Personal Access Token (PAT) નાખો</label>
-            <input type="password" id="token-input" placeholder="ghp_ વાળો ગુપ્ત ટોકન અહીં પેસ્ટ કરો">
-        </div>
-        <button type="button" class="btn" onclick="saveTokenFirstTime()">ટોકન સેવ કરો અને કનેક્ટ કરો 🔗</button>
-    </div>
-
-    <div id="status-msg" class="status"></div>
-
-    <!-- લાઇવ ડેટા એડિટ ફોર્મ્સ (આ ઓટોમેટીક ડાયરેક્ટ ખુલી જશે) -->
-    <div id="editor-form" style="display: none;">
+    <div id="pinScreen" class="admin-box" style="text-align: center;">
+        <h2>🔒 Vanraj Pro Security Lock</h2>
+        <p style="font-size: 13px; color: #718096; margin-bottom: 20px;">Control panel open karne ke liye apna 7-Digit PIN enter karein:</p>
         
-        <!-- ૧. સરકારી નોકરી લિસ્ટ -->
-        <div class="list-section">
-            <div class="section-head">🔥 લેટેસ્ટ સરકારી નોકરીઓ (Jobs List)</div>
-            <div id="jobs-container"></div>
-            <button type="button" class="btn" style="background:#4a5568; padding:6px 12px; margin-top:5px; font-size:12px;" onclick="addRow('jobs-container')">+ નવી લાઈન ઉમેરો</button>
-        </div>
-
-        <!-- ૨. આર્ટિકલ્સ લિસ્ટ -->
-        <div class="list-section">
-            <div class="section-head">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ (Articles List)</div>
-            <div id="articles-container"></div>
-            <button type="button" class="btn" style="background:#4a5568; padding:6px 12px; margin-top:5px; font-size:12px;" onclick="addRow('articles-container')">+ નવી લાઈન ઉમેરો</button>
-        </div>
-
-        <button type="button" class="btn btn-success" onclick="saveDataToGitHub()">ફેરફારો લાઇવ પબ્લિશ કરો 💾</button>
+        <input type="password" inputmode="numeric" pattern="[0-9]*" id="adminPinInput" maxlength="7" placeholder="•••••••" style="text-align: center; font-size: 24px; letter-spacing: 8px; font-weight: bold; margin-bottom: 15px;">
+        
+        <button class="btn-blue" onclick="checkAdminPin()">🔓 Unlock Control Panel</button>
     </div>
+
+    <div id="mainAdminBox" class="admin-box" style="display: none;">
+        <h2>🚀 Vanrajsinh Full-Access Panel</h2>
+
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('post-tab')">📝 POST</button>
+            <button class="tab-btn" onclick="switchTab('manage-tab')">⚙️ MANAGE</button>
+            <button class="tab-btn" onclick="switchTab('settings-tab')">📢 SETTINGS</button>
+            <button class="tab-btn" onclick="switchTab('editor-tab')">💻 EDITOR</button>
+        </div>
+
+        <div id="post-tab" class="tab-content active">
+            <h3 id="form-action-title" style="color: #2b5797; font-size: 16px; margin: 0;">Add New Live Update</h3>
+            
+            <label>1. Select Feed Location / Menu Grid:</label>
+            <select id="jobCategory">
+                <optgroup label="📝 Main Scroll Lists (નીચેની લાંબી યાદી)">
+                    <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ (List View)</option>
+                    <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ (List View)</option>
+                </optgroup>
+                
+                <optgroup label="🎓 શિક્ષણ અને સરકારી નોકરી Grid">
+                    <option value="govt-jobs">💼 Govt Jobs</option>
+                    <option value="syllabus">📋 Syllabus</option>
+                    <option value="answer-key">🔑 Answer Key</option>
+                    <option value="result">🏆 Result</option>
+                    <option value="admit-card">🎟️ Admit Card</option>
+                    <option value="prev-papers">📄 Prev. Papers</option>
+                    <option value="scholarship">🎓 Scholarship</option>
+                    <option value="edu-news">📰 Edu News</option>
+                </optgroup>
+
+                <optgroup label="🏛️ યોજના અને સમાચાર Grid">
+                    <option value="govt-schemes">🏛️ સરકારી યોજના</option>
+                    <option value="current-affairs">📅 Current Affairs</option>
+                    <option value="gujarati-news">🗣️ Gujarati News</option>
+                </optgroup>
+
+                <optgroup label="🧮 ગાઈડ અને કેલ્ક્યુલેટર Grid">
+                    <option value="howto-guides">ℹ️ How-to Guides</option>
+                    <option value="calculators">🧮 Calculators</option>
+                    <option value="finance-tax">💰 Finance & Tax</option>
+                </optgroup>
+
+                <optgroup label="💡 ઓનલાઈન બિલ પેમેન્ટ Grid">
+                    <option value="ugvcl-bill">💡 UGVCL Bill</option>
+                    <option value="gujarat-gas">🔥 Gujarat Gas</option>
+                    <option value="pgvcl-bill">⚡ PGVCL Bill</option>
+                    <option value="mgvcl-bill">🔌 MGVCL Bill</option>
+                </optgroup>
+
+                <optgroup label="🍿 મનોરંજન અને ટેકનોલોજી Grid">
+                    <option value="tech-news">🤖 Tech News</option>
+                    <option value="movie-ott">🍿 Movie & OTT</option>
+                    <option value="web-series">🎬 Web Series</option>
+                    <option value="auto-news">🚗 Auto News</option>
+                    <option value="cricket-ipl">🏏 Cricket / IPL</option>
+                    <option value="health-tips">🍏 Health Tips</option>
+                    <option value="wishes-quotes">🎉 Wishes & Quotes</option>
+                </optgroup>
+            </select>
+
+            <label>2. Badge Text (e.g. GSSSB, GPSC, LRD, NEW):</label>
+            <input type="text" id="jobTag" placeholder="GSSSB, GPSC ya NEW...">
+
+            <label>3. Post Main Title Text (Gujarati/English):</label>
+            <input type="text" id="jobTitle" placeholder="Bharti / Notice nu નામ લખો...">
+
+            <label>4. Sub-Text / Last Date / Alert Info:</label>
+            <input type="text" id="jobMeta" placeholder="Last Date: 21-07-2026 ya Click Here">
+
+            <label>5. Destination Target URL (GitHub HTML Page Link):</label>
+            <input type="url" id="jobLink" placeholder="https://gujaratfastalert.in/...">
+
+            <input type="hidden" id="editingPostId" value="">
+            <input type="hidden" id="editingCategory" value="">
+
+            <button id="submitBtn" class="btn-orange" onclick="publishPost()">🔥 Push Live to Gujaratfastalert.in</button>
+            <button id="cancelEditBtn" class="btn-red" style="display:none; margin-top:10px;" onclick="cancelEditing()">Cancel Edit Mode</button>
+        </div>
+
+        <div id="manage-tab" class="tab-content">
+            <h3 style="color: #2b5797; font-size: 16px; margin: 0 0 10px 0;">Edit / Delete Live Posts</h3>
+            <label>Select Category to view posts:</label>
+            <select id="manageCategory" onchange="loadCategoryPosts()">
+                <optgroup label="📝 Main Scroll Lists">
+                    <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ</option>
+                    <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</option>
+                </optgroup>
+                <optgroup label="🎓 શિક્ષણ અને સરકારી નોકરી Grid">
+                    <option value="govt-jobs">💼 Govt Jobs</option><option value="syllabus">📋 Syllabus</option>
+                    <option value="answer-key">🔑 Answer Key</option><option value="result">🏆 Result</option>
+                    <option value="admit-card">🎟️ Admit Card</option><option value="prev-papers">📄 Prev. Papers</option>
+                    <option value="scholarship">🎓 Scholarship</option><option value="edu-news">📰 Edu News</option>
+                </optgroup>
+                <optgroup label="🏛️ યોજના અને સમાચાર Grid">
+                    <option value="govt-schemes">🏛️ સરકારી યોજના</option><option value="current-affairs">📅 Current Affairs</option>
+                    <option value="gujarati-news">🗣️ Gujarati News</option>
+                </optgroup>
+                <optgroup label="🧮 ગાઈડ અને કેલ્ક્યુલેટર Grid">
+                    <option value="howto-guides">ℹ️ How-to Guides</option><option value="calculators">🧮 Calculators</option>
+                    <option value="finance-tax">💰 Finance & Tax</option>
+                </optgroup>
+                <optgroup label="💡 ઓનલાઈન બિલ પેમેન્ટ Grid">
+                    <option value="ugvcl-bill">💡 UGVCL Bill</option><option value="gujarat-gas">🔥 Gujarat Gas</option>
+                    <option value="pgvcl-bill">⚡ PGVCL Bill</option><option value="mgvcl-bill">🔌 MGVCL Bill</option>
+                </optgroup>
+                <optgroup label="🍿 મનોરંજન અને ટેકનોલોજી Grid">
+                    <option value="tech-news">🤖 Tech News</option><option value="movie-ott">🍿 Movie & OTT</option>
+                    <option value="web-series">🎬 Web Series</option><option value="auto-news">🚗 Auto News</option>
+                    <option value="cricket-ipl">🏏 Cricket / IPL</option><option value="health-tips">🍏 Health Tips</option>
+                    <option value="wishes-quotes">🎉 Wishes & Quotes</option>
+                </optgroup>
+            </select>
+            <div class="post-list" id="postsList"></div>
+        </div>
+
+        <div id="settings-tab" class="tab-content">
+            <h3 style="color: #2b5797; font-size: 16px; margin: 0 0 10px 0;">Website Global Settings</h3>
+            <label>📢 Header Marquee Ticker (Top Running Alert text):</label>
+            <textarea id="headerNotice" rows="3"></textarea>
+            <label>🌐 Website Global Title Name:</label>
+            <input type="text" id="siteTitleSetting">
+            <button class="btn-blue" onclick="saveGlobalSettings()">💾 Save Website Settings</button>
+        </div>
+
+        <div id="editor-tab" class="tab-content">
+            <h3 style="color: #2b5797; font-size: 16px; margin: 0 0 5px 0;">💻 Premium HTML Page Editor</h3>
+            <div class="info-note">Yahan template edit karein aur copy karke GitHub me naya page bana lein!</div>
+            <textarea id="htmlCodeInput" rows="12" style="font-family: monospace; font-size: 12px; background: #2d3748; color: #cbd5e0;" oninput="updateHtmlPreview()"></textarea>
+            <button class="btn-green" onclick="copyHtmlCode()">📋 Copy Updated HTML Code</button>
+            <iframe id="htmlPreviewFrame" style="width: 100%; min-height: 250px; border: 2px dashed #cbd5e0; background: white; margin-top: 10px; border-radius: 4px;"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // 🔑 PASS PIN CODE MATRIX (DEFAULT: 1234567)
+        const MY_SECRET_PIN = "1465822"; 
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
+            authDomain: "gujarat-fast-alert.firebaseapp.com",
+            databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
+            projectId: "gujarat-fast-alert",
+            storageBucket: "gujarat-fast-alert.firebasestorage.app",
+            messagingSenderId: "395130500748",
+            appId: "1:395130500748:web:e6589f3a57812efad6ada9",
+            measurementId: "G-ZJN134J7EC"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function checkAdminPin() {
+            if(document.getElementById('adminPinInput').value === MY_SECRET_PIN) {
+                document.getElementById('pinScreen').style.display = 'none';
+                document.getElementById('mainAdminBox').style.display = 'block';
+                loadGlobalSettings(); loadCategoryPosts();
+            } else {
+                alert("❌ Invalid Pin Security Authorization!");
+                document.getElementById('adminPinInput').value = '';
+            }
+        }
+
+        const defaultTemplate = `<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 10px; margin: 0; }
+        .box { background: white; padding: 15px; border-radius: 8px; }
+        h1 { color: #d35400; font-size: 18px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+        th, td { border: 1px solid #cbd5e0; padding: 8px; text-align: left; }
+        th { background: #2b5797; color: white; }
+        .btn { display: block; background: #e67e22; color: white; text-align: center; padding: 10px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>🚨 GSSSB Bharti Updates 2026</h1>
+    <div style="background:#eee; text-align:center; padding:10px; font-size:11px; margin:10px 0;">[GOOGLE ADSENSE DISPLAY AD]</div>
+    <table>
+        <tr><th>વિગત</th><th>માહિતી</th></tr>
+        <tr><td><b>છેલ્લી તારીખ</b></td><td>21-07-2026</td></tr>
+        <tr><td><b>પગાર ધોરણ</b></td><td>રૂ. 40,800/- ફિક્સ</td></tr>
+    </table>
+    <a href="https://ojas.gujarat.gov.in" class="btn" target="_blank">💻 ઓનલાઈન અરજી કરવા અહીં ક્લિક કરો</a>
 </div>
+</body>
+</html>`;
 
-<script>
-    // અહીં તમારી સાઇટની વિગતો ફિક્સ કરી દીધી છે
-    const REPO = "vanrajsinh/gujaratfastalert";
-    const BRANCH = "main"; // જો સાઇટ લોડ ન થાય તો અહીં 'master' કરી દેવું
-
-    let originalHtmlContent = "";
-    let fileSha = "";
-    let GITHUB_TOKEN = "";
-
-    // પેજ લોડ થતા જ ઓટોમેટીક રન થશે
-    window.onload = function() {
-        GITHUB_TOKEN = localStorage.getItem('fastalert_gh_token');
-        if (!GITHUB_TOKEN) {
-            document.getElementById('token-setup').style.display = 'block';
-            showStatus("કૃપા કરીને પહેલા તમારો ગિટહબ ટોકન સેટ કરો.", "error");
-        } else {
-            loadHomepageData();
-        }
-    }
-
-    // પહેલીવાર ટોકન સેવ કરવા માટે
-    function saveTokenFirstTime() {
-        const tokenVal = document.getElementById('token-input').value.trim();
-        if(!tokenVal) { alert("ટોકન ખાલી ન મૂકી શકાય!"); return; }
-        localStorage.setItem('fastalert_gh_token', tokenVal);
-        GITHUB_TOKEN = tokenVal;
-        document.getElementById('token-setup').style.display = 'none';
-        loadHomepageData();
-    }
-
-    // જો ટોકન ક્યારેય બદલવો હોય તો
-    function resetToken() {
-        if(confirm("શું તમે સેવ કરેલો ગિટહબ ટોકન ડીલીટ કરીને નવો નાખવા માંગો છો?")) {
-            localStorage.removeItem('fastalert_gh_token');
-            location.reload();
-        }
-    }
-
-    // ડાયરેક્ટ ડેટા લોડ કરવાનું ફંક્શન
-    async function loadHomepageData() {
-        const statusMsg = document.getElementById('status-msg');
-        statusMsg.style.display = 'block';
-        showStatus("સાઇટ પરથી લાઇવ કન્ટેન્ટ લોડ થઈ રહ્યો છે...", "success");
-
-        try {
-            const response = await fetch(`https://api.github.com/repos/${REPO}/contents/index.html?ref=${BRANCH}`, {
-                headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+        window.onload = function() {
+            document.getElementById('htmlCodeInput').value = defaultTemplate;
+            updateHtmlPreview();
+            document.getElementById('adminPinInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') { checkAdminPin(); }
             });
-            
-            if(!response.ok) { 
-                showStatus("કનેક્શન નિષ્ફળ! કદાચ ટોકન ખોટો છે અથવા બ્રાન્ચ મેચ નથી થતી. 'ટોકન બદલો' પર ક્લિક કરીને નવો ટોકન ટ્રાય કરો.", "error"); 
-                return; 
+        };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function updateHtmlPreview() {
+            const code = document.getElementById('htmlCodeInput').value;
+            const iframe = document.getElementById('htmlPreviewFrame');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open(); doc.write(code); doc.close();
+        }
+
+        function copyHtmlCode() {
+            const codeText = document.getElementById('htmlCodeInput');
+            codeText.select(); document.execCommand("copy");
+            alert("Updated HTML Template copied! 📋");
+        }
+
+        function publishPost() {
+            const category = document.getElementById('jobCategory').value;
+            const tag = document.getElementById('jobTag').value;
+            const title = document.getElementById('jobTitle').value;
+            const meta = document.getElementById('jobMeta').value;
+            const link = document.getElementById('jobLink').value;
+            const editingPostId = document.getElementById('editingPostId').value;
+            const oldCategory = document.getElementById('editingCategory').value;
+
+            if(!title || !link) { alert("Error: Title and Link are mandatory fields!"); return; }
+
+            if(editingPostId) {
+                if (oldCategory !== category) {
+                    database.ref('posts/' + oldCategory + '/' + editingPostId).remove();
+                    database.ref('posts/' + category).push().set({ tag, title, meta, link, timestamp: Date.now() });
+                } else {
+                    database.ref('posts/' + category + '/' + editingPostId).update({ tag, title, meta, link });
+                }
+                alert("Post successfully Updated! 🎉"); cancelEditing(); loadCategoryPosts();
+            } else {
+                database.ref('posts/' + category).push().set({ tag, title, meta, link, timestamp: Date.now() }).then(() => {
+                    alert("Post is now LIVE instantly! 🎉"); clearForm();
+                });
             }
-            
-            const data = await response.json();
-            fileSha = data.sha;
-            originalHtmlContent = decodeURIComponent(escape(atob(data.content)));
-
-            // ડેટા બોક્સમાં ભરવો
-            parseAndFill('jobs', '<!--START_JOBS-->', '<!--END_JOBS-->', 'jobs-container');
-            parseAndFill('articles', '<!--START_ARTICLES-->', '<!--END_ARTICLES-->', 'articles-container');
-
-            document.getElementById('editor-form').style.display = 'block';
-            statusMsg.style.display = 'none'; // ડેટા આવી જાય એટલે મેસેજ ગાયબ
-        } catch(e) {
-            showStatus("નેટવર્ક અથવા કનેક્શન પ્રોબ્લેમ થયો!", "error");
-        }
-    }
-
-    function parseAndFill(type, startMarker, endMarker, containerId) {
-        const container = document.getElementById(containerId);
-        container.innerHTML = "";
-        
-        const parts = originalHtmlContent.split(startMarker);
-        if(parts.length < 2) return;
-        const subParts = parts[1].split(endMarker);
-        const listHtml = subParts[0].trim();
-
-        const div = document.createElement('div');
-        div.innerHTML = listHtml;
-        const links = div.getElementsByTagName('a');
-
-        if(links.length === 0) {
-            for(let i=0; i<3; i++) addRow(containerId);
-            return;
         }
 
-        for(let link of links) {
-            const url = link.getAttribute('href') || '#';
-            const textSpan = link.querySelector('.item-text');
-            const title = textSpan ? textSpan.innerText.replace('📌 ', '').replace('💼 ', '') : link.innerText;
-            const hasBadge = link.querySelector('.badge-new') ? true : false;
-            addRow(containerId, title, url, hasBadge);
-        }
-    }
-
-    function addRow(containerId, title="", url="", hasBadge=false) {
-        const container = document.getElementById(containerId);
-        const row = document.createElement('div');
-        row.className = 'item-row';
-        row.innerHTML = `
-            <input type="text" class="item-title" placeholder="પોસ્ટનું નામ (દા.ત. GSSSB ક્લાર્ક ભરતી)" value="${title}">
-            <input type="text" class="item-url" placeholder="લિંક / URL (દા.ત. /category/jobs.html)" value="${url}">
-            <label><input type="checkbox" class="item-badge" ${hasBadge ? 'checked' : ''}> New Badge</label>
-            <button type="button" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold; margin-left:5px;" onclick="this.parentElement.remove()">✕</button>
-        `;
-        container.appendChild(row);
-    }
-
-    async function saveDataToGitHub() {
-        showStatus("તમારા ફેરફારો લાઇવ પબ્લિશ થઈ રહ્યા છે...", "success");
-        const statusMsg = document.getElementById('status-msg');
-        statusMsg.style.display = 'block';
-
-        const jobsHtml = generateHtmlFromContainer('jobs-container');
-        const articlesHtml = generateHtmlFromContainer('articles-container');
-
-        let updatedHtml = replaceBetween(originalHtmlContent, '<!--START_JOBS-->', '<!--END_JOBS-->', "\n" + jobsHtml + "\n            ");
-        updatedHtml = replaceBetween(updatedHtml, '<!--START_ARTICLES-->', '<!--END_ARTICLES-->', "\n" + articlesHtml + "\n            ");
-
-        const base64Content = btoa(unescape(encodeURIComponent(updatedHtml)));
-
-        try {
-            const response = await fetch(`https://api.github.com/repos/${REPO}/contents/index.html`, {
-                method: 'PUT',
-                headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    message: "Admin Panel: Direct Link Update",
-                    content: base64Content,
-                    sha: fileSha,
-                    branch: BRANCH
-                })
+        function loadCategoryPosts() {
+            const category = document.getElementById('manageCategory').value;
+            const listDiv = document.getElementById('postsList');
+            listDiv.innerHTML = 'Syncing lists...';
+            database.ref('posts/' + category).once('value', (snapshot) => {
+                listDiv.innerHTML = '';
+                const data = snapshot.val();
+                if(!data) { listDiv.innerHTML = 'No active posts found in this section node.'; return; }
+                Object.keys(data).reverse().forEach(key => {
+                    const post = data[key];
+                    const item = document.createElement('div');
+                    item.className = 'post-item';
+                    item.innerHTML = `
+                        <div><b>${post.title}</b></div>
+                        <div class="post-actions">
+                            <button class="action-btn edit-btn" onclick="startEditing('${key}', '${category}', ${JSON.stringify(post).replace(/"/g, '&quot;')})">✏️ Edit</button>
+                            <button class="action-btn delete-btn" onclick="deletePost('${key}', '${category}')">🗑️ Delete</button>
+                        </div>`;
+                    listDiv.appendChild(item);
+                });
             });
-
-            if(response.ok) {
-                const resData = await response.json();
-                fileSha = resData.content.sha;
-                originalHtmlContent = updatedHtml;
-                showStatus("🎉 સુપરસક્સેસ! બધી લિંક્સ ડાયરેક્ટ અપડેટ થઈ ગઈ છે. ક્લાઉડફ્લેર ક્લિયર કરી દો.", "success");
-            } else {
-                showStatus("સેવ કરવામાં કોઈ પ્રોબ્લેમ થયો. પરમિશન ચેક કરો.", "error");
-            }
-        } catch(e) {
-            showStatus("સર્વર કનેક્શન ફેલ!", "error");
         }
-    }
 
-    function generateHtmlFromContainer(containerId) {
-        const container = document.getElementById(containerId);
-        const rows = container.getElementsByClassName('item-row');
-        let html = "";
-        for(let row of rows) {
-            const title = row.querySelector('.item-title').value.trim();
-            const url = row.querySelector('.item-url').value.trim();
-            const badge = row.querySelector('.item-badge').checked;
-            
-            if(!title) continue;
-            
-            if(badge) {
-                html += `            <a href="${url || '#'}" class="list-item"><span class="item-text">📌 ${title}</span><span class="badge-new">New</span></a>\n`;
-            } else {
-                html += `            <a href="${url || '#'}" class="list-item"><span class="item-text">💼 ${title}</span><span class="arrow-icon">➔</span></a>\n`;
+        function startEditing(id, category, post) {
+            document.getElementById('editingPostId').value = id;
+            document.getElementById('editingCategory').value = category;
+            document.getElementById('jobCategory').value = category;
+            document.getElementById('jobTag').value = post.tag || '';
+            document.getElementById('jobTitle').value = post.title || '';
+            document.getElementById('jobMeta').value = post.meta || '';
+            document.getElementById('jobLink').value = post.link || '';
+            document.getElementById('form-action-title').innerText = "✏️ Editing Live Post Model";
+            document.getElementById('submitBtn').innerText = "💾 Save Changes Live";
+            document.getElementById('submitBtn').className = "btn-blue";
+            document.getElementById('cancelEditBtn').style.display = 'block';
+            switchTab('post-tab');
+        }
+
+        function cancelEditing() {
+            document.getElementById('editingPostId').value = '';
+            document.getElementById('editingCategory').value = ''; clearForm();
+            document.getElementById('form-action-title').innerText = "Add New Live Update";
+            document.getElementById('submitBtn').innerText = "🔥 Push Live to Gujaratfastalert.in";
+            document.getElementById('submitBtn').className = "btn-orange";
+            document.getElementById('cancelEditBtn').style.display = 'none';
+        }
+
+        function deletePost(id, category) {
+            if(confirm("Are you sure you want to delete this live element node?")) {
+                database.ref('posts/' + category + '/' + id).remove().then(() => { loadCategoryPosts(); });
             }
         }
-        return html.trim();
-    }
 
-    function replaceBetween(origin, start, end, insertion) {
-        const parts = origin.split(start);
-        const subParts = parts[1].split(end);
-        return parts[0] + start + insertion + end + subParts[1];
-    }
+        function saveGlobalSettings() {
+            database.ref('settings').set({
+                headerNotice: document.getElementById('headerNotice').value,
+                siteTitle: document.getElementById('siteTitleSetting').value
+            }).then(() => { alert("Global website config nodes synced! 👍"); });
+        }
 
-    function showStatus(msg, type) {
-        const el = document.getElementById('status-msg');
-        el.innerText = msg;
-        el.className = `status ${type}`;
-        el.style.display = 'block';
-    }
-</script>
+        function loadGlobalSettings() {
+            database.ref('settings').once('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) {
+                    document.getElementById('headerNotice').value = data.headerNotice || '';
+                    document.getElementById('siteTitleSetting').value = data.siteTitle || '';
+                }
+            });
+        }
 
+        function clearForm() {
+            document.getElementById('jobTitle').value = ''; document.getElementById('jobMeta').value = '';
+            document.getElementById('jobLink').value = ''; document.getElementById('jobTag').value = '';
+        }
+    </script>
 </body>
 </html>
