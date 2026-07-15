@@ -21,6 +21,10 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5297812051188062" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Firebase SDK Links -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
     <style>
         body { background-color: #f4f7fa; -webkit-tap-highlight-color: transparent; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
@@ -37,13 +41,12 @@
             <span class="bg-red-600 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mr-3 shrink-0 animate-pulse">BREAKING</span>
             <div class="overflow-hidden relative w-full h-5">
                 <div class="marquee-text absolute font-medium" id="marqueeAlertText">
-                    🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે...
+                    🚨 Loading live updates...
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 1. ફેરફાર: અહીં ફક્ત Gujarat Fast Alert જ રાખ્યું છે -->
     <div class="text-center pt-6 pb-4 px-4 w-full max-w-2xl">
         <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900" id="mainSiteTitle">
             Gujarat <span class="text-[#2b5797]">Fast Alert</span>
@@ -172,32 +175,54 @@
     <script>
         let siteData = {};
 
-        async function fetchLiveUpdates() {
-            try {
-                const response = await fetch('./posts.json?t=' + new Date().getTime());
-                siteData = await response.json();
-                
-                // Load global settings
-                if(siteData.settings) {
-                    // 4. ફેરફાર: જો નોટિસ ખાલી હોય તો ડિફોલ્ટ મેસેજ બતાવે
-                    if(siteData.settings.headerNotice && siteData.settings.headerNotice.trim() !== "") {
-                        document.getElementById('marqueeAlertText').innerText = siteData.settings.headerNotice;
+        // Firebase Configuration (Same as admin panel)
+        const firebaseConfig = {
+            apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
+            authDomain: "gujarat-fast-alert.firebaseapp.com",
+            databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
+            projectId: "gujarat-fast-alert",
+            storageBucket: "gujarat-fast-alert.firebasestorage.app",
+            messagingSenderId: "395130500748",
+            appId: "1:395130500748:web:e6589f3a57812efad6ada9",
+            measurementId: "G-ZJN134J7EC"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Fetch updates LIVE from Firebase Cloud instead of json file
+        function fetchLiveUpdates() {
+            database.ref().on('value', (snapshot) => {
+                const rootData = snapshot.val() || {};
+                siteData = {};
+
+                // Map settings Node
+                if(rootData.settings) {
+                    if(rootData.settings.headerNotice && rootData.settings.headerNotice.trim() !== "") {
+                        document.getElementById('marqueeAlertText').innerText = rootData.settings.headerNotice;
                     } else {
-                        document.getElementById('marqueeAlertText').innerText = "🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે! નવી અપડેટ્સ ટૂંક સમયમાં મૂકવામાં આવશે.";
+                        document.getElementById('marqueeAlertText').innerText = "🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે!";
                     }
-                    
-                    // 1. ફેરફાર: ટાઇટલ હંમેશા ફક્ત "Gujarat Fast Alert" જ રહેશે
-                    document.getElementById('mainSiteTitle').innerHTML = 'Gujarat <span class="text-[#2b5797]">Fast Alert</span>';
                     document.title = "Gujarat Fast Alert";
+                    document.getElementById('mainSiteTitle').innerHTML = 'Gujarat <span class="text-[#2b5797]">Fast Alert</span>';
                 }
 
+                // Convert Firebase object maps to sorted Arrays for UI rendering
+                if(rootData.posts) {
+                    Object.keys(rootData.posts).forEach(cat => {
+                        const catObj = rootData.posts[cat];
+                        // Convert map object into array and reverse to keep newest post on top
+                        siteData[cat] = Object.keys(catObj).map(key => catObj[key]).reverse();
+                    });
+                }
+
+                // Render lists instantly
                 renderMainList('latest-jobs-list', 'latest-jobs-list-container');
                 renderMainList('articles-list', 'articles-list-container');
-            } catch (error) {
-                console.error("Error reading data file:", error);
+            }, (error) => {
+                console.error("Firebase Read Sync Error:", error);
                 document.getElementById('latest-jobs-list-container').innerHTML = '<p class="p-4 text-center font-normal text-slate-400">કોઈ નવી અપડેટ નથી.</p>';
                 document.getElementById('articles-list-container').innerHTML = '<p class="p-4 text-center font-normal text-slate-400">કોઈ નવી અપડેટ નથી.</p>';
-            }
+            });
         }
 
         function renderMainList(catName, containerId) {
@@ -205,7 +230,6 @@
             container.innerHTML = '';
             const posts = siteData[catName] || [];
             
-            // 2 અને 3. ફેરફાર: જો લિસ્ટમાં કઈ ન હોય તો "કોઈ નવી અપડેટ નથી" એવું દેખાશે
             if(posts.length === 0) { 
                 container.innerHTML = '<p class="p-4 text-center font-normal text-slate-400">કોઈ નવી અપડેટ નથી.</p>'; 
                 return; 
