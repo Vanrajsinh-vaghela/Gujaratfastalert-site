@@ -57,80 +57,89 @@
         <h2>🚀 Vanrajsinh Full-Access Panel</h2>
 
         <div class="tab-container">
-            <button class="tab-btn active" onclick="switchTab('post-tab')">📝 POST</button>
+            <button class="tab-btn active" onclick="switchTab('post-tab')">✏️ EDIT POST</button>
             <button class="tab-btn" onclick="switchTab('manage-tab')">⚙️ MANAGE</button>
             <button class="tab-btn" onclick="switchTab('settings-tab')">📢 SETTINGS</button>
             <button class="tab-btn" onclick="switchTab('editor-tab')">💻 EDITOR</button>
         </div>
 
         <div id="post-tab" class="tab-content active">
-            <h3 id="form-action-title" style="color: #2b5797; font-size: 16px; margin: 0;">Add New Live Update</h3>
-            
-            <label>1. Select Feed Location / Menu Grid:</label>
-            <select id="jobCategory">
-                <optgroup label="📝 Main Scroll Lists (નીચેની લાંબી યાદી)">
-                    <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ (List View)</option>
-                    <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ (List View)</option>
-                </optgroup>
+            <!-- Placeholder display when not editing anything -->
+            <div id="noEditPlaceholder" style="text-align: center; padding: 30px 10px; color: #718096;">
+                <p style="font-size: 16px; font-weight: bold; color: #e53e3e; margin-top: 0;">⚠️ નવી પોસ્ટ ઉમેરવાનો વિકલ્પ બંધ છે.</p>
+                <p style="font-size: 13px; line-height: 1.5; margin-bottom: 0;">કોઈપણ ચાલુ કે જૂની પોસ્ટમાં ફેરફાર કરવા માટે ઉપર આપેલા <b>⚙️ MANAGE</b> ટેબ પર જાઓ અને ત્યાંથી જે-તે પોસ્ટની નીચે આપેલા <b>✏️ Edit</b> બટન પર ક્લિક કરો.</p>
+            </div>
+
+            <!-- Form fields hidden until Edit Mode is triggered -->
+            <div id="editFormContainer" style="display: none;">
+                <h3 id="form-action-title" style="color: #2b5797; font-size: 16px; margin: 0;">✏️ Editing Live Post Model</h3>
                 
-                <optgroup label="🎓 શિક્ષણ અને સરકારી નોકરી Grid">
-                    <option value="govt-jobs">💼 Govt Jobs</option>
-                    <option value="syllabus">📋 Syllabus</option>
-                    <option value="answer-key">🔑 Answer Key</option>
-                    <option value="result">🏆 Result</option>
-                    <option value="admit-card">🎟️ Admit Card</option>
-                    <option value="prev-papers">📄 Prev. Papers</option>
-                    <option value="scholarship">🎓 Scholarship</option>
-                    <option value="edu-news">📰 Edu News</option>
-                </optgroup>
+                <label>1. Select Feed Location / Menu Grid:</label>
+                <select id="jobCategory">
+                    <optgroup label="📝 Main Scroll Lists (નીચેની લાંબી યાદી)">
+                        <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ (List View)</option>
+                        <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ (List View)</option>
+                    </optgroup>
+                    
+                    <optgroup label="🎓 શિક્ષણ અને સરકારી નોકરી Grid">
+                        <option value="govt-jobs">💼 Govt Jobs</option>
+                        <option value="syllabus">📋 Syllabus</option>
+                        <option value="answer-key">🔑 Answer Key</option>
+                        <option value="result">🏆 Result</option>
+                        <option value="admit-card">🎟️ Admit Card</option>
+                        <option value="prev-papers">📄 Prev. Papers</option>
+                        <option value="scholarship">🎓 Scholarship</option>
+                        <option value="edu-news">📰 Edu News</option>
+                    </optgroup>
 
-                <optgroup label="🏛️ યોજના અને સમાચાર Grid">
-                    <option value="govt-schemes">🏛️ સરકારી યોજના</option>
-                    <option value="current-affairs">📅 Current Affairs</option>
-                    <option value="gujarati-news">🗣️ Gujarati News</option>
-                </optgroup>
+                    <optgroup label="🏛️ યોજના અને સમાચાર Grid">
+                        <option value="govt-schemes">🏛️ સરકારી યોજના</option>
+                        <option value="current-affairs">📅 Current Affairs</option>
+                        <option value="gujarati-news">🗣️ Gujarati News</option>
+                    </optgroup>
 
-                <optgroup label="🧮 ગાઈડ અને કેલ્ક્યુલેટર Grid">
-                    <option value="howto-guides">ℹ️ How-to Guides</option>
-                    <option value="calculators">🧮 Calculators</option>
-                    <option value="finance-tax">💰 Finance & Tax</option>
-                </optgroup>
+                    <optgroup label="🧮 ગાઈડ અને કેલ્ક્યુલેટર Grid">
+                        <option value="howto-guides">ℹ️ How-to Guides</option>
+                        <option value="calculators">🧮 Calculators</option>
+                        <option value="finance-tax">💰 Finance & Tax</option>
+                    </optgroup>
 
-                <optgroup label="💡 ઓનલાઈન બિલ પેમેન્ટ Grid">
-                    <option value="ugvcl-bill">💡 UGVCL Bill</option>
-                    <option value="gujarat-gas">🔥 Gujarat Gas</option>
-                    <option value="pgvcl-bill">⚡ PGVCL Bill</option>
-                    <option value="mgvcl-bill">🔌 MGVCL Bill</option>
-                </optgroup>
+                    <optgroup label="💡 ઓનલાઈન બિલ પેમેન્ટ Grid">
+                        <option value="ugvcl-bill">💡 UGVCL Bill</option>
+                        <option value="gujarat-gas">🔥 Gujarat Gas</option>
+                        <option value="pgvcl-bill">⚡ PGVCL Bill</option>
+                        <option value="mgvcl-bill">🔌 MGVCL Bill</option>
+                    </optgroup>
 
-                <optgroup label="🍿 મનોરંજન અને ટેકનોલોજી Grid">
-                    <option value="tech-news">🤖 Tech News</option>
-                    <option value="movie-ott">🍿 Movie & OTT</option>
-                    <option value="web-series">🎬 Web Series</option>
-                    <option value="auto-news">🚗 Auto News</option>
-                    <option value="cricket-ipl">🏏 Cricket / IPL</option>
-                    <option value="health-tips">🍏 Health Tips</option>
-                    <option value="wishes-quotes">🎉 Wishes & Quotes</option>
-                </optgroup>
-            </select>
+                    <optgroup label="🍿 મનોરંજન અને ટેકનોલોજી Grid">
+                        <option value="tech-news">🤖 Tech News</option>
+                        <option value="movie-ott">🍿 Movie & OTT</option>
+                        <option value="web-series">🎬 Web Series</option>
+                        <option value="auto-news">🚗 Auto News</option>
+                        <option value="cricket-ipl">🏏 Cricket / IPL</option>
+                        <option value="health-tips">🍏 Health Tips</option>
+                        <option value="wishes-quotes">🎉 Wishes & Quotes</option>
+                    </optgroup>
+                </select>
 
-            <label>2. Badge Text (e.g. GSSSB, GPSC, LRD, NEW):</label>
-            <input type="text" id="jobTag" placeholder="GSSSB, GPSC ya NEW...">
+                <label>2. Badge Text (e.g. GSSSB, GPSC, LRD, NEW):</label>
+                <input type="text" id="jobTag" placeholder="GSSSB, GPSC ya NEW...">
 
-            <label>3. Post Main Title Text (Gujarati/English):</label>
-            <input type="text" id="jobTitle" placeholder="Bharti / Notice nu નામ લખો...">
+                <label>3. Post Main Title Text (Gujarati/English):</label>
+                <input type="text" id="jobTitle" placeholder="Bharti / Notice nu નામ લખો...">
 
-            <label>4. Sub-Text / Last Date / Alert Info:</label>
-            <input type="text" id="jobMeta" placeholder="Last Date: 21-07-2026 ya Click Here">
+                <label>4. Sub-Text / Last Date / Alert Info:</label>
+                <input type="text" id="jobMeta" placeholder="Last Date: 21-07-2026 ya Click Here">
 
-            <label>5. Destination Target URL (GitHub HTML Page Link):</label>
-            <input type="url" id="jobLink" placeholder="https://gujaratfastalert.in/...">
+                <label>5. Destination Target URL (GitHub HTML Page Link):</label>
+                <input type="url" id="jobLink" placeholder="https://gujaratfastalert.in/...">
 
-            <input type="hidden" id="editingPostId" value="">
-            <input type="hidden" id="editingCategory" value="">
+                <input type="hidden" id="editingPostId" value="">
+                <input type="hidden" id="editingCategory" value="">
 
-            <button id="submitBtn" class="btn-orange" onclick="publishPost()">🔥 Push Live to Gujaratfastalert.in</button>
-            <button id="cancelEditBtn" class="btn-red" style="display:none; margin-top:10px;" onclick="cancelEditing()">Cancel Edit Mode</button>
+                <button id="submitBtn" class="btn-blue" onclick="publishPost()">💾 Save Changes Live</button>
+                <button id="cancelEditBtn" class="btn-red" style="display:none; margin-top:10px;" onclick="cancelEditing()">Cancel Edit Mode</button>
+            </div>
         </div>
 
         <div id="manage-tab" class="tab-content">
@@ -188,7 +197,6 @@
     </div>
 
     <script>
-        // 🔑 PASS PIN CODE MATRIX (DEFAULT: 1234567)
         const MY_SECRET_PIN = "1465822"; 
 
         const firebaseConfig = {
@@ -281,6 +289,7 @@
             const editingPostId = document.getElementById('editingPostId').value;
             const oldCategory = document.getElementById('editingCategory').value;
 
+            if(!editingPostId) { alert("Error: Direct new posts are disabled! Please use Manage tab to edit."); return; }
             if(!title || !link) { alert("Error: Title and Link are mandatory fields!"); return; }
 
             if(editingPostId) {
@@ -291,10 +300,6 @@
                     database.ref('posts/' + category + '/' + editingPostId).update({ tag, title, meta, link });
                 }
                 alert("Post successfully Updated! 🎉"); cancelEditing(); loadCategoryPosts();
-            } else {
-                database.ref('posts/' + category).push().set({ tag, title, meta, link, timestamp: Date.now() }).then(() => {
-                    alert("Post is now LIVE instantly! 🎉"); clearForm();
-                });
             }
         }
 
@@ -322,6 +327,9 @@
         }
 
         function startEditing(id, category, post) {
+            document.getElementById('noEditPlaceholder').style.display = 'none';
+            document.getElementById('editFormContainer').style.display = 'block';
+
             document.getElementById('editingPostId').value = id;
             document.getElementById('editingCategory').value = category;
             document.getElementById('jobCategory').value = category;
@@ -339,10 +347,9 @@
         function cancelEditing() {
             document.getElementById('editingPostId').value = '';
             document.getElementById('editingCategory').value = ''; clearForm();
-            document.getElementById('form-action-title').innerText = "Add New Live Update";
-            document.getElementById('submitBtn').innerText = "🔥 Push Live to Gujaratfastalert.in";
-            document.getElementById('submitBtn').className = "btn-orange";
             document.getElementById('cancelEditBtn').style.display = 'none';
+            document.getElementById('editFormContainer').style.display = 'none';
+            document.getElementById('noEditPlaceholder').style.display = 'block';
         }
 
         function deletePost(id, category) {
