@@ -144,7 +144,7 @@
                 <span>🔥 લેટેસ્ટ સરકારી નોકરીઓ</span>
                 <span class="text-[10px] opacity-90">બધું જુઓ →</span>
             </div>
-            <div id="latest-jobs-list-container" class="p-2 divide-y divide-slate-100 text-xs font-bold text-slate-700">
+            <div id="latest-jobs-list-container" class="divide-y divide-slate-100 text-xs font-bold text-slate-700">
                 <div class="p-4 text-slate-400 text-center font-normal">Loading...</div>
             </div>
         </div>
@@ -154,7 +154,7 @@
                 <span>📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</span>
                 <span class="text-[10px] opacity-90">બધું જુઓ →</span>
             </div>
-            <div id="articles-list-container" class="p-2 divide-y divide-slate-100 text-xs font-bold text-slate-700">
+            <div id="articles-list-container" class="divide-y divide-slate-100 text-xs font-bold text-slate-700">
                 <div class="p-4 text-slate-400 text-center font-normal">Loading...</div>
             </div>
         </div>
@@ -175,7 +175,6 @@
     <script>
         let siteData = {};
 
-        // Firebase Configuration (Same as admin panel)
         const firebaseConfig = {
             apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
             authDomain: "gujarat-fast-alert.firebaseapp.com",
@@ -189,13 +188,25 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Fetch updates LIVE from Firebase Cloud instead of json file
+        // સ્માર્ટ ફંક્શન: લિંકના ટાઈપિંગમાં ભૂલો હશે તો જાતે જ સુધારી દેશે
+        function fixLink(link) {
+            if (!link || link === '#') return '#';
+            let l = link.trim();
+            if (l.startsWith('http://') || l.startsWith('https://') || l.startsWith('./') || l.startsWith('/')) {
+                return l;
+            }
+            if (l.startsWith('gujaratfastalert.in')) {
+                let cleaned = l.replace(/^gujaratfastalert\.in\.?\/?/, 'gujaratfastalert.in/');
+                return 'https://' + cleaned;
+            }
+            return './' + l;
+        }
+
         function fetchLiveUpdates() {
             database.ref().on('value', (snapshot) => {
                 const rootData = snapshot.val() || {};
                 siteData = {};
 
-                // Map settings Node
                 if(rootData.settings) {
                     if(rootData.settings.headerNotice && rootData.settings.headerNotice.trim() !== "") {
                         document.getElementById('marqueeAlertText').innerText = rootData.settings.headerNotice;
@@ -206,22 +217,17 @@
                     document.getElementById('mainSiteTitle').innerHTML = 'Gujarat <span class="text-[#2b5797]">Fast Alert</span>';
                 }
 
-                // Convert Firebase object maps to sorted Arrays for UI rendering
                 if(rootData.posts) {
                     Object.keys(rootData.posts).forEach(cat => {
                         const catObj = rootData.posts[cat];
-                        // Convert map object into array and reverse to keep newest post on top
                         siteData[cat] = Object.keys(catObj).map(key => catObj[key]).reverse();
                     });
                 }
 
-                // Render lists instantly
                 renderMainList('latest-jobs-list', 'latest-jobs-list-container');
                 renderMainList('articles-list', 'articles-list-container');
             }, (error) => {
-                console.error("Firebase Read Sync Error:", error);
-                document.getElementById('latest-jobs-list-container').innerHTML = '<p class="p-4 text-center font-normal text-slate-400">કોઈ નવી અપડેટ નથી.</p>';
-                document.getElementById('articles-list-container').innerHTML = '<p class="p-4 text-center font-normal text-slate-400">કોઈ નવી અપડેટ નથી.</p>';
+                console.error("Firebase Sync Error:", error);
             });
         }
 
@@ -237,13 +243,13 @@
             
             posts.forEach((post) => {
                 container.innerHTML += `
-                    <div class="p-3 flex justify-between items-center hover:bg-slate-50 transition">
-                        <a href="${post.link}" target="_blank" class="hover:text-blue-700 pr-2 leading-tight flex items-start gap-1.5">
+                    <a href="${fixLink(post.link)}" target="_blank" class="p-3 flex justify-between items-center hover:bg-slate-50 transition text-slate-700 hover:text-blue-700 border-b border-slate-100 last:border-none w-full">
+                        <div class="pr-2 leading-tight flex items-start gap-1.5 font-bold">
                             <span class="text-red-500 shrink-0">📌</span>
                             <span>${post.title}</span>
-                        </a>
+                        </div>
                         <span class="text-[9px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-black shrink-0 tracking-wider">${post.tag || 'NEW'}</span>
-                    </div>`;
+                    </a>`;
             });
         }
 
@@ -259,10 +265,12 @@
             if(matches.length === 0) { tc.innerHTML = '<p class="text-xs text-rose-500 p-2 font-normal">આ સેક્શનમાં અત્યારે કોઈ માહિતી નથી.</p>'; return; }
             matches.forEach((post) => {
                 tc.innerHTML += `
-                    <div class="py-2.5 flex items-start gap-2 text-xs">
-                        <span class="bg-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black shrink-0">${post.tag || 'ALERT'}</span>
-                        <a href="${post.link}" target="_blank" class="text-blue-900 hover:text-orange-600 font-bold leading-normal">${post.title} <span class="text-slate-400 font-medium text-[10px] ml-1">(${post.meta || 'View'})</span></a>
-                    </div>`;
+                    <a href="${fixLink(post.link)}" target="_blank" class="py-2.5 px-1 flex items-center justify-between gap-2 text-xs border-b border-slate-100 last:border-none hover:bg-orange-50/50 rounded-lg transition text-blue-900 hover:text-orange-600 font-bold w-full">
+                        <div class="flex items-start gap-2">
+                            <span class="bg-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black shrink-0">${post.tag || 'ALERT'}</span>
+                            <span class="leading-normal">${post.title} <span class="text-slate-400 font-medium text-[10px] ml-1">(${post.meta || 'View'})</span></span>
+                        </div>
+                    </a>`;
             });
         }
 
