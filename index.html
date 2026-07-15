@@ -11,8 +11,6 @@
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5297812051188062" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
     <style>
         body { background-color: #f4f7fa; -webkit-tap-highlight-color: transparent; }
@@ -30,7 +28,7 @@
             <span class="bg-red-600 px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mr-3 shrink-0 animate-pulse">BREAKING</span>
             <div class="overflow-hidden relative w-full h-5">
                 <div class="marquee-text absolute font-medium" id="marqueeAlertText">
-                    🚨 Loading live system ticker alert from admin control panel...
+                    🚨 Loading live updates...
                 </div>
             </div>
         </div>
@@ -102,7 +100,7 @@
         </div>
 
         <div>
-            <h3 class="text-sm font-black text-slate-700 mb-2 flex items-center gap-1.5">⚡ ઓનલાઈન બિલ પેમેન્ટ</h3>
+            <h3 class="text-sm font-black text-slate-700 mb-2 flex items-center gap-1.5">💡 ઓનલાઈન બિલ પેમેન્ટ</h3>
             <div class="grid grid-cols-4 gap-2 text-[10px] font-bold text-slate-700">
                 <div onclick="filterCategory('ugvcl-bill', '💡 UGVCL Bill')" class="grid-card"><div>💡</div><div class="mt-1">UGVCL Bill</div></div>
                 <div onclick="filterCategory('gujarat-gas', '🔥 Gujarat Gas')" class="grid-card"><div>🔥</div><div class="mt-1">Gujarat Gas</div></div>
@@ -134,7 +132,7 @@
                 <span class="text-[10px] opacity-90">બધું જુઓ →</span>
             </div>
             <div id="latest-jobs-list-container" class="p-2 divide-y divide-slate-100 text-xs font-bold text-slate-700">
-                <div class="p-4 text-slate-400 text-center font-normal">Syncing live server nodes...</div>
+                <div class="p-4 text-slate-400 text-center font-normal">Loading...</div>
             </div>
         </div>
 
@@ -144,7 +142,7 @@
                 <span class="text-[10px] opacity-90">બધું જુઓ →</span>
             </div>
             <div id="articles-list-container" class="p-2 divide-y divide-slate-100 text-xs font-bold text-slate-700">
-                <div class="p-4 text-slate-400 text-center font-normal">Syncing live server nodes...</div>
+                <div class="p-4 text-slate-400 text-center font-normal">Loading...</div>
             </div>
         </div>
 
@@ -162,85 +160,75 @@
     </footer>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
-            authDomain: "gujarat-fast-alert.firebaseapp.com",
-            databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
-            projectId: "gujarat-fast-alert",
-            storageBucket: "gujarat-fast-alert.firebasestorage.app",
-            messagingSenderId: "395130500748",
-            appId: "1:395130500748:web:e6589f3a57812efad6ada9",
-            measurementId: "G-ZJN134J7EC"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        let siteData = {};
 
-        // Sync Global Admin Settings
-        function syncGlobalSettings() {
-            database.ref('settings').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if(data) {
-                    if(data.headerNotice) document.getElementById('marqueeAlertText').innerText = data.headerNotice;
-                    if(data.siteTitle) {
-                        document.title = data.siteTitle;
-                        let stylizedTitle = data.siteTitle.includes("Fast Alert") ? data.siteTitle.replace("Fast Alert", '<span class="text-[#2b5797]">Fast Alert</span>') : data.siteTitle;
+        // Fetch unified posts.json hosted on GitHub alongside index.html
+        async function fetchLiveUpdates() {
+            try {
+                const response = await fetch('./posts.json?t=' + new Date().getTime()); // Anti-cache query string
+                siteData = await response.json();
+                
+                // Load global settings
+                if(siteData.settings) {
+                    if(siteData.settings.headerNotice) {
+                        document.getElementById('marqueeAlertText').innerText = siteData.settings.headerNotice;
+                    }
+                    if(siteData.settings.siteTitle) {
+                        document.title = siteData.settings.siteTitle;
+                        let stylizedTitle = siteData.settings.siteTitle.includes("Fast Alert") ? siteData.settings.siteTitle.replace("Fast Alert", '<span class="text-[#2b5797]">Fast Alert</span>') : siteData.settings.siteTitle;
                         document.getElementById('mainSiteTitle').innerHTML = stylizedTitle;
                     }
                 }
+
+                // Render lists
+                renderMainList('latest-jobs-list', 'latest-jobs-list-container');
+                renderMainList('articles-list', 'articles-list-container');
+            } catch (error) {
+                console.error("Error reading data file:", error);
+                document.getElementById('latest-jobs-list-container').innerHTML = '<p class="p-4 text-center font-normal text-rose-500">Error sync mapping files.</p>';
+            }
+        }
+
+        function renderMainList(catName, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            const posts = siteData[catName] || [];
+            if(posts.length === 0) { container.innerHTML = '<p class="p-4 text-center font-normal text-slate-400">No active posts.</p>'; return; }
+            posts.forEach((post) => {
+                container.innerHTML += `
+                    <div class="p-3 flex justify-between items-center hover:bg-slate-50 transition">
+                        <a href="${post.link}" target="_blank" class="hover:text-blue-700 pr-2 leading-tight flex items-start gap-1.5">
+                            <span class="text-red-500 shrink-0">📌</span>
+                            <span>${post.title}</span>
+                        </a>
+                        <span class="text-[9px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-black shrink-0 tracking-wider">${post.tag || 'NEW'}</span>
+                    </div>`;
             });
         }
 
-        // Live Dynamic Listener for Bottom Main Scroll Lists
-        function listenMainList(catName, containerId) {
-            database.ref('posts/' + catName).orderByChild('timestamp').limitToLast(12).on('value', (snapshot) => {
-                const container = document.getElementById(containerId);
-                container.innerHTML = '';
-                let posts = [];
-                snapshot.forEach((child) => { posts.unshift(child.val()); });
-                if(posts.length === 0) { container.innerHTML = '<p class="p-4 text-center font-normal text-slate-400">No active posts.</p>'; return; }
-                posts.forEach((post) => {
-                    container.innerHTML += `
-                        <div class="p-3 flex justify-between items-center hover:bg-slate-50 transition">
-                            <a href="${post.link}" target="_blank" class="hover:text-blue-700 pr-2 leading-tight flex items-start gap-1.5">
-                                <span class="text-red-500 shrink-0">📌</span>
-                                <span>${post.title}</span>
-                            </a>
-                            <span class="text-[9px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-black shrink-0 tracking-wider">${post.tag || 'NEW'}</span>
-                        </div>`;
-                });
-            });
-        }
-
-        // Grid Button Click Popup Filter Mechanism
         function filterCategory(categorySlug, displayTitle) {
             const fb = document.getElementById('filterViewBlock');
             const tc = document.getElementById('filter-content-target');
             document.getElementById('filterViewTitle').innerText = displayTitle;
             fb.classList.remove('hidden');
             fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            tc.innerHTML = '<p class="text-xs text-slate-400 p-2">Syncing database stream...</p>';
+            tc.innerHTML = '';
             
-            database.ref('posts/' + categorySlug).orderByChild('timestamp').limitToLast(20).once('value', (snapshot) => {
-                tc.innerHTML = '';
-                let matches = [];
-                snapshot.forEach((child) => { matches.unshift(child.val()); });
-                if(matches.length === 0) { tc.innerHTML = '<p class="text-xs text-rose-500 p-2 font-normal">Is grid section me abhi koi active post nahi h.</p>'; return; }
-                matches.forEach((post) => {
-                    tc.innerHTML += `
-                        <div class="py-2.5 flex items-start gap-2 text-xs">
-                            <span class="bg-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black shrink-0">${post.tag || 'ALERT'}</span>
-                            <a href="${post.link}" target="_blank" class="text-blue-900 hover:text-orange-600 font-bold leading-normal">${post.title} <span class="text-slate-400 font-medium text-[10px] ml-1">(${post.meta || 'View'})</span></a>
-                        </div>`;
-                });
+            const matches = siteData[categorySlug] || [];
+            if(matches.length === 0) { tc.innerHTML = '<p class="text-xs text-rose-500 p-2 font-normal">Is grid section me abhi koi active post nahi h.</p>'; return; }
+            matches.forEach((post) => {
+                tc.innerHTML += `
+                    <div class="py-2.5 flex items-start gap-2 text-xs">
+                        <span class="bg-orange-500 text-white text-[9px] px-1.5 py-0.5 rounded font-black shrink-0">${post.tag || 'ALERT'}</span>
+                        <a href="${post.link}" target="_blank" class="text-blue-900 hover:text-orange-600 font-bold leading-normal">${post.title} <span class="text-slate-400 font-medium text-[10px] ml-1">(${post.meta || 'View'})</span></a>
+                    </div>`;
             });
         }
 
         function closeFilterView() { document.getElementById('filterViewBlock').classList.add('hidden'); }
 
         window.onload = function() {
-            syncGlobalSettings();
-            listenMainList('latest-jobs-list', 'latest-jobs-list-container');
-            listenMainList('articles-list', 'articles-list-container');
+            fetchLiveUpdates();
         }
     </script>
 </body>
