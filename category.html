@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJN134J7EC"></script>
@@ -14,10 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Gujarat Fast Alert - Category Updates</title>
     
-    <!-- Premium Fonts & Tailwind CSS -->
+    <!-- Premium Google Fonts & Tailwind CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Gujarati:wght@500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Firebase SDK Links -->
@@ -34,21 +34,22 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col items-center pb-12">
 
-    <!-- Top Navigation Header -->
-    <div class="w-full bg-slate-900 text-white py-3 px-4 shadow-md sticky top-0 z-50">
-        <div class="max-w-lg mx-auto flex justify-between items-center">
-            <a href="./index.html" class="flex items-center gap-1.5 text-xs font-bold bg-slate-800 hover:bg-slate-700 text-orange-400 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-                ⬅ હોમ પેજ (Home)
+    <!-- Top Navigation Header with Highlighted Back Button -->
+    <div class="w-full bg-slate-900 text-white py-3 px-4 shadow-lg sticky top-0 z-50 border-b border-slate-800">
+        <div class="max-w-lg mx-auto flex justify-between items-center gap-2">
+            <!-- Prominent Back to Home Button with Orange Border Lining -->
+            <a href="./index.html" class="flex items-center gap-2 text-xs md:text-sm font-extrabold bg-orange-500/15 text-orange-400 hover:bg-orange-500 hover:text-white px-4 py-2 rounded-xl border-2 border-orange-500 shadow-md transition-all active:scale-95 shrink-0">
+                ⬅ Back to Home
             </a>
-            <span class="text-xs font-extrabold tracking-wider text-slate-300">GUJARAT FAST ALERT</span>
+            <span class="text-xs md:text-sm font-extrabold tracking-wider text-slate-200 uppercase truncate">GUJARAT FAST ALERT</span>
         </div>
     </div>
 
-    <!-- Category Header Card -->
+    <!-- Category Banner Card -->
     <div class="w-full max-w-lg px-4 mt-6">
-        <div class="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white p-5 rounded-2xl shadow-md text-center">
+        <div class="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white p-6 rounded-2xl shadow-md text-center border border-orange-400/30">
             <h1 id="catHeaderTitle" class="text-xl md:text-2xl font-extrabold tracking-tight">Loading Updates...</h1>
-            <p class="text-xs font-semibold opacity-90 mt-1">ગુજરાત ફાસ્ટ એલર્ટ - તમામ તાજેતરની માહિતી</p>
+            <p class="text-xs font-semibold opacity-95 mt-1.5 text-amber-100">Gujarat Fast Alert - Official Educational & Utility Portal</p>
         </div>
     </div>
 
@@ -56,16 +57,26 @@
     <div class="w-full max-w-lg px-4 mt-6">
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
             <div id="category-posts-list" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
-                <div class="p-8 text-center text-slate-400 font-semibold">અપડેટ્સ લોડ થઈ રહ્યા છે...</div>
+                <div class="p-8 text-center text-slate-400 font-semibold">Loading category updates...</div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="w-full bg-slate-900 text-slate-400 py-8 px-6 text-xs text-center border-t border-slate-800 mt-12">
-        <p class="font-extrabold text-slate-200 mb-1.5">© 2026-27, Vanrajsinh Vaghela ®</p>
-        <p class="opacity-75 max-w-md mx-auto mb-4">Gujarat Fast Alert - Gujarat's No. 01 Educational News Portal</p>
-        <a href="./index.html" class="text-orange-400 font-bold hover:underline">← પાછા હોમ પેજ પર જાઓ</a>
+    <!-- Footer with AdSense Mandatory Links -->
+    <footer class="w-full bg-slate-900 text-slate-400 py-10 px-6 text-xs text-center border-t border-slate-800 mt-12">
+        <p class="font-extrabold text-slate-200 mb-1.5 text-sm">© 2026-27, Vanrajsinh Vaghela ®</p>
+        <p class="opacity-75 max-w-md mx-auto mb-5 leading-relaxed">⚠️ Disclaimer: Gujarat Fast Alert is an independent portal and is not affiliated with OJAS or any government authority.</p>
+        
+        <div class="flex justify-center gap-3 text-slate-300 font-bold text-xs flex-wrap mb-4">
+            <a href="./about.html" class="hover:text-orange-400 transition">About Us</a><span>|</span>
+            <a href="./contact.html" class="hover:text-orange-400 transition">Contact Us</a><span>|</span>
+            <a href="./privacy.html" class="hover:text-orange-400 transition">Privacy Policy</a><span>|</span>
+            <a href="./disclaimer.html" class="hover:text-orange-400 transition">Disclaimer</a>
+        </div>
+
+        <div>
+            <a href="./index.html" class="inline-block text-orange-400 font-extrabold hover:underline">← Back to Main Home Page</a>
+        </div>
     </footer>
 
     <!-- Firebase Logic -->
@@ -83,40 +94,41 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Get Category from URL
+        // Fetch Category Parameter from URL
         const urlParams = new URLSearchParams(window.location.search);
         const categorySlug = urlParams.get('c') || 'latest-jobs-list';
 
+        // English Category Header Titles
         const categoryTitles = {
-            'govt-jobs': '💼 સરકારી નોકરીઓ (Govt Jobs)',
-            'syllabus': '📋 સિલેબસ (Syllabus)',
-            'answer-key': '🔑 આન્સર કી (Answer Key)',
-            'result': '🏆 રીઝલ્ટ (Result)',
-            'admit-card': '🎟️ કૉલ લેટર (Admit Card)',
-            'prev-papers': '📄 જૂના પેપર્સ (Prev. Papers)',
-            'scholarship': '🎓 સ્કોલરશીપ (Scholarship)',
-            'edu-news': '📰 શૈક્ષણિક સમાચાર (Edu News)',
-            'govt-schemes': '🏛️ સરકારી યોજનાઓ',
-            'current-affairs': '📅 કરંટ અફેર્સ',
-            'gujarati-news': '🗣️ ગુજરાત ન્યૂઝ',
-            'howto-guides': 'ℹ️ હાઉ-ટુ ગાઈડ્સ',
-            'calculators': '🧮 કેલ્ક્યુલેટર્સ',
-            'finance-tax': '💰 ફાઈનાન્સ અને ટેક્સ',
-            'ugvcl-bill': '💡 UGVCL બિલ પેમેન્ટ',
-            'gujarat-gas': '🔥 ગુજરાત ગેસ પેમેન્ટ',
-            'pgvcl-bill': '⚡ PGVCL બિલ પેમેન્ટ',
-            'mgvcl-bill': '🔌 MGVCL બિલ પેમેન્ટ',
-            'tech-news': '🤖 ટેકનોલોજી ન્યૂઝ',
-            'movie-ott': '🍿 મૂવી અને OTT',
-            'web-series': '🎬 વેબ સિરીઝ',
-            'auto-news': '🚗 ઓટોમોબાઈલ ન્યૂઝ',
-            'cricket-ipl': '🏏 ક્રિકેટ સમાચાર',
-            'health-tips': '🍏 હેલ્થ ટિપ્સ',
-            'wishes-quotes': '🎉 શુભકામનાઓ અને સુવિચાર',
-            'schemes-list': '🔗 ડાયરેક્ટ ઓનલાઈન સેવાઓ અને યોજનાઓ',
-            'news-list': '📰 તાજા સમાચાર અને મહત્વની અપડેટ્સ',
-            'latest-jobs-list': '🔥 લેટેસ્ટ સરકારી નોકરીઓ (OJAS / GPSC)',
-            'articles-list': '📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ'
+            'govt-jobs': '💼 Government Jobs (OJAS / GPSC)',
+            'syllabus': '📋 Exam Syllabus & Pattern',
+            'answer-key': '🔑 Official Answer Keys',
+            'result': '🏆 Exam Results & Merit Lists',
+            'admit-card': '🎟️ Call Letters & Admit Cards',
+            'prev-papers': '📄 Previous Year Question Papers',
+            'scholarship': '🎓 Educational Scholarships',
+            'edu-news': '📰 Educational News & Updates',
+            'govt-schemes': '🏛️ Government Schemes & Welfare',
+            'current-affairs': '📅 Daily Current Affairs',
+            'gujarati-news': '🗣️ Gujarat Latest News',
+            'howto-guides': 'ℹ️ How-to Online Guides',
+            'calculators': '🧮 Utility Calculators',
+            'finance-tax': '💰 Finance & Tax Updates',
+            'ugvcl-bill': '💡 UGVCL Bill Payment',
+            'gujarat-gas': '🔥 Gujarat Gas Bill Payment',
+            'pgvcl-bill': '⚡ PGVCL Bill Payment',
+            'mgvcl-bill': '🔌 MGVCL Bill Payment',
+            'tech-news': '🤖 Technology News',
+            'movie-ott': '🍿 Movies & OTT Releases',
+            'web-series': '🎬 Web Series Updates',
+            'auto-news': '🚗 Automobile News',
+            'cricket-ipl': '🏏 Cricket & IPL Updates',
+            'health-tips': '🍏 Health & Wellness Tips',
+            'wishes-quotes': '🎉 Daily Wishes & Quotes',
+            'schemes-list': '🔗 Direct Online Services & Schemes',
+            'news-list': '📰 Breaking News & Top Updates',
+            'latest-jobs-list': '🔥 Top Latest Govt Jobs',
+            'articles-list': '📰 Articles & General Info'
         };
 
         function fixLink(link) {
@@ -133,7 +145,7 @@
         }
 
         function loadCategoryPosts() {
-            const displayTitle = categoryTitles[categorySlug] || 'માહિતી અને અપડેટ્સ';
+            const displayTitle = categoryTitles[categorySlug] || 'Category Updates';
             document.getElementById('catHeaderTitle').innerText = displayTitle;
             document.getElementById('pageTitle').innerText = displayTitle + ' - Gujarat Fast Alert';
 
@@ -144,9 +156,13 @@
 
                 if (!postsObj) {
                     container.innerHTML = `
-                        <div class="p-8 text-center text-slate-500 font-semibold">
-                            અત્યારે આ કેટેગરીમાં કોઈ માહિતી ઉપલબ્ધ નથી.<br>
-                            <a href="./index.html" class="inline-block mt-3 text-xs bg-orange-500 text-white px-4 py-2 rounded-lg font-bold">← હોમ પેજ પર પાછા જાઓ</a>
+                        <div class="p-10 text-center text-slate-500 font-semibold">
+                            <div class="text-4xl mb-3">📂</div>
+                            <p class="text-base text-slate-800 font-extrabold">No updates available in this category right now.</p>
+                            <p class="text-xs text-slate-400 mt-1">Please check back later or explore other sections.</p>
+                            <a href="./index.html" class="inline-flex items-center gap-2 mt-6 text-xs md:text-sm bg-orange-500 hover:bg-orange-600 text-white border-2 border-orange-600 px-5 py-2.5 rounded-xl font-extrabold shadow-md transition active:scale-95">
+                                ← Back to Home Page
+                            </a>
                         </div>`;
                     return;
                 }
