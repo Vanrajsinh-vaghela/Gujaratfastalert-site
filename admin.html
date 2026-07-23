@@ -3,160 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gujarat Fast Alert - Pro Admin Panel</title>
+    <title>Gujarat Fast Alert - Golden Pro Admin Panel</title>
     
-    <!-- Google Fonts & Tailwind CSS CDN -->
+    <!-- Tailwind CSS & Firebase SDK -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
     <style>
-        body { background-color: #f4f7fa; font-family: system-ui, -apple-system, sans-serif; }
+        :root {
+            --bg-dark: #0b0f19;
+            --card-dark: #131b2e;
+            --card-border: #1e293b;
+            --input-bg: #0f172a;
+            --gold-start: #eab308;
+            --gold-end: #ca8a04;
+        }
+        body { 
+            background-color: var(--bg-dark); 
+            color: #f1f5f9; 
+            font-family: system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        /* Custom styling for active tab button */
+        
+        /* Premium Golden Button Style (As requested in SS) */
+        .btn-gold {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            color: #000000;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+            border: 1px solid #fef08a;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-gold:hover {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+        .btn-gold:active {
+            transform: translateY(1px);
+        }
+
+        .dark-card {
+            background-color: var(--card-dark);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+        }
+
+        .dark-input {
+            background-color: var(--input-bg);
+            border: 1px solid #334155;
+            color: #f8fafc;
+        }
+        .dark-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+        }
+
         .tab-btn.active {
-            background-color: #2b5797;
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #000000;
+            font-weight: 800;
         }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex items-center justify-center p-4 md:p-6">
+<body class="min-h-screen flex items-center justify-center p-3 md:p-6">
 
     <!-- 🔒 SECURITY LOCK SCREEN -->
-    <div id="pinScreen" class="w-full max-w-md bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-slate-100 text-center transition-all">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-50 text-blue-600 rounded-full text-2xl mb-4">
+    <div id="pinScreen" class="w-full max-w-md dark-card p-6 md:p-8 text-center transition-all shadow-2xl">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-amber-500/10 text-amber-400 rounded-2xl text-3xl mb-4 border border-amber-500/20">
             🔒
         </div>
-        <h2 class="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Vanraj Security Lock</h2>
-        <p class="text-xs text-slate-500 mt-1 mb-6">કંટ્રોલ પેનલ ઓપન કરવા માટે 7-અંકનો સિક્યોરિટી PIN દાખલ કરો:</p>
+        <h2 class="text-2xl font-black text-white tracking-tight">Vanraj Security Lock</h2>
+        <p class="text-xs text-slate-400 mt-1 mb-6">કંટ્રોલ પેનલ ઓપન કરવા માટે 7-અંકનો PIN દાખલ કરો:</p>
         
         <input type="password" inputmode="numeric" pattern="[0-9]*" id="adminPinInput" maxlength="7" placeholder="•••••••" 
-            class="w-full text-center text-3xl tracking-[12px] font-extrabold py-3 bg-slate-50 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-600 focus:bg-white transition-all mb-4">
+            class="w-full text-center text-3xl tracking-[12px] font-extrabold py-3.5 dark-input rounded-xl mb-5">
         
-        <button onclick="checkAdminPin()" 
-            class="w-full py-3.5 bg-gradient-to-r from-[#2b5797] to-blue-700 text-white font-bold rounded-xl shadow-md shadow-blue-200 hover:opacity-95 active:scale-[0.99] transition-all text-sm uppercase tracking-wider">
-            🔓 Unlock Control Panel
+        <button onclick="checkAdminPin()" class="w-full py-4 btn-gold rounded-xl text-sm tracking-wider">
+            🔓 UNLOCK CONTROL PANEL
         </button>
     </div>
 
     <!-- 🚀 MAIN DASHBOARD BOX -->
-    <div id="mainAdminBox" class="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-slate-100 p-5 md:p-6 transition-all hidden">
+    <div id="mainAdminBox" class="w-full max-w-2xl dark-card p-4 md:p-6 shadow-2xl hidden">
         
         <!-- Header Profile -->
-        <div class="flex items-center gap-3 border-b border-slate-100 pb-4 mb-5">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-500 to-amber-600 flex items-center justify-center text-white text-lg font-bold shadow-md shadow-orange-100">
-                👑
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-5">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-600 flex items-center justify-center text-black text-xl font-black shadow-lg shadow-amber-500/20">
+                    👑
+                </div>
+                <div>
+                    <h2 class="text-base font-black text-white tracking-wide">Vanrajsinh Full-Access</h2>
+                    <p class="text-[11px] text-emerald-400 font-bold flex items-center gap-1.5 mt-0.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Auto-Sync Active
+                    </p>
+                </div>
             </div>
-            <div>
-                <h2 class="text-md font-black text-slate-900 leading-tight">Vanrajsinh Full-Access</h2>
-                <p class="text-[10px] text-green-600 font-bold flex items-center gap-1 mt-0.5">
-                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Live Sync Dashboard
-                </p>
-            </div>
+            <button onclick="toggleGithubConfig()" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-2 rounded-lg border border-slate-700 transition">
+                ⚙️ GitHub API Settings
+            </button>
         </div>
 
-        <!-- Modern Micro Tabs Grid -->
-        <div class="grid grid-cols-4 gap-1.5 p-1 bg-slate-100 rounded-xl mb-6">
-            <button class="tab-btn active text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('post-tab', this)">📝 POST</button>
-            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('manage-tab', this)">⚙️ MANAGE</button>
-            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('settings-tab', this)">📢 CONFIG</button>
-            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-600 transition-all text-center" onclick="switchTab('editor-tab', this)">💻 EDITOR</button>
+        <!-- GitHub Setup Block (Collapsible) -->
+        <div id="githubConfigBlock" class="mb-6 p-4 bg-slate-900/90 border border-amber-500/30 rounded-xl space-y-3 hidden">
+            <h4 class="text-xs font-black text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                <span>⚙️ GitHub Auto-Publish Setup</span>
+                <span class="text-[10px] text-slate-400 font-normal">(માત્ર 1 વાર જ સેટ કરવાનું રહેશે)</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-[11px] text-slate-300 font-bold mb-1">GitHub Repo (username/repo):</label>
+                    <input type="text" id="ghRepo" placeholder="vanrajsinh/gujaratfastalert" class="w-full p-2.5 dark-input rounded-lg text-xs">
+                </div>
+                <div>
+                    <label class="block text-[11px] text-slate-300 font-bold mb-1">GitHub Personal Token (PAT):</label>
+                    <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" class="w-full p-2.5 dark-input rounded-lg text-xs">
+                </div>
+            </div>
+            <button onclick="saveGithubConfig()" class="w-full py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg text-xs transition">
+                💾 Save GitHub Settings
+            </button>
         </div>
 
-        <!-- 1. POST TAB -->
+        <!-- Tabs Grid -->
+        <div class="grid grid-cols-4 gap-1.5 p-1.5 bg-slate-900 rounded-xl mb-6 border border-slate-800">
+            <button class="tab-btn active text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-400 transition-all text-center" onclick="switchTab('post-tab', this)">📝 NEW POST</button>
+            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-400 transition-all text-center" onclick="switchTab('manage-tab', this)">⚙️ MANAGE</button>
+            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-400 transition-all text-center" onclick="switchTab('settings-tab', this)">📢 CONFIG</button>
+            <button class="tab-btn text-[11px] md:text-xs font-bold py-2.5 rounded-lg text-slate-400 transition-all text-center" onclick="switchTab('editor-tab', this)">💻 PREVIEW</button>
+        </div>
+
+        <!-- STATUS LOG DISPLAY -->
+        <div id="statusLog" class="mb-4 p-3 rounded-xl text-xs font-bold hidden"></div>
+
+        <!-- 1. POST TAB (Combined Post Details + HTML Editor) -->
         <div id="post-tab" class="tab-content active space-y-4">
-            <div class="bg-blue-50/70 border-l-4 border-blue-600 p-3 rounded-r-xl">
-                <h3 id="form-action-title" class="text-xs font-black text-blue-950 uppercase tracking-wider">Add New Live Update</h3>
-            </div>
             
-            <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">1. Select Feed Location / Menu Grid:</label>
-                <select id="jobCategory" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all">
-                    <optgroup label="📝 Main Scroll Lists (નીચેની લાંબી યાદી)">
-                        <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ (List View)</option>
-                        <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ (List View)</option>
-                    </optgroup>
-                    <optgroup label="🎓 શિક્ષણ અને સરકારી નોકરી Grid">
-                        <option value="govt-jobs">💼 Govt Jobs</option>
-                        <option value="syllabus">📋 Syllabus</option>
-                        <option value="answer-key">🔑 Answer Key</option>
-                        <option value="result">🏆 Result</option>
-                        <option value="admit-card">🎟️ Admit Card</option>
-                        <option value="prev-papers">📄 Prev. Papers</option>
-                        <option value="scholarship">🎓 Scholarship</option>
-                        <option value="edu-news">📰 Edu News</option>
-                    </optgroup>
-                    <optgroup label="🏛️ યોજના અને સમાચાર Grid">
-                        <option value="govt-schemes">🏛️ સરકારી યોજના</option>
-                        <option value="current-affairs">📅 Current Affairs</option>
-                        <option value="gujarati-news">🗣️ Gujarati News</option>
-                    </optgroup>
-                    <optgroup label="🧮 ગાઈડ અને કેલ્ક્યુલેટર Grid">
-                        <option value="howto-guides">ℹ️ How-to Guides</option>
-                        <option value="calculators">🧮 Calculators</option>
-                        <option value="finance-tax">💰 Finance & Tax</option>
-                    </optgroup>
-                    <optgroup label="💡 ઓનલાઈન બિલ પેમેન્ટ Grid">
-                        <option value="ugvcl-bill">💡 UGVCL Bill</option>
-                        <option value="gujarat-gas">🔥 Gujarat Gas</option>
-                        <option value="pgvcl-bill">⚡ PGVCL Bill</option>
-                        <option value="mgvcl-bill">🔌 MGVCL Bill</option>
-                    </optgroup>
-                    <optgroup label="🍿 મનોરંજન અને ટેકનોલોજી Grid">
-                        <option value="tech-news">🤖 Tech News</option>
-                        <option value="movie-ott">🍿 Movie & OTT</option>
-                        <option value="web-series">🎬 Web Series</option>
-                        <option value="auto-news">🚗 Auto News</option>
-                        <option value="cricket-ipl">🏏 Cricket / IPL</option>
-                        <option value="health-tips">🍏 Health Tips</option>
-                        <option value="wishes-quotes">🎉 Wishes & Quotes</option>
-                    </optgroup>
-                </select>
+            <div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl">
+                <h3 id="form-action-title" class="text-xs font-black text-amber-400 uppercase tracking-wider">🔥 Create & Publish Live Post</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">1. Target Feed Location / Category:</label>
+                    <select id="jobCategory" class="w-full p-3 dark-input rounded-xl text-xs font-bold">
+                        <optgroup label="📝 Main Scroll Lists (હોમ પેજ લિસ્ટ)">
+                            <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ (List View)</option>
+                            <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ (List View)</option>
+                        </optgroup>
+                        <optgroup label="🎓 શિક્ષણ અને સરકારી નોકરી Grid">
+                            <option value="govt-jobs">💼 Govt Jobs</option>
+                            <option value="syllabus">📋 Syllabus</option>
+                            <option value="answer-key">🔑 Answer Key</option>
+                            <option value="result">🏆 Result</option>
+                            <option value="admit-card">🎟️ Admit Card</option>
+                            <option value="prev-papers">📄 Prev. Papers</option>
+                            <option value="scholarship">🎓 Scholarship</option>
+                            <option value="edu-news">📰 Edu News</option>
+                        </optgroup>
+                        <optgroup label="🏛️ યોજના અને સમાચાર Grid">
+                            <option value="govt-schemes">🏛️ સરકારી યોજના</option>
+                            <option value="current-affairs">📅 Current Affairs</option>
+                            <option value="gujarati-news">🗣️ Gujarati News</option>
+                        </optgroup>
+                        <optgroup label="🧮 કેલ્ક્યુલેટર Grid">
+                            <option value="howto-guides">ℹ️ How-to Guides</option>
+                            <option value="calculators">🧮 Calculators</option>
+                            <option value="finance-tax">💰 Finance & Tax</option>
+                        </optgroup>
+                        <optgroup label="🍿 મનોરંજન અને અન્ય Grid">
+                            <option value="tech-news">🤖 Tech News</option>
+                            <option value="movie-ott">🍿 Movie & OTT</option>
+                            <option value="web-series">🎬 Web Series</option>
+                            <option value="auto-news">🚗 Auto News</option>
+                            <option value="cricket-ipl">🏏 Cricket / IPL</option>
+                            <option value="health-tips">🍏 Health Tips</option>
+                            <option value="wishes-quotes">🎉 Wishes & Quotes</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">2. Badge Tag (e.g. GSSSB, GPSC, NEW):</label>
+                    <input type="text" id="jobTag" placeholder="GSSSB, GPSC, NEW..." class="w-full p-3 dark-input rounded-xl text-xs font-medium">
+                </div>
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">2. Badge Text (e.g. GSSSB, GPSC, LRD, NEW):</label>
-                <input type="text" id="jobTag" placeholder="GSSSB, GPSC ya NEW..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all">
+                <label class="block text-xs font-bold text-slate-300 mb-1">3. Post Main Title (Gujarati/English):</label>
+                <input type="text" id="jobTitle" placeholder="GSSSB એગ્રીકલ્ચર ઓવરશીયર (વર્ગ-3) ભરતી 2026" oninput="autoGenerateSlug()" class="w-full p-3 dark-input rounded-xl text-xs font-medium">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">4. Sub-Text / Last Date:</label>
+                    <input type="text" id="jobMeta" placeholder="Last Date: 18-07-2026" class="w-full p-3 dark-input rounded-xl text-xs font-medium">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">5. Auto Clean File Name (Slug):</label>
+                    <input type="text" id="fileSlug" placeholder="gsssb-agriculture-overseer-2026.html" class="w-full p-3 dark-input rounded-xl text-xs font-medium text-amber-400 font-mono">
+                </div>
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">3. Post Main Title Text (Gujarati/English):</label>
-                <input type="text" id="jobTitle" placeholder="Bharti / Notice nu નામ લખો..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all">
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">4. Sub-Text / Last Date / Alert Info:</label>
-                <input type="text" id="jobMeta" placeholder="Last Date: 21-07-2026 ya Click Here" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all">
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">5. Destination Target URL (GitHub HTML Page Link):</label>
-                <input type="url" id="jobLink" placeholder="https://gujaratfastalert.in/..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all">
+                <label class="block text-xs font-bold text-slate-300 mb-1">6. Paste Post Full HTML Code (પેજ નો કોડ અહીં પેસ્ટ કરો):</label>
+                <textarea id="postHtmlCode" rows="8" placeholder="<!DOCTYPE html> ... Paste full HTML code here" class="w-full p-3 dark-input rounded-xl font-mono text-xs leading-relaxed resize-y"></textarea>
             </div>
 
             <input type="hidden" id="editingPostId" value="">
             <input type="hidden" id="editingCategory" value="">
 
             <div class="pt-2">
-                <button id="submitBtn" onclick="publishPost()" class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold rounded-xl shadow-lg shadow-orange-100 hover:opacity-95 transition-all text-xs uppercase tracking-wider">
-                    🔥 Push Live to Gujaratfastalert.in
+                <button id="submitBtn" onclick="publishAutoPost()" class="w-full py-4 btn-gold rounded-xl text-xs tracking-wider">
+                    🔥 PUBLISH & SYNC TO GUJARATFASTALERT.IN
                 </button>
-                <button id="cancelEditBtn" onclick="cancelEditing()" class="w-full py-2.5 bg-rose-500 text-white font-bold rounded-xl hover:bg-rose-600 transition-all text-xs uppercase tracking-wider mt-2 hidden">
-                    Cancel Edit Mode
+                <button id="cancelEditBtn" onclick="cancelEditing()" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs tracking-wider mt-2 hidden">
+                    CANCEL EDIT MODE
                 </button>
             </div>
         </div>
 
         <!-- 2. MANAGE TAB -->
         <div id="manage-tab" class="tab-content space-y-4">
-            <div class="bg-blue-50/70 border-l-4 border-blue-600 p-3 rounded-r-xl mb-4">
-                <h3 class="text-xs font-black text-blue-950 uppercase tracking-wider">Edit / Delete Live Posts</h3>
+            <div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl mb-4">
+                <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider">Edit / Delete Live Posts</h3>
             </div>
             <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Select Category to view posts:</label>
-                <select id="manageCategory" onchange="loadCategoryPosts()" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#2b5797] focus:bg-white transition-all">
+                <label class="block text-xs font-bold text-slate-300 mb-1">Select Category to view posts:</label>
+                <select id="manageCategory" onchange="loadCategoryPosts()" class="w-full p-3 dark-input rounded-xl text-xs font-bold">
                     <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ</option>
                     <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</option>
                     <option value="govt-jobs">💼 Govt Jobs</option>
@@ -170,42 +251,41 @@
                 </select>
             </div>
             
-            <div class="border border-slate-100 bg-slate-50 rounded-xl p-2 max-h-[320px] overflow-y-auto space-y-2 mt-2" id="postsList"></div>
+            <div class="border border-slate-800 bg-slate-900 rounded-xl p-2 max-h-[350px] overflow-y-auto space-y-2 mt-2" id="postsList"></div>
         </div>
 
-        <!-- 3. SETTINGS TAB -->
+        <!-- 3. CONFIG SETTINGS TAB -->
         <div id="settings-tab" class="tab-content space-y-4">
-            <div class="bg-blue-50/70 border-l-4 border-blue-600 p-3 rounded-r-xl">
-                <h3 class="text-xs font-black text-blue-950 uppercase tracking-wider">Website Global Settings</h3>
+            <div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl">
+                <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider">Website Global Settings</h3>
             </div>
             <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">📢 Header Marquee Ticker (Top Running Alert text):</label>
-                <textarea id="headerNotice" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all resize-none"></textarea>
+                <label class="block text-xs font-bold text-slate-300 mb-1">📢 Header Marquee Ticker (Top Running Alert):</label>
+                <textarea id="headerNotice" rows="3" class="w-full p-3 dark-input rounded-xl text-xs font-medium resize-none"></textarea>
             </div>
             <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">🌐 Website Global Title Name:</label>
-                <input type="text" id="siteTitleSetting" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all">
+                <label class="block text-xs font-bold text-slate-300 mb-1">🌐 Website Global Title Name:</label>
+                <input type="text" id="siteTitleSetting" class="w-full p-3 dark-input rounded-xl text-xs font-medium">
             </div>
-            <button onclick="saveGlobalSettings()" class="w-full py-3.5 bg-gradient-to-r from-[#2b5797] to-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-100 hover:opacity-95 transition-all text-xs uppercase tracking-wider pt-2">
-                💾 Save Website Settings
+            <button onclick="saveGlobalSettings()" class="w-full py-3.5 btn-gold rounded-xl text-xs tracking-wider">
+                💾 SAVE GLOBAL SETTINGS
             </button>
         </div>
 
-        <!-- 4. EDITOR TAB -->
+        <!-- 4. HTML LIVE CANVAS PREVIEW TAB -->
         <div id="editor-tab" class="tab-content space-y-4">
-            <div class="bg-blue-50/70 border-l-4 border-blue-600 p-3 rounded-r-xl">
-                <h3 class="text-xs font-black text-blue-950 uppercase tracking-wider">💻 Premium HTML Page Editor</h3>
+            <div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl">
+                <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider">💻 HTML Live Canvas Preview</h3>
             </div>
-            <textarea id="htmlCodeInput" rows="10" oninput="updateHtmlPreview()" class="w-full p-3 font-mono text-[11px] bg-slate-900 text-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-all"></textarea>
-            <button onclick="copyHtmlCode()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition-all text-xs uppercase tracking-wider">
-                📋 Copy Updated HTML Code
+            <button onclick="updatePreviewFromCode()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold rounded-xl text-xs transition">
+                🔄 Refresh Live Preview
             </button>
-            <div class="text-[10px] font-bold text-slate-400 mt-2">Live Canvas Preview:</div>
-            <iframe id="htmlPreviewFrame" class="w-full min-h-[180px] border-2 border-dashed border-slate-200 rounded-xl bg-white"></iframe>
+            <iframe id="htmlPreviewFrame" class="w-full h-[350px] border border-slate-700 rounded-xl bg-white"></iframe>
         </div>
+
     </div>
 
-    <!-- FIREBASE AND CORE INTERACTIVE SCRIPTS -->
+    <!-- CORE SCRIPT ENGINE -->
     <script>
         const MY_SECRET_PIN = "1465822"; 
 
@@ -226,7 +306,9 @@
             if(document.getElementById('adminPinInput').value === MY_SECRET_PIN) {
                 document.getElementById('pinScreen').style.display = 'none';
                 document.getElementById('mainAdminBox').classList.remove('hidden');
-                loadGlobalSettings(); loadCategoryPosts();
+                loadSavedGithubConfig();
+                loadGlobalSettings(); 
+                loadCategoryPosts();
             } else {
                 alert("❌ Invalid Pin Security Authorization!");
                 document.getElementById('adminPinInput').value = '';
@@ -240,28 +322,126 @@
             if(btn) btn.classList.add('active');
         }
 
-        function publishPost() {
-            const category = document.getElementById('jobCategory').value;
-            const tag = document.getElementById('jobTag').value;
+        function toggleGithubConfig() {
+            const block = document.getElementById('githubConfigBlock');
+            block.classList.toggle('hidden');
+        }
+
+        function saveGithubConfig() {
+            const repo = document.getElementById('ghRepo').value.trim();
+            const token = document.getElementById('ghToken').value.trim();
+            localStorage.setItem('gh_repo', repo);
+            localStorage.setItem('gh_token', token);
+            alert("✅ GitHub API Credentials Saved!");
+            document.getElementById('githubConfigBlock').classList.add('hidden');
+        }
+
+        function loadSavedGithubConfig() {
+            document.getElementById('ghRepo').value = localStorage.getItem('gh_repo') || '';
+            document.getElementById('ghToken').value = localStorage.getItem('gh_token') || '';
+        }
+
+        function autoGenerateSlug() {
             const title = document.getElementById('jobTitle').value;
-            const meta = document.getElementById('jobMeta').value;
-            const link = document.getElementById('jobLink').value;
+            let slug = title.toLowerCase()
+                .replace(/[^a-z0-9]/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '');
+            if(!slug) slug = 'post-' + Date.now();
+            document.getElementById('fileSlug').value = slug + '.html';
+        }
+
+        function showStatus(msg, isError = false) {
+            const log = document.getElementById('statusLog');
+            log.className = `mb-4 p-3 rounded-xl text-xs font-bold ${isError ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'}`;
+            log.innerText = msg;
+            log.classList.remove('hidden');
+        }
+
+        async function publishAutoPost() {
+            const repo = document.getElementById('ghRepo').value.trim();
+            const token = document.getElementById('ghToken').value.trim();
+            
+            const category = document.getElementById('jobCategory').value;
+            const tag = document.getElementById('jobTag').value.trim();
+            const title = document.getElementById('jobTitle').value.trim();
+            const meta = document.getElementById('jobMeta').value.trim();
+            let slug = document.getElementById('fileSlug').value.trim();
+            const htmlCode = document.getElementById('postHtmlCode').value.trim();
+            
             const editingPostId = document.getElementById('editingPostId').value;
             const oldCategory = document.getElementById('editingCategory').value;
 
-            if(!title || !link) { alert("Error: Title and Link are mandatory fields!"); return; }
+            if(!title) { alert("❌ Title is required!"); return; }
+
+            // IF HTML code provided -> Upload to GitHub first
+            let finalLink = slug;
+            if (htmlCode) {
+                if(!repo || !token) {
+                    alert("⚠️ GitHub Repo or Access Token missing! Please click '⚙️ GitHub API Settings' at the top right and save your credentials.");
+                    toggleGithubConfig();
+                    return;
+                }
+                
+                if(!slug.endsWith('.html')) slug += '.html';
+                finalLink = slug;
+
+                showStatus("⏳ 1/2. Uploading HTML Page directly to GitHub Repository...");
+
+                try {
+                    const apiUrl = `https://api.github.com/repos/${repo}/contents/${slug}`;
+                    let sha = "";
+                    
+                    // Check if file already exists on GitHub to get SHA
+                    const getRes = await fetch(apiUrl, { headers: { 'Authorization': `token ${token}` } });
+                    if(getRes.ok) {
+                        const getData = await getRes.json();
+                        sha = getData.sha;
+                    }
+
+                    // Put/Update file in GitHub
+                    const uploadRes = await fetch(apiUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: `Auto-publish post: ${slug}`,
+                            content: btoa(unescape(encodeURIComponent(htmlCode))),
+                            sha: sha || undefined
+                        })
+                    });
+
+                    if(!uploadRes.ok) {
+                        throw new Error("GitHub Upload Failed! Check your Token and Repo Name.");
+                    }
+                } catch(err) {
+                    console.error(err);
+                    showStatus(`❌ GitHub Error: ${err.message}`, true);
+                    return;
+                }
+            }
+
+            showStatus("⏳ 2/2. Syncing Post details to Live Firebase Feed...");
+
+            // Push to Firebase Realtime Database
+            const postObj = { tag, title, meta, link: finalLink, timestamp: Date.now() };
 
             if(editingPostId) {
                 if (oldCategory !== category) {
                     database.ref('posts/' + oldCategory + '/' + editingPostId).remove();
-                    database.ref('posts/' + category).push().set({ tag, title, meta, link, timestamp: Date.now() });
+                    database.ref('posts/' + category).push().set(postObj);
                 } else {
-                    database.ref('posts/' + category + '/' + editingPostId).update({ tag, title, meta, link });
+                    database.ref('posts/' + category + '/' + editingPostId).update({ tag, title, meta, link: finalLink });
                 }
-                alert("Post successfully Updated! 🎉"); cancelEditing(); loadCategoryPosts();
+                showStatus("✅ Success! Post Updated Live!");
+                cancelEditing(); 
+                loadCategoryPosts();
             } else {
-                database.ref('posts/' + category).push().set({ tag, title, meta, link, timestamp: Date.now() }).then(() => {
-                    alert("Post is now LIVE instantly! 🎉"); clearForm();
+                database.ref('posts/' + category).push().set(postObj).then(() => {
+                    showStatus(`🎉 SUCCESS! Post is LIVE! File '${finalLink}' uploaded to GitHub & Linked to Index Page!`);
+                    clearForm();
                 });
             }
         }
@@ -269,20 +449,20 @@
         function loadCategoryPosts() {
             const category = document.getElementById('manageCategory').value;
             const listDiv = document.getElementById('postsList');
-            listDiv.innerHTML = '<p class="text-xs text-slate-400 p-3 text-center">Syncing live cloud storage...</p>';
+            listDiv.innerHTML = '<p class="text-xs text-slate-500 p-3 text-center">Syncing live cloud storage...</p>';
             database.ref('posts/' + category).once('value', (snapshot) => {
                 listDiv.innerHTML = '';
                 const data = snapshot.val();
-                if(!data) { listDiv.innerHTML = '<p class="text-xs text-slate-400 p-4 text-center">No active posts found here.</p>'; return; }
+                if(!data) { listDiv.innerHTML = '<p class="text-xs text-slate-500 p-4 text-center">No active posts found in this category.</p>'; return; }
                 Object.keys(data).reverse().forEach(key => {
                     const post = data[key];
                     const item = document.createElement('div');
-                    item.className = 'bg-white p-3 rounded-xl border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-sm';
+                    item.className = 'bg-slate-800/80 p-3 rounded-xl border border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2';
                     item.innerHTML = `
-                        <div class="text-xs font-bold text-slate-700 pr-2">${post.title}</div>
+                        <div class="text-xs font-bold text-slate-200 pr-2">${post.title} <span class="text-[10px] text-amber-400 font-normal">(${post.link})</span></div>
                         <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
-                            <button class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg font-bold text-[10px] hover:bg-blue-100 transition" onclick="startEditing('${key}', '${category}', ${JSON.stringify(post).replace(/"/g, '&quot;')})">✏️ Edit</button>
-                            <button class="px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg font-bold text-[10px] hover:bg-rose-100 transition" onclick="deletePost('${key}', '${category}')">🗑️ Delete</button>
+                            <button class="px-3 py-1.5 bg-amber-500/20 text-amber-300 rounded-lg font-bold text-[10px] hover:bg-amber-500/30 transition" onclick="startEditing('${key}', '${category}', ${JSON.stringify(post).replace(/"/g, '&quot;')})">✏️ Edit</button>
+                            <button class="px-3 py-1.5 bg-rose-500/20 text-rose-300 rounded-lg font-bold text-[10px] hover:bg-rose-500/30 transition" onclick="deletePost('${key}', '${category}')">🗑️ Delete</button>
                         </div>`;
                     listDiv.appendChild(item);
                 });
@@ -296,25 +476,24 @@
             document.getElementById('jobTag').value = post.tag || '';
             document.getElementById('jobTitle').value = post.title || '';
             document.getElementById('jobMeta').value = post.meta || '';
-            document.getElementById('jobLink').value = post.link || '';
+            document.getElementById('fileSlug').value = post.link || '';
             document.getElementById('form-action-title').innerText = "✏️ Editing Live Post Model";
-            document.getElementById('submitBtn').innerText = "💾 Save Changes Live";
-            document.getElementById('submitBtn').className = "w-full py-3.5 bg-gradient-to-r from-blue-600 to-[#2b5797] text-white font-bold rounded-xl shadow-lg shadow-blue-100 hover:opacity-95 transition-all text-xs uppercase tracking-wider";
+            document.getElementById('submitBtn').innerText = "💾 SAVE CHANGES LIVE";
             document.getElementById('cancelEditBtn').classList.remove('hidden');
             switchTab('post-tab');
         }
 
         function cancelEditing() {
             document.getElementById('editingPostId').value = '';
-            document.getElementById('editingCategory').value = ''; clearForm();
-            document.getElementById('form-action-title').innerText = "Add New Live Update";
-            document.getElementById('submitBtn').innerText = "🔥 Push Live to Gujaratfastalert.in";
-            document.getElementById('submitBtn').className = "w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-bold rounded-xl shadow-lg shadow-orange-100 hover:opacity-95 transition-all text-xs uppercase tracking-wider";
+            document.getElementById('editingCategory').value = ''; 
+            clearForm();
+            document.getElementById('form-action-title').innerText = "🔥 Create & Publish Live Post";
+            document.getElementById('submitBtn').innerText = "🔥 PUBLISH & SYNC TO GUJARATFASTALERT.IN";
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
         function deletePost(id, category) {
-            if(confirm("Are you sure you want to delete this live element?")) {
+            if(confirm("Are you sure you want to delete this live post?")) {
                 database.ref('posts/' + category + '/' + id).remove().then(() => { loadCategoryPosts(); });
             }
         }
@@ -323,7 +502,7 @@
             database.ref('settings').set({
                 headerNotice: document.getElementById('headerNotice').value,
                 siteTitle: document.getElementById('siteTitleSetting').value
-            }).then(() => { alert("Global website config nodes synced! 👍"); });
+            }).then(() => { alert("Global website settings updated!"); });
         }
 
         function loadGlobalSettings() {
@@ -337,21 +516,18 @@
         }
 
         function clearForm() {
-            document.getElementById('jobTitle').value = ''; document.getElementById('jobMeta').value = '';
-            document.getElementById('jobLink').value = ''; document.getElementById('jobTag').value = '';
+            document.getElementById('jobTitle').value = ''; 
+            document.getElementById('jobMeta').value = '';
+            document.getElementById('fileSlug').value = ''; 
+            document.getElementById('jobTag').value = '';
+            document.getElementById('postHtmlCode').value = '';
         }
 
-        function updateHtmlPreview() {
-            const code = document.getElementById('htmlCodeInput').value;
+        function updatePreviewFromCode() {
+            const code = document.getElementById('postHtmlCode').value;
             const iframe = document.getElementById('htmlPreviewFrame');
             const doc = iframe.contentDocument || iframe.contentWindow.document;
             doc.open(); doc.write(code); doc.close();
-        }
-
-        function copyHtmlCode() {
-            const textarea = document.getElementById('htmlCodeInput');
-            textarea.select(); document.execCommand('copy');
-            alert("HTML code copied to clipboard! 📋");
         }
     </script>
 </body>
