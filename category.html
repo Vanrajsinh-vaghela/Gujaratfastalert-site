@@ -14,13 +14,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Gujarat Fast Alert - Category Updates</title>
     
-    <!-- Premium Google Fonts & Tailwind CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://gujarat-fast-alert-default-rtdb.firebaseio.com" crossorigin>
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Sans+Gujarati:wght@500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Firebase SDK Links -->
+    <!-- Firebase Fast Load SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
@@ -30,14 +31,22 @@
             background-color: #f1f5f9; 
             -webkit-tap-highlight-color: transparent; 
         }
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.2s infinite;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col items-center pb-12">
 
-    <!-- Top Navigation Header with Highlighted Back Button -->
+    <!-- Top Navigation Header -->
     <div class="w-full bg-slate-900 text-white py-3 px-4 shadow-lg sticky top-0 z-50 border-b border-slate-800">
         <div class="max-w-lg mx-auto flex justify-between items-center gap-2">
-            <!-- Prominent Back to Home Button with Orange Border Lining -->
             <a href="./index.html" class="flex items-center gap-2 text-xs md:text-sm font-extrabold bg-orange-500/15 text-orange-400 hover:bg-orange-500 hover:text-white px-4 py-2 rounded-xl border-2 border-orange-500 shadow-md transition-all active:scale-95 shrink-0">
                 ⬅ Back to Home
             </a>
@@ -48,7 +57,7 @@
     <!-- Category Banner Card -->
     <div class="w-full max-w-lg px-4 mt-6">
         <div class="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 text-white p-6 rounded-2xl shadow-md text-center border border-orange-400/30">
-            <h1 id="catHeaderTitle" class="text-xl md:text-2xl font-extrabold tracking-tight">Loading Updates...</h1>
+            <h1 id="catHeaderTitle" class="text-xl md:text-2xl font-extrabold tracking-tight">Category Updates</h1>
             <p class="text-xs font-semibold opacity-95 mt-1.5 text-amber-100">Gujarat Fast Alert - Official Educational & Utility Portal</p>
         </div>
     </div>
@@ -57,12 +66,15 @@
     <div class="w-full max-w-lg px-4 mt-6">
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
             <div id="category-posts-list" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
-                <div class="p-8 text-center text-slate-400 font-semibold">Loading category updates...</div>
+                <!-- Skeleton Loader Animation for Smooth Visual Experience -->
+                <div class="p-4 flex justify-between items-center"><div class="h-4 skeleton w-3/4 rounded"></div><div class="h-4 skeleton w-12 rounded-full"></div></div>
+                <div class="p-4 flex justify-between items-center"><div class="h-4 skeleton w-2/3 rounded"></div><div class="h-4 skeleton w-12 rounded-full"></div></div>
+                <div class="p-4 flex justify-between items-center"><div class="h-4 skeleton w-4/5 rounded"></div><div class="h-4 skeleton w-12 rounded-full"></div></div>
             </div>
         </div>
     </div>
 
-    <!-- Footer with AdSense Mandatory Links -->
+    <!-- Footer -->
     <footer class="w-full bg-slate-900 text-slate-400 py-10 px-6 text-xs text-center border-t border-slate-800 mt-12">
         <p class="font-extrabold text-slate-200 mb-1.5 text-sm">© 2026-27, Vanrajsinh Vaghela ®</p>
         <p class="opacity-75 max-w-md mx-auto mb-5 leading-relaxed">⚠️ Disclaimer: Gujarat Fast Alert is an independent portal and is not affiliated with OJAS or any government authority.</p>
@@ -79,26 +91,11 @@
         </div>
     </footer>
 
-    <!-- Firebase Logic -->
+    <!-- Firebase Instant Caching Logic -->
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
-            authDomain: "gujarat-fast-alert.firebaseapp.com",
-            databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
-            projectId: "gujarat-fast-alert",
-            storageBucket: "gujarat-fast-alert.firebasestorage.app",
-            messagingSenderId: "395130500748",
-            appId: "1:395130500748:web:e6589f3a57812efad6ada9",
-            measurementId: "G-ZJN134J7EC"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        // Fetch Category Parameter from URL
         const urlParams = new URLSearchParams(window.location.search);
         const categorySlug = urlParams.get('c') || 'latest-jobs-list';
 
-        // English Category Header Titles
         const categoryTitles = {
             'govt-jobs': '💼 Government Jobs (OJAS / GPSC)',
             'syllabus': '📋 Exam Syllabus & Pattern',
@@ -131,6 +128,10 @@
             'articles-list': '📰 Articles & General Info'
         };
 
+        const displayTitle = categoryTitles[categorySlug] || 'Category Updates';
+        document.getElementById('catHeaderTitle').innerText = displayTitle;
+        document.getElementById('pageTitle').innerText = displayTitle + ' - Gujarat Fast Alert';
+
         function fixLink(link) {
             if (!link || link === '#') return '#';
             let l = link.trim();
@@ -144,45 +145,68 @@
             return './' + l;
         }
 
-        function loadCategoryPosts() {
-            const displayTitle = categoryTitles[categorySlug] || 'Category Updates';
-            document.getElementById('catHeaderTitle').innerText = displayTitle;
-            document.getElementById('pageTitle').innerText = displayTitle + ' - Gujarat Fast Alert';
+        function renderPosts(postsArr) {
+            const container = document.getElementById('category-posts-list');
+            if(!postsArr || postsArr.length === 0) {
+                container.innerHTML = `
+                    <div class="p-10 text-center text-slate-500 font-semibold">
+                        <div class="text-4xl mb-3">📂</div>
+                        <p class="text-base text-slate-800 font-extrabold">No updates available in this category right now.</p>
+                        <p class="text-xs text-slate-400 mt-1">Please check back later or explore other sections.</p>
+                        <a href="./index.html" class="inline-flex items-center gap-2 mt-6 text-xs md:text-sm bg-orange-500 hover:bg-orange-600 text-white border-2 border-orange-600 px-5 py-2.5 rounded-xl font-extrabold shadow-md transition active:scale-95">
+                            ← Back to Home Page
+                        </a>
+                    </div>`;
+                return;
+            }
 
-            database.ref('posts/' + categorySlug).on('value', (snapshot) => {
-                const postsObj = snapshot.val();
-                const container = document.getElementById('category-posts-list');
-                container.innerHTML = '';
-
-                if (!postsObj) {
-                    container.innerHTML = `
-                        <div class="p-10 text-center text-slate-500 font-semibold">
-                            <div class="text-4xl mb-3">📂</div>
-                            <p class="text-base text-slate-800 font-extrabold">No updates available in this category right now.</p>
-                            <p class="text-xs text-slate-400 mt-1">Please check back later or explore other sections.</p>
-                            <a href="./index.html" class="inline-flex items-center gap-2 mt-6 text-xs md:text-sm bg-orange-500 hover:bg-orange-600 text-white border-2 border-orange-600 px-5 py-2.5 rounded-xl font-extrabold shadow-md transition active:scale-95">
-                                ← Back to Home Page
-                            </a>
-                        </div>`;
-                    return;
-                }
-
-                const posts = Object.keys(postsObj).map(key => postsObj[key]).reverse();
-
-                posts.forEach((post) => {
-                    container.innerHTML += `
-                        <a href="${fixLink(post.link)}" target="_blank" class="p-4 flex justify-between items-center hover:bg-orange-50/50 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 last:border-none w-full group">
-                            <div class="pr-3 leading-snug flex items-start gap-2.5 font-extrabold text-sm md:text-base">
-                                <span class="text-orange-500 shrink-0 mt-0.5">📌</span>
-                                <span class="group-hover:translate-x-0.5 transition-transform">${post.title}</span>
-                            </div>
-                            <span class="text-[10px] bg-orange-100 text-orange-800 px-2.5 py-1 rounded-full font-extrabold shrink-0 tracking-wider shadow-sm ml-2">${post.tag || 'ALERT'}</span>
-                        </a>`;
-                });
+            let html = '';
+            postsArr.forEach((post) => {
+                html += `
+                    <a href="${fixLink(post.link)}" target="_blank" class="p-4 flex justify-between items-center hover:bg-orange-50/50 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 last:border-none w-full group">
+                        <div class="pr-3 leading-snug flex items-start gap-2.5 font-extrabold text-sm md:text-base">
+                            <span class="text-orange-500 shrink-0 mt-0.5">📌</span>
+                            <span class="group-hover:translate-x-0.5 transition-transform">${post.title}</span>
+                        </div>
+                        <span class="text-[10px] bg-orange-100 text-orange-800 px-2.5 py-1 rounded-full font-extrabold shrink-0 tracking-wider shadow-sm ml-2">${post.tag || 'ALERT'}</span>
+                    </a>`;
             });
+            container.innerHTML = html;
         }
 
-        window.onload = loadCategoryPosts;
+        // STEP 1: Instant Cache Check (Load instantly from memory)
+        const cachedData = localStorage.getItem('cache_' + categorySlug);
+        if (cachedData) {
+            try {
+                renderPosts(JSON.parse(cachedData));
+            } catch(e){}
+        }
+
+        // STEP 2: Live Firebase Sync (Update in Background)
+        const firebaseConfig = {
+            apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
+            authDomain: "gujarat-fast-alert.firebaseapp.com",
+            databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
+            projectId: "gujarat-fast-alert",
+            storageBucket: "gujarat-fast-alert.firebasestorage.app",
+            messagingSenderId: "395130500748",
+            appId: "1:395130500748:web:e6589f3a57812efad6ada9",
+            measurementId: "G-ZJN134J7EC"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        database.ref('posts/' + categorySlug).on('value', (snapshot) => {
+            const postsObj = snapshot.val();
+            if (postsObj) {
+                const postsArr = Object.keys(postsObj).map(key => postsObj[key]).reverse();
+                localStorage.setItem('cache_' + categorySlug, JSON.stringify(postsArr));
+                renderPosts(postsArr);
+            } else {
+                renderPosts([]);
+            }
+        });
     </script>
 </body>
 </html>
