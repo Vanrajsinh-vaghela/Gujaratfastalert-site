@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="gu">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJN134J7EC"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ZJN134J7EC');
-    </script>
-    
+    <!-- Speed Optimization Preconnects -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://gujarat-fast-alert-default-rtdb.firebaseio.com" crossorigin>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -21,16 +18,24 @@
     <meta name="robots" content="index, follow">
 
     <!-- Premium Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Deferred Fast Rendering Scripts -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5297812051188062" crossorigin="anonymous"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJN134J7EC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZJN134J7EC');
+    </script>
     
-    <!-- Firebase SDK Links -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- Firebase SDK Links (Deferred) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js" defer></script>
     
     <style>
         body { 
@@ -142,7 +147,7 @@
             </div>
         </div>
 
-        <!-- CATEGORY GRIDS (Opening New Category Page) -->
+        <!-- CATEGORY GRIDS -->
         <div>
             <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">🎓 શિક્ષણ અને સરકારી નોકરી</h3>
             <div class="grid grid-cols-4 gap-2.5 text-xs font-extrabold text-slate-700">
@@ -228,118 +233,112 @@
         </div>
     </footer>
 
-    <!-- Firebase Scripts -->
+    <!-- Optimized Firebase Execution -->
     <script>
-        let siteData = {};
+        document.addEventListener('DOMContentLoaded', () => {
+            let siteData = {};
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
-            authDomain: "gujarat-fast-alert.firebaseapp.com",
-            databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
-            projectId: "gujarat-fast-alert",
-            storageBucket: "gujarat-fast-alert.firebasestorage.app",
-            messagingSenderId: "395130500748",
-            appId: "1:395130500748:web:e6589f3a57812efad6ada9",
-            measurementId: "G-ZJN134J7EC"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+            const firebaseConfig = {
+                apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
+                authDomain: "gujarat-fast-alert.firebaseapp.com",
+                databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
+                projectId: "gujarat-fast-alert",
+                storageBucket: "gujarat-fast-alert.firebasestorage.app",
+                messagingSenderId: "395130500748",
+                appId: "1:395130500748:web:e6589f3a57812efad6ada9",
+                measurementId: "G-ZJN134J7EC"
+            };
 
-        function fixLink(link) {
-            if (!link || link === '#') return '#';
-            let l = link.trim();
-            if (l.startsWith('http://') || l.startsWith('https://') || l.startsWith('./') || l.startsWith('/')) {
-                return l;
-            }
-            if (l.startsWith('gujaratfastalert.in')) {
-                let cleaned = l.replace(/^gujaratfastalert\.in\.?\/?/, 'gujaratfastalert.in/');
-                return 'https://' + cleaned;
-            }
-            return './' + l;
-        }
-
-        function fetchLiveUpdates() {
-            database.ref().on('value', (snapshot) => {
-                const rootData = snapshot.val() || {};
-                siteData = {};
-
-                if(rootData.settings) {
-                    if(rootData.settings.headerNotice && rootData.settings.headerNotice.trim() !== "") {
-                        document.getElementById('marqueeAlertText').innerText = rootData.settings.headerNotice;
-                    } else {
-                        document.getElementById('marqueeAlertText').innerText = "🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે!";
-                    }
-                }
-
-                if(rootData.posts) {
-                    Object.keys(rootData.posts).forEach(cat => {
-                        const catObj = rootData.posts[cat];
-                        siteData[cat] = Object.keys(catObj).map(key => catObj[key]).reverse();
-                    });
-                }
-
-                // Render Main Live Boxes
-                renderMainList('schemes-list', 'schemes-list-container');
-                renderMainList('news-list', 'news-list-container');
-                renderMainList('latest-jobs-list', 'latest-jobs-list-container');
-                renderMainList('articles-list', 'articles-list-container');
-            }, (error) => {
-                console.error("Firebase Sync Error:", error);
-            });
-        }
-
-        function renderMainList(catName, containerId) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
-            container.innerHTML = '';
-            const posts = siteData[catName] || [];
-            
-            if(posts.length === 0) { 
-                if(catName === 'schemes-list') {
-                    container.innerHTML = `
-                        <a href="https://ikhedut.gujarat.gov.in" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50 transition text-slate-800 font-extrabold border-b border-slate-100">
-                            <span class="flex items-center gap-2"><span class="text-emerald-600 text-base">🔗</span> i-Khedut & Digital Gujarat Services</span>
-                            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">ONLINE</span>
-                        </a>`;
-                } else if(catName === 'news-list') {
-                    container.innerHTML = `
-                        <div class="p-3.5 md:p-4 flex justify-between items-center text-slate-500 font-semibold">
-                            <span class="flex items-center gap-2">📰 ગુજરાત સમાચાર અપડેટ્સ લોડ થઈ રહ્યા છે...</span>
-                            <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">NEWS</span>
-                        </div>`;
+            function initFirebase() {
+                if (typeof firebase !== 'undefined') {
+                    firebase.initializeApp(firebaseConfig);
+                    const database = firebase.database();
+                    fetchLiveUpdates(database);
                 } else {
-                    container.innerHTML = `
-                        <a href="https://ojas.gujarat.gov.in" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50 transition text-slate-800 font-extrabold border-b border-slate-100">
-                            <span class="flex items-center gap-2"><span class="text-red-500 text-base">📌</span> OJAS Gujarat Online Application Portal Updates</span>
-                            <span class="text-[10px] bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">OFFICIAL</span>
-                        </a>`; 
+                    setTimeout(initFirebase, 100);
                 }
-                return; 
             }
-            
-            // Show Top 5 Posts
-            const topPosts = posts.slice(0, 5);
-            const hiddenPosts = posts.slice(5);
 
-            let htmlContent = '';
+            function fixLink(link) {
+                if (!link || link === '#') return '#';
+                let l = link.trim();
+                if (l.startsWith('http://') || l.startsWith('https://') || l.startsWith('./') || l.startsWith('/')) {
+                    return l;
+                }
+                if (l.startsWith('gujaratfastalert.in')) {
+                    let cleaned = l.replace(/^gujaratfastalert\.in\.?\/?/, 'gujaratfastalert.in/');
+                    return 'https://' + cleaned;
+                }
+                return './' + l;
+            }
 
-            topPosts.forEach((post) => {
-                htmlContent += `
-                    <a href="${fixLink(post.link)}" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50/80 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 last:border-none w-full group">
-                        <div class="pr-2 leading-snug flex items-start gap-2 font-extrabold text-sm md:text-base">
-                            <span class="text-blue-600 shrink-0 mt-0.5">📌</span>
-                            <span class="group-hover:translate-x-0.5 transition-transform">${post.title}</span>
-                        </div>
-                        <span class="text-[10px] bg-blue-100/90 text-blue-800 px-2.5 py-1 rounded-full font-extrabold shrink-0 tracking-wider shadow-sm ml-2">${post.tag || 'NEW'}</span>
-                    </a>`;
-            });
+            function fetchLiveUpdates(database) {
+                database.ref().on('value', (snapshot) => {
+                    const rootData = snapshot.val() || {};
+                    siteData = {};
 
-            // Expand / Collapse feature
-            if (hiddenPosts.length > 0) {
-                htmlContent += `<div id="${containerId}-extra" class="hidden divide-y divide-slate-100">`;
-                hiddenPosts.forEach((post) => {
+                    if(rootData.settings) {
+                        if(rootData.settings.headerNotice && rootData.settings.headerNotice.trim() !== "") {
+                            document.getElementById('marqueeAlertText').innerText = rootData.settings.headerNotice;
+                        } else {
+                            document.getElementById('marqueeAlertText').innerText = "🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે!";
+                        }
+                    }
+
+                    if(rootData.posts) {
+                        Object.keys(rootData.posts).forEach(cat => {
+                            const catObj = rootData.posts[cat];
+                            siteData[cat] = Object.keys(catObj).map(key => catObj[key]).reverse();
+                        });
+                    }
+
+                    // Render Main Live Boxes
+                    renderMainList('schemes-list', 'schemes-list-container');
+                    renderMainList('news-list', 'news-list-container');
+                    renderMainList('latest-jobs-list', 'latest-jobs-list-container');
+                    renderMainList('articles-list', 'articles-list-container');
+                }, (error) => {
+                    console.error("Firebase Sync Error:", error);
+                });
+            }
+
+            function renderMainList(catName, containerId) {
+                const container = document.getElementById(containerId);
+                if(!container) return;
+                const posts = siteData[catName] || [];
+                
+                if(posts.length === 0) { 
+                    if(catName === 'schemes-list') {
+                        container.innerHTML = `
+                            <a href="https://ikhedut.gujarat.gov.in" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50 transition text-slate-800 font-extrabold border-b border-slate-100">
+                                <span class="flex items-center gap-2"><span class="text-emerald-600 text-base">🔗</span> i-Khedut & Digital Gujarat Services</span>
+                                <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">ONLINE</span>
+                            </a>`;
+                    } else if(catName === 'news-list') {
+                        container.innerHTML = `
+                            <div class="p-3.5 md:p-4 flex justify-between items-center text-slate-500 font-semibold">
+                                <span class="flex items-center gap-2">📰 ગુજરાત સમાચાર અપડેટ્સ લોડ થઈ રહ્યા છે...</span>
+                                <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">NEWS</span>
+                            </div>`;
+                    } else {
+                        container.innerHTML = `
+                            <a href="https://ojas.gujarat.gov.in" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50 transition text-slate-800 font-extrabold border-b border-slate-100">
+                                <span class="flex items-center gap-2"><span class="text-red-500 text-base">📌</span> OJAS Gujarat Online Application Portal Updates</span>
+                                <span class="text-[10px] bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">OFFICIAL</span>
+                            </a>`; 
+                    }
+                    return; 
+                }
+                
+                // Show Top 5 Posts
+                const topPosts = posts.slice(0, 5);
+                const hiddenPosts = posts.slice(5);
+
+                let htmlContent = '';
+
+                topPosts.forEach((post) => {
                     htmlContent += `
-                        <a href="${fixLink(post.link)}" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50/80 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 w-full group">
+                        <a href="${fixLink(post.link)}" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50/80 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 last:border-none w-full group">
                             <div class="pr-2 leading-snug flex items-start gap-2 font-extrabold text-sm md:text-base">
                                 <span class="text-blue-600 shrink-0 mt-0.5">📌</span>
                                 <span class="group-hover:translate-x-0.5 transition-transform">${post.title}</span>
@@ -347,40 +346,53 @@
                             <span class="text-[10px] bg-blue-100/90 text-blue-800 px-2.5 py-1 rounded-full font-extrabold shrink-0 tracking-wider shadow-sm ml-2">${post.tag || 'NEW'}</span>
                         </a>`;
                 });
-                htmlContent += `</div>`;
 
-                htmlContent += `
-                    <button onclick="toggleExpand('${containerId}-extra', this)" class="w-full py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs text-center border-t border-slate-200/80 flex items-center justify-center gap-1.5 transition active:scale-98">
-                        <span class="btn-text">વધુ જુઓ (+${hiddenPosts.length} વધારે)</span>
-                        <span class="arrow-icon text-sm">🔽</span>
-                    </button>`;
+                // Expand / Collapse feature
+                if (hiddenPosts.length > 0) {
+                    htmlContent += `<div id="${containerId}-extra" class="hidden divide-y divide-slate-100">`;
+                    hiddenPosts.forEach((post) => {
+                        htmlContent += `
+                            <a href="${fixLink(post.link)}" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50/80 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 w-full group">
+                                <div class="pr-2 leading-snug flex items-start gap-2 font-extrabold text-sm md:text-base">
+                                    <span class="text-blue-600 shrink-0 mt-0.5">📌</span>
+                                    <span class="group-hover:translate-x-0.5 transition-transform">${post.title}</span>
+                                </div>
+                                <span class="text-[10px] bg-blue-100/90 text-blue-800 px-2.5 py-1 rounded-full font-extrabold shrink-0 tracking-wider shadow-sm ml-2">${post.tag || 'NEW'}</span>
+                            </a>`;
+                    });
+                    htmlContent += `</div>`;
+
+                    htmlContent += `
+                        <button onclick="toggleExpand('${containerId}-extra', this)" class="w-full py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs text-center border-t border-slate-200/80 flex items-center justify-center gap-1.5 transition active:scale-98">
+                            <span class="btn-text">વધુ જુઓ (+${hiddenPosts.length} વધારે)</span>
+                            <span class="arrow-icon text-sm">🔽</span>
+                        </button>`;
+                }
+
+                container.innerHTML = htmlContent;
             }
 
-            container.innerHTML = htmlContent;
-        }
+            window.toggleExpand = function(extraDivId, btnElement) {
+                const extraDiv = document.getElementById(extraDivId);
+                if (!extraDiv) return;
 
-        function toggleExpand(extraDivId, btnElement) {
-            const extraDiv = document.getElementById(extraDivId);
-            if (!extraDiv) return;
+                const isHidden = extraDiv.classList.contains('hidden');
+                const arrowSpan = btnElement.querySelector('.arrow-icon');
+                const textSpan = btnElement.querySelector('.btn-text');
 
-            const isHidden = extraDiv.classList.contains('hidden');
-            const arrowSpan = btnElement.querySelector('.arrow-icon');
-            const textSpan = btnElement.querySelector('.btn-text');
+                if (isHidden) {
+                    extraDiv.classList.remove('hidden');
+                    if(arrowSpan) arrowSpan.innerText = '🔼';
+                    if(textSpan) textSpan.innerText = 'ઓછું બતાવો';
+                } else {
+                    extraDiv.classList.add('hidden');
+                    if(arrowSpan) arrowSpan.innerText = '🔽';
+                    if(textSpan) textSpan.innerText = `વધુ જુઓ (+${extraDiv.children.length} વધારે)`;
+                }
+            };
 
-            if (isHidden) {
-                extraDiv.classList.remove('hidden');
-                arrowSpan.innerText = '🔼';
-                textSpan.innerText = 'ઓછું બતાવો';
-            } else {
-                extraDiv.classList.add('hidden');
-                arrowSpan.innerText = '🔽';
-                textSpan.innerText = 'વધુ જુઓ';
-            }
-        }
-
-        window.onload = function() {
-            fetchLiveUpdates();
-        }
+            initFirebase();
+        });
     </script>
 </body>
 </html>
