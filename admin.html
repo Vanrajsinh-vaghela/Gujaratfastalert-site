@@ -28,7 +28,7 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
-        /* Premium Golden Button Style (As requested in SS) */
+        /* Premium Golden Button Style */
         .btn-gold {
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
             color: #000000;
@@ -80,7 +80,7 @@
             🔒
         </div>
         <h2 class="text-2xl font-black text-white tracking-tight">Vanraj Security Lock</h2>
-        <p class="text-xs text-slate-400 mt-1 mb-6">કંટ્રોલ પેનલ ઓપન કરવા માટે 7-અંકનો PIN દાખલ કરો:</p>
+        <p class="text-xs text-slate-400 mt-1 mb-6">કંટ્રોલ પેનલ ઓપન કરવા માટે PIN દાખલ કરો:</p>
         
         <input type="password" inputmode="numeric" pattern="[0-9]*" id="adminPinInput" maxlength="7" placeholder="•••••••" 
             class="w-full text-center text-3xl tracking-[12px] font-extrabold py-3.5 dark-input rounded-xl mb-5">
@@ -143,7 +143,7 @@
         <!-- STATUS LOG DISPLAY -->
         <div id="statusLog" class="mb-4 p-3 rounded-xl text-xs font-bold hidden"></div>
 
-        <!-- 1. POST TAB (Combined Post Details + HTML Editor) -->
+        <!-- 1. POST TAB -->
         <div id="post-tab" class="tab-content active space-y-4">
             
             <div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl">
@@ -154,9 +154,11 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">1. Target Feed Location / Category:</label>
                     <select id="jobCategory" class="w-full p-3 dark-input rounded-xl text-xs font-bold">
-                        <optgroup label="📝 Main Scroll Lists (હોમ પેજ લિસ્ટ)">
-                            <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ (List View)</option>
-                            <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ (List View)</option>
+                        <optgroup label="📝 Main Scroll Lists (હોમ પેજ લાઈવ બોક્સ)">
+                            <option value="schemes-list">🔗 ૧. ઓનલાઈન સેવાઓ અને યોજનાઓ</option>
+                            <option value="news-list">📰 ૨. તાજા સમાચાર અને અપડેટ્સ</option>
+                            <option value="latest-jobs-list">🔥 ૩. લેટેસ્ટ સરકારી નોકરીઓ (OJAS / GPSC)</option>
+                            <option value="articles-list">📰 ૪. લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</option>
                         </optgroup>
                         <optgroup label="🎓 શિક્ષણ અને સરકારી નોકરી Grid">
                             <option value="govt-jobs">💼 Govt Jobs</option>
@@ -173,12 +175,16 @@
                             <option value="current-affairs">📅 Current Affairs</option>
                             <option value="gujarati-news">🗣️ Gujarati News</option>
                         </optgroup>
-                        <optgroup label="🧮 કેલ્ક્યુલેટર Grid">
+                        <optgroup label="🛠️ ટૂલ્સ, કેલ્ક્યુલેટર અને બિલ">
                             <option value="howto-guides">ℹ️ How-to Guides</option>
                             <option value="calculators">🧮 Calculators</option>
                             <option value="finance-tax">💰 Finance & Tax</option>
+                            <option value="ugvcl-bill">💡 UGVCL Bill</option>
+                            <option value="gujarat-gas">🔥 Gujarat Gas</option>
+                            <option value="pgvcl-bill">⚡ PGVCL Bill</option>
+                            <option value="mgvcl-bill">🔌 MGVCL Bill</option>
                         </optgroup>
-                        <optgroup label="🍿 મનોરંજન અને અન્ય Grid">
+                        <optgroup label="📺 મનોરંજન અને અન્ય Grid">
                             <option value="tech-news">🤖 Tech News</option>
                             <option value="movie-ott">🍿 Movie & OTT</option>
                             <option value="web-series">🎬 Web Series</option>
@@ -191,14 +197,14 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">2. Badge Tag (e.g. GSSSB, GPSC, NEW):</label>
-                    <input type="text" id="jobTag" placeholder="GSSSB, GPSC, NEW..." class="w-full p-3 dark-input rounded-xl text-xs font-medium">
+                    <label class="block text-xs font-bold text-slate-300 mb-1">2. Badge Tag (e.g. GSSSB, GPSC, NEW, ONLINE):</label>
+                    <input type="text" id="jobTag" placeholder="GSSSB, GPSC, NEW, ONLINE..." class="w-full p-3 dark-input rounded-xl text-xs font-medium">
                 </div>
             </div>
 
             <div>
                 <label class="block text-xs font-bold text-slate-300 mb-1">3. Post Main Title (Gujarati/English):</label>
-                <input type="text" id="jobTitle" placeholder="GSSSB એગ્રીકલ્ચર ઓવરશીયર (વર્ગ-3) ભરતી 2026" oninput="autoGenerateSlug()" class="w-full p-3 dark-input rounded-xl text-xs font-medium">
+                <input type="text" id="jobTitle" placeholder="GSSSB એગ્રીકલ્ચર ઓવરશીયર ભરતી 2026" oninput="autoGenerateSlug()" class="w-full p-3 dark-input rounded-xl text-xs font-medium">
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -213,7 +219,7 @@
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-300 mb-1">6. Paste Post Full HTML Code (પેજ નો કોડ અહીં પેસ્ટ કરો):</label>
+                <label class="block text-xs font-bold text-slate-300 mb-1">6. Paste Post Full HTML Code (પેજ નો કોડ અહીં પેસ્ટ કરો - મરજિયાત):</label>
                 <textarea id="postHtmlCode" rows="8" placeholder="<!DOCTYPE html> ... Paste full HTML code here" class="w-full p-3 dark-input rounded-xl font-mono text-xs leading-relaxed resize-y"></textarea>
             </div>
 
@@ -238,8 +244,10 @@
             <div>
                 <label class="block text-xs font-bold text-slate-300 mb-1">Select Category to view posts:</label>
                 <select id="manageCategory" onchange="loadCategoryPosts()" class="w-full p-3 dark-input rounded-xl text-xs font-bold">
-                    <option value="latest-jobs-list">🔥 લેટેસ્ટ સરકારી નોકરીઓ</option>
-                    <option value="articles-list">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</option>
+                    <option value="schemes-list">🔗 ૧. ઓનલાઈન સેવાઓ અને યોજનાઓ</option>
+                    <option value="news-list">📰 ૨. તાજા સમાચાર અને અપડેટ્સ</option>
+                    <option value="latest-jobs-list">🔥 ૩. લેટેસ્ટ સરકારી નોકરીઓ</option>
+                    <option value="articles-list">📰 ૪. લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</option>
                     <option value="govt-jobs">💼 Govt Jobs</option>
                     <option value="syllabus">📋 Syllabus</option>
                     <option value="answer-key">🔑 Answer Key</option>
@@ -248,6 +256,9 @@
                     <option value="prev-papers">📄 Prev. Papers</option>
                     <option value="scholarship">🎓 Scholarship</option>
                     <option value="edu-news">📰 Edu News</option>
+                    <option value="govt-schemes">🏛️ સરકારી યોજના</option>
+                    <option value="current-affairs">📅 Current Affairs</option>
+                    <option value="gujarati-news">🗣️ Gujarati News</option>
                 </select>
             </div>
             
@@ -310,7 +321,7 @@
                 loadGlobalSettings(); 
                 loadCategoryPosts();
             } else {
-                alert("❌ Invalid Pin Security Authorization!");
+                alert("❌ Invalid Security PIN!");
                 document.getElementById('adminPinInput').value = '';
             }
         }
@@ -374,11 +385,12 @@
 
             if(!title) { alert("❌ Title is required!"); return; }
 
-            // IF HTML code provided -> Upload to GitHub first
             let finalLink = slug;
+
+            // Upload HTML page directly to GitHub if code is pasted
             if (htmlCode) {
                 if(!repo || !token) {
-                    alert("⚠️ GitHub Repo or Access Token missing! Please click '⚙️ GitHub API Settings' at the top right and save your credentials.");
+                    alert("⚠️ GitHub Repo or Access Token missing! Please click '⚙️ GitHub API Settings' at top right and save credentials.");
                     toggleGithubConfig();
                     return;
                 }
@@ -392,14 +404,12 @@
                     const apiUrl = `https://api.github.com/repos/${repo}/contents/${slug}`;
                     let sha = "";
                     
-                    // Check if file already exists on GitHub to get SHA
                     const getRes = await fetch(apiUrl, { headers: { 'Authorization': `token ${token}` } });
                     if(getRes.ok) {
                         const getData = await getRes.json();
                         sha = getData.sha;
                     }
 
-                    // Put/Update file in GitHub
                     const uploadRes = await fetch(apiUrl, {
                         method: 'PUT',
                         headers: {
@@ -414,7 +424,7 @@
                     });
 
                     if(!uploadRes.ok) {
-                        throw new Error("GitHub Upload Failed! Check your Token and Repo Name.");
+                        throw new Error("GitHub Upload Failed! Check Token & Repo Name.");
                     }
                 } catch(err) {
                     console.error(err);
@@ -425,7 +435,6 @@
 
             showStatus("⏳ 2/2. Syncing Post details to Live Firebase Feed...");
 
-            // Push to Firebase Realtime Database
             const postObj = { tag, title, meta, link: finalLink, timestamp: Date.now() };
 
             if(editingPostId) {
@@ -440,7 +449,7 @@
                 loadCategoryPosts();
             } else {
                 database.ref('posts/' + category).push().set(postObj).then(() => {
-                    showStatus(`🎉 SUCCESS! Post is LIVE! File '${finalLink}' uploaded to GitHub & Linked to Index Page!`);
+                    showStatus(`🎉 SUCCESS! Post is LIVE on Gujarat Fast Alert!`);
                     clearForm();
                 });
             }
@@ -449,7 +458,7 @@
         function loadCategoryPosts() {
             const category = document.getElementById('manageCategory').value;
             const listDiv = document.getElementById('postsList');
-            listDiv.innerHTML = '<p class="text-xs text-slate-500 p-3 text-center">Syncing live cloud storage...</p>';
+            listDiv.innerHTML = '<p class="text-xs text-slate-500 p-3 text-center">Syncing live cloud database...</p>';
             database.ref('posts/' + category).once('value', (snapshot) => {
                 listDiv.innerHTML = '';
                 const data = snapshot.val();
