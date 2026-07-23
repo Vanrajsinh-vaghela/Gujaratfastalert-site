@@ -7,7 +7,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-ZJN134J7EC');
     </script>
     
@@ -53,6 +52,7 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.03); 
             border: 1px solid #e2e8f0; 
             transition: all 0.2s ease-in-out; 
+            display: block;
         }
         .grid-card:hover { 
             border-color: #f97316; 
@@ -106,17 +106,6 @@
         </a>
     </div>
 
-    <!-- Filter View Container -->
-    <div class="w-full max-w-lg px-4 mb-4 hidden" id="filterViewBlock">
-        <div class="w-full bg-[#fffcf7] border-2 border-orange-500 rounded-2xl overflow-hidden shadow-lg">
-            <div class="bg-orange-500 text-white p-3.5 px-4 font-extrabold text-sm flex justify-between items-center">
-                <span id="filterViewTitle">Category Matches</span>
-                <button onclick="closeFilterView()" class="bg-black/20 hover:bg-black/40 text-white px-2.5 py-1 rounded-lg text-xs font-bold">Close [X]</button>
-            </div>
-            <div id="filter-content-target" class="p-3 divide-y divide-slate-100 max-h-72 overflow-y-auto"></div>
-        </div>
-    </div>
-
     <!-- Main Content Container -->
     <div class="w-full max-w-lg px-4 space-y-6">
 
@@ -124,7 +113,7 @@
         <div class="premium-box">
             <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
                 <span class="flex items-center gap-2">🔗 ડાયરેક્ટ ઓનલાઈન સેવાઓ અને યોજનાઓ</span>
-                <span class="text-xs font-bold bg-white/20 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0">બધું જુઓ →</span>
+                <a href="./category.html?c=schemes-list" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0 transition">બધું જુઓ →</a>
             </div>
             <div id="schemes-list-container" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
                 <div class="p-5 text-slate-400 text-center font-semibold">Loading updates...</div>
@@ -135,7 +124,7 @@
         <div class="premium-box">
             <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
                 <span class="flex items-center gap-2">📰 તાજા સમાચાર અને મહત્વની અપડેટ્સ</span>
-                <span class="text-xs font-bold bg-white/20 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0">બધું જુઓ →</span>
+                <a href="./category.html?c=news-list" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0 transition">બધું જુઓ →</a>
             </div>
             <div id="news-list-container" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
                 <div class="p-5 text-slate-400 text-center font-semibold">Loading news...</div>
@@ -146,68 +135,68 @@
         <div class="premium-box">
             <div class="bg-gradient-to-r from-orange-500 via-rose-500 to-red-600 text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
                 <span class="flex items-center gap-2">🔥 લેટેસ્ટ સરકારી નોકરીઓ (OJAS / GPSC)</span>
-                <span class="text-xs font-bold bg-white/20 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0">બધું જુઓ →</span>
+                <a href="./category.html?c=latest-jobs-list" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0 transition">બધું જુઓ →</a>
             </div>
             <div id="latest-jobs-list-container" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
                 <div class="p-5 text-slate-400 text-center font-semibold">Loading updates...</div>
             </div>
         </div>
 
-        <!-- CATEGORY GRIDS -->
+        <!-- CATEGORY GRIDS (Opening New Category Page) -->
         <div>
             <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">🎓 શિક્ષણ અને સરકારી નોકરી</h3>
             <div class="grid grid-cols-4 gap-2.5 text-xs font-extrabold text-slate-700">
-                <div onclick="filterCategory('govt-jobs', '💼 Govt Jobs')" class="grid-card"><div class="text-base">💼</div><div class="mt-1">Govt Jobs</div></div>
-                <div onclick="filterCategory('syllabus', '📋 Syllabus')" class="grid-card"><div class="text-base">📋</div><div class="mt-1">Syllabus</div></div>
-                <div onclick="filterCategory('answer-key', '🔑 Answer Key')" class="grid-card"><div class="text-base">🔑</div><div class="mt-1">Answer Key</div></div>
-                <div onclick="filterCategory('result', '🏆 Result')" class="grid-card"><div class="text-base">🏆</div><div class="mt-1">Result</div></div>
-                <div onclick="filterCategory('admit-card', '🎟️ Admit Card')" class="grid-card"><div class="text-base">🎟️</div><div class="mt-1">Admit Card</div></div>
-                <div onclick="filterCategory('prev-papers', '📄 Prev. Papers')" class="grid-card"><div class="text-base">📄</div><div class="mt-1">Prev. Papers</div></div>
-                <div onclick="filterCategory('scholarship', '🎓 Scholarship')" class="grid-card"><div class="text-base">🎓</div><div class="mt-1">Scholarship</div></div>
-                <div onclick="filterCategory('edu-news', '📰 Edu News')" class="grid-card"><div class="text-base">📰</div><div class="mt-1">Edu News</div></div>
+                <a href="./category.html?c=govt-jobs" class="grid-card"><div class="text-base">💼</div><div class="mt-1">Govt Jobs</div></a>
+                <a href="./category.html?c=syllabus" class="grid-card"><div class="text-base">📋</div><div class="mt-1">Syllabus</div></a>
+                <a href="./category.html?c=answer-key" class="grid-card"><div class="text-base">🔑</div><div class="mt-1">Answer Key</div></a>
+                <a href="./category.html?c=result" class="grid-card"><div class="text-base">🏆</div><div class="mt-1">Result</div></a>
+                <a href="./category.html?c=admit-card" class="grid-card"><div class="text-base">🎟️</div><div class="mt-1">Admit Card</div></a>
+                <a href="./category.html?c=prev-papers" class="grid-card"><div class="text-base">📄</div><div class="mt-1">Prev. Papers</div></a>
+                <a href="./category.html?c=scholarship" class="grid-card"><div class="text-base">🎓</div><div class="mt-1">Scholarship</div></a>
+                <a href="./category.html?c=edu-news" class="grid-card"><div class="text-base">📰</div><div class="mt-1">Edu News</div></a>
             </div>
         </div>
 
         <div>
             <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">🏛️ યોજના અને સમાચાર</h3>
             <div class="grid grid-cols-3 gap-2.5 text-xs font-extrabold text-slate-700">
-                <div onclick="filterCategory('govt-schemes', '🏛️ સરકારી યોજના')" class="grid-card"><div class="text-base">🏛️</div><div class="mt-1">સરકારી યોજના</div></div>
-                <div onclick="filterCategory('current-affairs', '📅 Current Affairs')" class="grid-card"><div class="text-base">📅</div><div class="mt-1">Current Affairs</div></div>
-                <div onclick="filterCategory('gujarati-news', '🗣️ Gujarati News')" class="grid-card"><div class="text-base">🗣️</div><div class="mt-1">Gujarati News</div></div>
+                <a href="./category.html?c=govt-schemes" class="grid-card"><div class="text-base">🏛️</div><div class="mt-1">સરકારી યોજના</div></a>
+                <a href="./category.html?c=current-affairs" class="grid-card"><div class="text-base">📅</div><div class="mt-1">Current Affairs</div></a>
+                <a href="./category.html?c=gujarati-news" class="grid-card"><div class="text-base">🗣️</div><div class="mt-1">Gujarati News</div></a>
             </div>
         </div>
 
         <div>
             <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">🛠️ ઉપયોગી ગાઈડ, ટૂલ્સ અને કેલ્ક્યુલેટર</h3>
             <div class="grid grid-cols-3 gap-2.5 text-xs font-extrabold text-slate-700">
-                <a href="./tools/photo-resizer.html" class="grid-card block"><div class="text-base">🖼️</div><div class="mt-1">Photo Resizer</div></a>
-                <a href="./tools/age-calculator.html" class="grid-card block"><div class="text-base">🧮</div><div class="mt-1">Age Calculator</div></a>
-                <div onclick="filterCategory('howto-guides', 'ℹ️ How-to Guides')" class="grid-card"><div class="text-base">ℹ️</div><div class="mt-1">How-to Guides</div></div>
-                <div onclick="filterCategory('calculators', '🧮 Calculators')" class="grid-card"><div class="text-base">🧮</div><div class="mt-1">Calculators</div></div>
-                <div onclick="filterCategory('finance-tax', '💰 Finance & Tax')" class="grid-card"><div class="text-base">💰</div><div class="mt-1">Finance & Tax</div></div>
+                <a href="./tools/photo-resizer.html" class="grid-card"><div class="text-base">🖼️</div><div class="mt-1">Photo Resizer</div></a>
+                <a href="./tools/age-calculator.html" class="grid-card"><div class="text-base">🧮</div><div class="mt-1">Age Calculator</div></a>
+                <a href="./category.html?c=howto-guides" class="grid-card"><div class="text-base">ℹ️</div><div class="mt-1">How-to Guides</div></a>
+                <a href="./category.html?c=calculators" class="grid-card"><div class="text-base">🧮</div><div class="mt-1">Calculators</div></a>
+                <a href="./category.html?c=finance-tax" class="grid-card"><div class="text-base">💰</div><div class="mt-1">Finance & Tax</div></a>
             </div>
         </div>
 
         <div>
             <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">💡 ઓનલાઈન બિલ પેમેન્ટ</h3>
             <div class="grid grid-cols-4 gap-2.5 text-xs font-extrabold text-slate-700">
-                <div onclick="filterCategory('ugvcl-bill', '💡 UGVCL Bill')" class="grid-card"><div class="text-base">💡</div><div class="mt-1">UGVCL Bill</div></div>
-                <div onclick="filterCategory('gujarat-gas', '🔥 Gujarat Gas')" class="grid-card"><div class="text-base">🔥</div><div class="mt-1">Gujarat Gas</div></div>
-                <div onclick="filterCategory('pgvcl-bill', '⚡ PGVCL Bill')" class="grid-card"><div class="text-base">⚡</div><div class="mt-1">PGVCL Bill</div></div>
-                <div onclick="filterCategory('mgvcl-bill', '🔌 MGVCL Bill')" class="grid-card"><div class="text-base">🔌</div><div class="mt-1">MGVCL Bill</div></div>
+                <a href="./category.html?c=ugvcl-bill" class="grid-card"><div class="text-base">💡</div><div class="mt-1">UGVCL Bill</div></a>
+                <a href="./category.html?c=gujarat-gas" class="grid-card"><div class="text-base">🔥</div><div class="mt-1">Gujarat Gas</div></a>
+                <a href="./category.html?c=pgvcl-bill" class="grid-card"><div class="text-base">⚡</div><div class="mt-1">PGVCL Bill</div></a>
+                <a href="./category.html?c=mgvcl-bill" class="grid-card"><div class="text-base">🔌</div><div class="mt-1">MGVCL Bill</div></a>
             </div>
         </div>
 
         <div>
             <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">📺 મનોરંજન અને ટેકનોલોજી</h3>
             <div class="grid grid-cols-4 gap-2.5 text-xs font-extrabold text-slate-700">
-                <div onclick="filterCategory('tech-news', '🤖 Tech News')" class="grid-card"><div class="text-base">🤖</div><div class="mt-1">Tech News</div></div>
-                <div onclick="filterCategory('movie-ott', '🍿 Movie & OTT')" class="grid-card"><div class="text-base">🍿</div><div class="mt-1">Movie & OTT</div></div>
-                <div onclick="filterCategory('web-series', '🎬 Web Series')" class="grid-card"><div class="text-base">🎬</div><div class="mt-1">Web Series</div></div>
-                <div onclick="filterCategory('auto-news', '🚗 Auto News')" class="grid-card"><div class="text-base">🚗</div><div class="mt-1">Auto News</div></div>
-                <div onclick="filterCategory('cricket-ipl', '🏏 Cricket / IPL')" class="grid-card"><div class="text-base">🏏</div><div class="mt-1">Cricket / IPL</div></div>
-                <div onclick="filterCategory('health-tips', '🍏 Health Tips')" class="grid-card"><div class="text-base">🍏</div><div class="mt-1">Health Tips</div></div>
-                <div onclick="filterCategory('wishes-quotes', '🎉 Wishes & Quotes')" class="grid-card"><div class="text-base">🎉</div><div class="mt-1">Wishes</div></div>
+                <a href="./category.html?c=tech-news" class="grid-card"><div class="text-base">🤖</div><div class="mt-1">Tech News</div></a>
+                <a href="./category.html?c=movie-ott" class="grid-card"><div class="text-base">🍿</div><div class="mt-1">Movie & OTT</div></a>
+                <a href="./category.html?c=web-series" class="grid-card"><div class="text-base">🎬</div><div class="mt-1">Web Series</div></a>
+                <a href="./category.html?c=auto-news" class="grid-card"><div class="text-base">🚗</div><div class="mt-1">Auto News</div></a>
+                <a href="./category.html?c=cricket-ipl" class="grid-card"><div class="text-base">🏏</div><div class="mt-1">Cricket / IPL</div></a>
+                <a href="./category.html?c=health-tips" class="grid-card"><div class="text-base">🍏</div><div class="mt-1">Health Tips</div></a>
+                <a href="./category.html?c=wishes-quotes" class="grid-card"><div class="text-base">🎉</div><div class="mt-1">Wishes</div></a>
             </div>
         </div>
 
@@ -218,7 +207,7 @@
         <div class="premium-box">
             <div class="bg-gradient-to-r from-slate-800 via-slate-900 to-black text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
                 <span class="flex items-center gap-2">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</span>
-                <span class="text-xs font-bold bg-white/20 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0">બધું જુઓ →</span>
+                <a href="./category.html?c=articles-list" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0 transition">બધું જુઓ →</a>
             </div>
             <div id="articles-list-container" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
                 <div class="p-5 text-slate-400 text-center font-semibold">Loading articles...</div>
@@ -328,7 +317,7 @@
                 return; 
             }
             
-            // Limit to Top 5 initially
+            // Show Top 5 Posts
             const topPosts = posts.slice(0, 5);
             const hiddenPosts = posts.slice(5);
 
@@ -345,7 +334,7 @@
                     </a>`;
             });
 
-            // If more than 5 posts, add dropdown toggle box
+            // Expand / Collapse feature
             if (hiddenPosts.length > 0) {
                 htmlContent += `<div id="${containerId}-extra" class="hidden divide-y divide-slate-100">`;
                 hiddenPosts.forEach((post) => {
@@ -370,7 +359,6 @@
             container.innerHTML = htmlContent;
         }
 
-        // Toggle Expand Function
         function toggleExpand(extraDivId, btnElement) {
             const extraDiv = document.getElementById(extraDivId);
             if (!extraDiv) return;
@@ -389,32 +377,6 @@
                 textSpan.innerText = 'વધુ જુઓ';
             }
         }
-
-        function filterCategory(categorySlug, displayTitle) {
-            const fb = document.getElementById('filterViewBlock');
-            const tc = document.getElementById('filter-content-target');
-            document.getElementById('filterViewTitle').innerText = displayTitle;
-            fb.classList.remove('hidden');
-            fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            tc.innerHTML = '';
-            
-            const matches = siteData[categorySlug] || [];
-            if(matches.length === 0) { 
-                tc.innerHTML = '<p class="text-xs text-slate-500 p-4 text-center font-normal">અત્યારે કોઈ નવી માહિતી ઉપલબ્ધ નથી. કૃપા કરીને થોડીવાર પછી ચેક કરો.</p>'; 
-                return; 
-            }
-            matches.forEach((post) => {
-                tc.innerHTML += `
-                    <a href="${fixLink(post.link)}" target="_blank" class="py-3 px-2 flex items-center justify-between gap-2 text-xs md:text-sm border-b border-slate-100 last:border-none hover:bg-orange-50/50 rounded-xl transition text-blue-900 hover:text-orange-600 font-extrabold w-full">
-                        <div class="flex items-start gap-2">
-                            <span class="bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-md font-black shrink-0 mt-0.5">${post.tag || 'ALERT'}</span>
-                            <span class="leading-normal">${post.title} <span class="text-slate-400 font-medium text-xs ml-1">(${post.meta || 'View'})</span></span>
-                        </div>
-                    </a>`;
-            });
-        }
-
-        function closeFilterView() { document.getElementById('filterViewBlock').classList.add('hidden'); }
 
         window.onload = function() {
             fetchLiveUpdates();
