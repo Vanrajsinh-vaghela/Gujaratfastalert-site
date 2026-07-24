@@ -17,11 +17,12 @@
     <meta name="author" content="Vanrajsinh Vaghela">
     <meta name="robots" content="index, follow">
 
+    <!-- Fast Render CSS (No defer to prevent layout flickering) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Premium Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Deferred Fast Rendering Scripts -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5297812051188062" crossorigin="anonymous"></script>
 
     <!-- Google Analytics -->
@@ -33,7 +34,7 @@
       gtag('config', 'G-ZJN134J7EC');
     </script>
     
-    <!-- Firebase SDK Links (Deferred) -->
+    <!-- Firebase SDK Links -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js" defer></script>
     
@@ -114,8 +115,8 @@
     <!-- Main Content Container -->
     <div class="w-full max-w-lg px-4 space-y-6">
 
-        <!-- 🖼️ DYNAMIC FESTIVAL / HOLIDAY POSTER BANNER -->
-        <div id="mainFestivalPoster" class="my-2 text-center hidden">
+        <!-- 🖼️ DYNAMIC FESTIVAL / HOLIDAY POSTER BANNER (Initially Hidden Inline) -->
+        <div id="mainFestivalPoster" class="my-2 text-center" style="display: none;">
             <a id="posterAnchor" href="#" target="_blank" class="block group">
                 <img id="posterImg" src="" alt="Festival Alert" class="w-full max-w-lg mx-auto rounded-2xl border-2 border-amber-500/80 shadow-lg object-cover transition transform group-hover:scale-[1.01]">
             </a>
@@ -305,12 +306,12 @@
                                 } else {
                                     posterAnchor.removeAttribute('href');
                                 }
-                                posterBox.classList.remove('hidden');
+                                posterBox.style.display = 'block';
                             } else {
-                                posterBox.classList.add('hidden');
+                                posterBox.style.display = 'none';
                             }
                         } else if (posterBox) {
-                            posterBox.classList.add('hidden');
+                            posterBox.style.display = 'none';
                         }
                     }
 
