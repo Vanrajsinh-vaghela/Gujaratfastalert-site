@@ -114,6 +114,13 @@
     <!-- Main Content Container -->
     <div class="w-full max-w-lg px-4 space-y-6">
 
+        <!-- 🖼️ DYNAMIC FESTIVAL / HOLIDAY POSTER BANNER -->
+        <div id="mainFestivalPoster" class="my-2 text-center hidden">
+            <a id="posterAnchor" href="#" target="_blank" class="block group">
+                <img id="posterImg" src="" alt="Festival Alert" class="w-full max-w-lg mx-auto rounded-2xl border-2 border-amber-500/80 shadow-lg object-cover transition transform group-hover:scale-[1.01]">
+            </a>
+        </div>
+
         <!-- 🔗 BOX 1: DIRECT ONLINE SERVICES & SCHEMES -->
         <div class="premium-box">
             <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
@@ -282,6 +289,28 @@
                             document.getElementById('marqueeAlertText').innerText = rootData.settings.headerNotice;
                         } else {
                             document.getElementById('marqueeAlertText').innerText = "🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે!";
+                        }
+
+                        // --- Dynamic Festival Poster Handling ---
+                        const posterBox = document.getElementById('mainFestivalPoster');
+                        const posterImg = document.getElementById('posterImg');
+                        const posterAnchor = document.getElementById('posterAnchor');
+
+                        if (posterBox && rootData.settings.festivalPoster) {
+                            const fp = rootData.settings.festivalPoster;
+                            if (fp.active && fp.imgUrl && fp.imgUrl.trim() !== "") {
+                                posterImg.src = fp.imgUrl.trim();
+                                if (fp.linkUrl && fp.linkUrl.trim() !== "") {
+                                    posterAnchor.href = fixLink(fp.linkUrl);
+                                } else {
+                                    posterAnchor.removeAttribute('href');
+                                }
+                                posterBox.classList.remove('hidden');
+                            } else {
+                                posterBox.classList.add('hidden');
+                            }
+                        } else if (posterBox) {
+                            posterBox.classList.add('hidden');
                         }
                     }
 
