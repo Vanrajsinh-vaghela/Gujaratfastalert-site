@@ -268,8 +268,32 @@
         <!-- 3. CONFIG SETTINGS TAB -->
         <div id="settings-tab" class="tab-content space-y-4">
             <div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl">
-                <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider">Website Global Settings</h3>
+                <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider">Website Global & Festival Poster Settings</h3>
             </div>
+
+            <!-- 🎉 FESTIVAL / HOLIDAY POSTER CONTROL -->
+            <div class="p-4 bg-slate-900 border border-amber-500/40 rounded-2xl space-y-3">
+                <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-black text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                        🎉 Festival / Holiday Main Poster
+                    </h4>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="posterActive" class="w-4 h-4 accent-amber-500 rounded">
+                        <span class="text-xs font-bold text-slate-300">Show on Screen (હોમપેજ પર બતાવો)</span>
+                    </label>
+                </div>
+                
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">🖼️ Poster Image URL (ફોટો/પોસ્ટરની લિંક):</label>
+                    <input type="text" id="posterImgUrl" placeholder="https://i.ibb.co/example/festival.jpg" class="w-full p-2.5 dark-input rounded-xl text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">🔗 Poster Target Link (પોસ્ટર પર ક્લિક કરવાથી ક્યાં જવું - Optional):</label>
+                    <input type="text" id="posterLinkUrl" placeholder="https://gujaratfastalert.in/diwali-offer.html" class="w-full p-2.5 dark-input rounded-xl text-xs">
+                </div>
+            </div>
+
             <div>
                 <label class="block text-xs font-bold text-slate-300 mb-1">📢 Header Marquee Ticker (Top Running Alert):</label>
                 <textarea id="headerNotice" rows="3" class="w-full p-3 dark-input rounded-xl text-xs font-medium resize-none"></textarea>
@@ -510,8 +534,13 @@
         function saveGlobalSettings() {
             database.ref('settings').set({
                 headerNotice: document.getElementById('headerNotice').value,
-                siteTitle: document.getElementById('siteTitleSetting').value
-            }).then(() => { alert("Global website settings updated!"); });
+                siteTitle: document.getElementById('siteTitleSetting').value,
+                festivalPoster: {
+                    active: document.getElementById('posterActive').checked,
+                    imgUrl: document.getElementById('posterImgUrl').value.trim(),
+                    linkUrl: document.getElementById('posterLinkUrl').value.trim()
+                }
+            }).then(() => { alert("✅ Global website & Festival Poster settings updated!"); });
         }
 
         function loadGlobalSettings() {
@@ -520,6 +549,11 @@
                 if(data) {
                     document.getElementById('headerNotice').value = data.headerNotice || '';
                     document.getElementById('siteTitleSetting').value = data.siteTitle || '';
+                    if(data.festivalPoster) {
+                        document.getElementById('posterActive').checked = data.festivalPoster.active || false;
+                        document.getElementById('posterImgUrl').value = data.festivalPoster.imgUrl || '';
+                        document.getElementById('posterLinkUrl').value = data.festivalPoster.linkUrl || '';
+                    }
                 }
             });
         }
