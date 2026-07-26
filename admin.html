@@ -432,8 +432,15 @@
 
             if(!title) { alert("❌ Title is required!"); return; }
 
-            // Auto Schedule Time Calculation
-            const scheduledAtTimestamp = scheduleInput ? new Date(scheduleInput).getTime() : Date.now();
+            // ⏰ ROBUST AUTO SCHEDULE TIME CALCULATION (Mobile & Safari Safe Timestamp)
+            let scheduledAtTimestamp = null;
+            if (scheduleInput) {
+                // Cross-browser safe parsing for mobile devices
+                let formattedStr = scheduleInput.replace(/-/g, "/").replace("T", " ");
+                let parsedTime = new Date(formattedStr).getTime();
+                if (isNaN(parsedTime)) parsedTime = new Date(scheduleInput).getTime();
+                if (!isNaN(parsedTime)) scheduledAtTimestamp = parsedTime;
+            }
 
             let finalLink = slug;
 
@@ -514,7 +521,7 @@
                 keywords,
                 link: finalLink, 
                 timestamp: Date.now(),
-                scheduledAt: scheduledAtTimestamp 
+                scheduledAt: scheduledAtTimestamp // Saved as pure Millisecond Timestamp or null
             };
 
             if(editingPostId) {
@@ -529,7 +536,7 @@
                 loadCategoryPosts();
             } else {
                 database.ref('posts/' + category).push().set(postObj).then(() => {
-                    const isFuture = scheduledAtTimestamp > Date.now();
+                    const isFuture = scheduledAtTimestamp && scheduledAtTimestamp > Date.now();
                     showStatus(isFuture ? `📅 SUCCESS! Post Scheduled for ${new Date(scheduledAtTimestamp).toLocaleString()}` : `🎉 SUCCESS! Post is LIVE on Gujarat Fast Alert!`);
                     clearForm();
                 });
@@ -549,9 +556,15 @@
 
                 Object.keys(data).reverse().forEach(key => {
                     const post = data[key];
-                    const isScheduled = post.scheduledAt && post.scheduledAt > now;
+                    
+                    let schedTime = Number(post.scheduledAt);
+                    if (isNaN(schedTime) && post.scheduledAt) {
+                        schedTime = new Date(String(post.scheduledAt).replace(/-/g, "/").replace("T", " ")).getTime();
+                    }
+
+                    const isScheduled = schedTime && !isNaN(schedTime) && schedTime > now;
                     const statusBadge = isScheduled 
-                        ? `<span class="bg-indigo-900/80 text-indigo-300 text-[9px] px-2 py-0.5 rounded-md font-extrabold border border-indigo-500/30">⏰ SCHEDULED (${new Date(post.scheduledAt).toLocaleDateString()})</span>`
+                        ? `<span class="bg-indigo-900/80 text-indigo-300 text-[9px] px-2 py-0.5 rounded-md font-extrabold border border-indigo-500/30">⏰ SCHEDULED (${new Date(schedTime).toLocaleString()})</span>`
                         : `<span class="bg-emerald-900/80 text-emerald-300 text-[9px] px-2 py-0.5 rounded-md font-extrabold border border-emerald-500/30">🟢 LIVE</span>`;
 
                     const item = document.createElement('div');
@@ -582,9 +595,17 @@
             document.getElementById('fileSlug').value = post.link || '';
             
             if(post.scheduledAt) {
-                const dateObj = new Date(post.scheduledAt);
-                dateObj.setMinutes(dateObj.getMinutes() - dateObj.getTimezoneOffset());
-                document.getElementById('jobScheduleTime').value = dateObj.toISOString().slice(0, 16);
+                let schedTime = Number(post.scheduledAt);
+                if(isNaN(schedTime)) {
+                    schedTime = new Date(String(post.scheduledAt).replace(/-/g, "/").replace("T", " ")).getTime();
+                }
+                if(!isNaN(schedTime)) {
+                    const dateObj = new Date(schedTime);
+                    dateObj.setMinutes(dateObj.getMinutes() - dateObj.getTimezoneOffset());
+                    document.getElementById('jobScheduleTime').value = dateObj.toISOString().slice(0, 16);
+                } else {
+                    document.getElementById('jobScheduleTime').value = '';
+                }
             } else {
                 document.getElementById('jobScheduleTime').value = '';
             }
