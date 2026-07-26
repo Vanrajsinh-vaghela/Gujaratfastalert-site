@@ -331,7 +331,7 @@
                         }
                     }
 
-                    // ⏰ AUTO SCHEDULING FILTER LOGIC
+                    // ⏰ AUTO SCHEDULING FILTER LOGIC (100% Robust Cross-Browser Calculation)
                     const currentTimestamp = Date.now();
 
                     if(rootData.posts) {
@@ -339,7 +339,25 @@
                             const catObj = rootData.posts[cat];
                             siteData[cat] = Object.keys(catObj)
                                 .map(key => catObj[key])
-                                .filter(post => !post.scheduledAt || post.scheduledAt <= currentTimestamp) // Filter out future scheduled posts
+                                .filter(post => {
+                                    // 1. Agar koi scheduling date set nahi ki hai -> Direct live
+                                    if (!post.scheduledAt) return true;
+
+                                    // 2. Parse value to Number
+                                    let scheduledTime = Number(post.scheduledAt);
+
+                                    // 3. Agar date string format mein ho ("2026-07-26T21:30")
+                                    if (isNaN(scheduledTime)) {
+                                        let formattedDateStr = String(post.scheduledAt).replace(/-/g, "/").replace("T", " ");
+                                        scheduledTime = new Date(formattedDateStr).getTime();
+                                    }
+
+                                    // 4. Agar date invalid nikle -> Show post
+                                    if (isNaN(scheduledTime)) return true;
+
+                                    // 5. Sirf wahi post dikhao jiska time aa chuka hai
+                                    return scheduledTime <= currentTimestamp;
+                                })
                                 .reverse();
                         });
                     }
