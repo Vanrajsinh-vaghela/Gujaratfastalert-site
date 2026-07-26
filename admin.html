@@ -102,7 +102,7 @@
                 <div>
                     <h2 class="text-base font-black text-white tracking-wide">Vanrajsinh Full-Access</h2>
                     <p class="text-[11px] text-emerald-400 font-bold flex items-center gap-1.5 mt-0.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Auto-Sync Active
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Auto-Sync & Schedule Active
                     </p>
                 </div>
             </div>
@@ -147,7 +147,14 @@
         <div id="post-tab" class="tab-content active space-y-4">
             
             <div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl">
-                <h3 id="form-action-title" class="text-xs font-black text-amber-400 uppercase tracking-wider">🔥 Create & Publish Live Post</h3>
+                <h3 id="form-action-title" class="text-xs font-black text-amber-400 uppercase tracking-wider">🔥 Create, Schedule & Publish SEO Post</h3>
+            </div>
+
+            <!-- AUTO SCHEDULING DATE/TIME PICKER -->
+            <div class="p-3 bg-slate-900/90 border border-indigo-500/40 rounded-xl space-y-1">
+                <label class="block text-xs font-bold text-indigo-400">📅 Auto-Schedule Publish Time (લાઈવ કરવાનો સમય):</label>
+                <input type="datetime-local" id="jobScheduleTime" class="w-full p-2.5 dark-input rounded-xl text-xs font-bold text-amber-300">
+                <p class="text-[10px] text-slate-400">*અત્યારે જ લાઈવ કરવા માટે આ લાઈન ખાલી છોડી દો. ભવિષ્યની તારીખ પસંદ કરવાથી તે તારીખે આપોઆપ લાઈવ થશે.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -207,6 +214,19 @@
                 <input type="text" id="jobTitle" placeholder="GSSSB એગ્રીકલ્ચર ઓવરશીયર ભરતી 2026" oninput="autoGenerateSlug()" class="w-full p-3 dark-input rounded-xl text-xs font-medium">
             </div>
 
+            <!-- SEO FIELDS SECTION -->
+            <div class="p-3 bg-amber-500/5 border border-amber-500/20 rounded-xl space-y-3">
+                <h4 class="text-xs font-black text-amber-400 uppercase tracking-wider">🚀 SEO & Google Ranking Boosters</h4>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">🔍 Google Meta Description (1-2 લાઇન્સ ની શોર્ટ સમરી):</label>
+                    <input type="text" id="jobMetaDesc" placeholder="GSSSB Agriculture Overseer Recruitment 2026. Online form, eligibility, salary & OJAS apply link." class="w-full p-2.5 dark-input rounded-xl text-xs">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">🔑 Focus SEO Keywords (કોમા , લગાવીને Keywords લખો):</label>
+                    <input type="text" id="jobKeywords" placeholder="GSSSB Bharti 2026, OJAS Online Application, Gujarat Govt Jobs, GSSSB Qualification" class="w-full p-2.5 dark-input rounded-xl text-xs">
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">4. Sub-Text / Last Date:</label>
@@ -219,7 +239,7 @@
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-300 mb-1">6. Paste Post Full HTML Code (પેજ નો કોડ અહીં પેસ્ટ કરો - મરજિયાત):</label>
+                <label class="block text-xs font-bold text-slate-300 mb-1">6. Paste Post Full HTML Code (મરજિયાત):</label>
                 <textarea id="postHtmlCode" rows="8" placeholder="<!DOCTYPE html> ... Paste full HTML code here" class="w-full p-3 dark-input rounded-xl font-mono text-xs leading-relaxed resize-y"></textarea>
             </div>
 
@@ -228,7 +248,7 @@
 
             <div class="pt-2">
                 <button id="submitBtn" onclick="publishAutoPost()" class="w-full py-4 btn-gold rounded-xl text-xs tracking-wider">
-                    🔥 PUBLISH & SYNC TO GUJARATFASTALERT.IN
+                    🔥 PUBLISH / SCHEDULE POST & SYNC
                 </button>
                 <button id="cancelEditBtn" onclick="cancelEditing()" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs tracking-wider mt-2 hidden">
                     CANCEL EDIT MODE
@@ -239,7 +259,7 @@
         <!-- 2. MANAGE TAB -->
         <div id="manage-tab" class="tab-content space-y-4">
             <div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-xl mb-4">
-                <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider">Edit / Delete Live Posts</h3>
+                <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider">Edit / Delete Live & Scheduled Posts</h3>
             </div>
             <div>
                 <label class="block text-xs font-bold text-slate-300 mb-1">Select Category to view posts:</label>
@@ -401,17 +421,23 @@
             const tag = document.getElementById('jobTag').value.trim();
             const title = document.getElementById('jobTitle').value.trim();
             const meta = document.getElementById('jobMeta').value.trim();
+            const metaDesc = document.getElementById('jobMetaDesc').value.trim();
+            const keywords = document.getElementById('jobKeywords').value.trim();
+            const scheduleInput = document.getElementById('jobScheduleTime').value;
             let slug = document.getElementById('fileSlug').value.trim();
-            const htmlCode = document.getElementById('postHtmlCode').value.trim();
+            let htmlCode = document.getElementById('postHtmlCode').value.trim();
             
             const editingPostId = document.getElementById('editingPostId').value;
             const oldCategory = document.getElementById('editingCategory').value;
 
             if(!title) { alert("❌ Title is required!"); return; }
 
+            // Auto Schedule Time Calculation
+            const scheduledAtTimestamp = scheduleInput ? new Date(scheduleInput).getTime() : Date.now();
+
             let finalLink = slug;
 
-            // Upload HTML page directly to GitHub if code is pasted
+            // Direct HTML Upload with Auto SEO Meta Injection
             if (htmlCode) {
                 if(!repo || !token) {
                     alert("⚠️ GitHub Repo or Access Token missing! Please click '⚙️ GitHub API Settings' at top right and save credentials.");
@@ -421,6 +447,27 @@
                 
                 if(!slug.endsWith('.html')) slug += '.html';
                 finalLink = slug;
+
+                // Auto Inject SEO Head Meta Tags into HTML Code if <head> exists
+                if (htmlCode.includes('<head>')) {
+                    const seoMetaInjection = `
+    <!-- Auto-Generated SEO Meta Tags -->
+    <meta name="description" content="${metaDesc || title}">
+    <meta name="keywords" content="${keywords || 'Gujarat Fast Alert, OJAS Gujarat, Govt Jobs'}">
+    <meta property="og:title" content="${title}">
+    <meta property="og:description" content="${metaDesc || title}">
+    <!-- Schema.org JobPosting -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "${title}",
+      "description": "${metaDesc || title}",
+      "author": { "@type": "Person", "name": "Vanrajsinh Vaghela" }
+    }
+    <\/script>`;
+                    htmlCode = htmlCode.replace('<head>', '<head>' + seoMetaInjection);
+                }
 
                 showStatus("⏳ 1/2. Uploading HTML Page directly to GitHub Repository...");
 
@@ -459,21 +506,31 @@
 
             showStatus("⏳ 2/2. Syncing Post details to Live Firebase Feed...");
 
-            const postObj = { tag, title, meta, link: finalLink, timestamp: Date.now() };
+            const postObj = { 
+                tag, 
+                title, 
+                meta, 
+                metaDesc,
+                keywords,
+                link: finalLink, 
+                timestamp: Date.now(),
+                scheduledAt: scheduledAtTimestamp 
+            };
 
             if(editingPostId) {
                 if (oldCategory !== category) {
                     database.ref('posts/' + oldCategory + '/' + editingPostId).remove();
                     database.ref('posts/' + category).push().set(postObj);
                 } else {
-                    database.ref('posts/' + category + '/' + editingPostId).update({ tag, title, meta, link: finalLink });
+                    database.ref('posts/' + category + '/' + editingPostId).update(postObj);
                 }
                 showStatus("✅ Success! Post Updated Live!");
                 cancelEditing(); 
                 loadCategoryPosts();
             } else {
                 database.ref('posts/' + category).push().set(postObj).then(() => {
-                    showStatus(`🎉 SUCCESS! Post is LIVE on Gujarat Fast Alert!`);
+                    const isFuture = scheduledAtTimestamp > Date.now();
+                    showStatus(isFuture ? `📅 SUCCESS! Post Scheduled for ${new Date(scheduledAtTimestamp).toLocaleString()}` : `🎉 SUCCESS! Post is LIVE on Gujarat Fast Alert!`);
                     clearForm();
                 });
             }
@@ -487,12 +544,23 @@
                 listDiv.innerHTML = '';
                 const data = snapshot.val();
                 if(!data) { listDiv.innerHTML = '<p class="text-xs text-slate-500 p-4 text-center">No active posts found in this category.</p>'; return; }
+                
+                const now = Date.now();
+
                 Object.keys(data).reverse().forEach(key => {
                     const post = data[key];
+                    const isScheduled = post.scheduledAt && post.scheduledAt > now;
+                    const statusBadge = isScheduled 
+                        ? `<span class="bg-indigo-900/80 text-indigo-300 text-[9px] px-2 py-0.5 rounded-md font-extrabold border border-indigo-500/30">⏰ SCHEDULED (${new Date(post.scheduledAt).toLocaleDateString()})</span>`
+                        : `<span class="bg-emerald-900/80 text-emerald-300 text-[9px] px-2 py-0.5 rounded-md font-extrabold border border-emerald-500/30">🟢 LIVE</span>`;
+
                     const item = document.createElement('div');
                     item.className = 'bg-slate-800/80 p-3 rounded-xl border border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2';
                     item.innerHTML = `
-                        <div class="text-xs font-bold text-slate-200 pr-2">${post.title} <span class="text-[10px] text-amber-400 font-normal">(${post.link})</span></div>
+                        <div class="text-xs font-bold text-slate-200 pr-2">
+                            ${post.title} ${statusBadge}
+                            <div class="text-[10px] text-amber-400 font-normal mt-0.5">Link: ${post.link}</div>
+                        </div>
                         <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
                             <button class="px-3 py-1.5 bg-amber-500/20 text-amber-300 rounded-lg font-bold text-[10px] hover:bg-amber-500/30 transition" onclick="startEditing('${key}', '${category}', ${JSON.stringify(post).replace(/"/g, '&quot;')})">✏️ Edit</button>
                             <button class="px-3 py-1.5 bg-rose-500/20 text-rose-300 rounded-lg font-bold text-[10px] hover:bg-rose-500/30 transition" onclick="deletePost('${key}', '${category}')">🗑️ Delete</button>
@@ -509,8 +577,19 @@
             document.getElementById('jobTag').value = post.tag || '';
             document.getElementById('jobTitle').value = post.title || '';
             document.getElementById('jobMeta').value = post.meta || '';
+            document.getElementById('jobMetaDesc').value = post.metaDesc || '';
+            document.getElementById('jobKeywords').value = post.keywords || '';
             document.getElementById('fileSlug').value = post.link || '';
-            document.getElementById('form-action-title').innerText = "✏️ Editing Live Post Model";
+            
+            if(post.scheduledAt) {
+                const dateObj = new Date(post.scheduledAt);
+                dateObj.setMinutes(dateObj.getMinutes() - dateObj.getTimezoneOffset());
+                document.getElementById('jobScheduleTime').value = dateObj.toISOString().slice(0, 16);
+            } else {
+                document.getElementById('jobScheduleTime').value = '';
+            }
+
+            document.getElementById('form-action-title').innerText = "✏️ Editing Live/Scheduled Post Model";
             document.getElementById('submitBtn').innerText = "💾 SAVE CHANGES LIVE";
             document.getElementById('cancelEditBtn').classList.remove('hidden');
             switchTab('post-tab');
@@ -520,13 +599,13 @@
             document.getElementById('editingPostId').value = '';
             document.getElementById('editingCategory').value = ''; 
             clearForm();
-            document.getElementById('form-action-title').innerText = "🔥 Create & Publish Live Post";
-            document.getElementById('submitBtn').innerText = "🔥 PUBLISH & SYNC TO GUJARATFASTALERT.IN";
+            document.getElementById('form-action-title').innerText = "🔥 Create, Schedule & Publish SEO Post";
+            document.getElementById('submitBtn').innerText = "🔥 PUBLISH / SCHEDULE POST & SYNC";
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
         function deletePost(id, category) {
-            if(confirm("Are you sure you want to delete this live post?")) {
+            if(confirm("Are you sure you want to delete this live/scheduled post?")) {
                 database.ref('posts/' + category + '/' + id).remove().then(() => { loadCategoryPosts(); });
             }
         }
@@ -561,9 +640,12 @@
         function clearForm() {
             document.getElementById('jobTitle').value = ''; 
             document.getElementById('jobMeta').value = '';
+            document.getElementById('jobMetaDesc').value = '';
+            document.getElementById('jobKeywords').value = '';
             document.getElementById('fileSlug').value = ''; 
             document.getElementById('jobTag').value = '';
             document.getElementById('postHtmlCode').value = '';
+            document.getElementById('jobScheduleTime').value = '';
         }
 
         function updatePreviewFromCode() {
