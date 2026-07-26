@@ -12,10 +12,24 @@
     
     <!-- High-Ranking SEO Meta Tags -->
     <title>Gujarat Fast Alert - OJAS Bharti 2026, GPSC, News & Govt Schemes</title>
-    <meta name="description" content="Gujarat Fast Alert by Vanrajsinh Vaghela. Get fastest updates on OJAS Bharti 2026, GPSC, Latest News, Govt Schemes, Online Services, Answer Keys & Results.">
-    <meta name="keywords" content="Gujarat Fast Alert, OJAS Bharti 2026, GPSC Recruitment, GSSSB Jobs, Gujarat News, Online Services, Govt Schemes Gujarat">
+    <meta name="description" content="Gujarat Fast Alert by Vanrajsinh Vaghela. Get fastest updates on OJAS Bharti 2026, GPSC, GSSSB Recruitment, Call Letters, Answer Keys, Results & Govt Schemes.">
+    <meta name="keywords" content="Gujarat Fast Alert, OJAS Gujarat 2026, GSSSB Bharti, GPSC Recruitment, OJAS Call Letter, Gujarat Govt Jobs, i-Khedut Scheme">
     <meta name="author" content="Vanrajsinh Vaghela">
     <meta name="robots" content="index, follow">
+
+    <!-- Schema.org WebSite JSON-LD Markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Gujarat Fast Alert",
+      "url": "https://gujaratfastalert.in/",
+      "publisher": {
+        "@type": "Person",
+        "name": "Vanrajsinh Vaghela"
+      }
+    }
+    </script>
 
     <!-- Fast Render CSS (No defer to prevent layout flickering) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -115,7 +129,7 @@
     <!-- Main Content Container -->
     <div class="w-full max-w-lg px-4 space-y-6">
 
-        <!-- 🖼️ DYNAMIC FESTIVAL / HOLIDAY POSTER BANNER (Initially Hidden Inline) -->
+        <!-- 🖼️ DYNAMIC FESTIVAL / HOLIDAY POSTER BANNER -->
         <div id="mainFestivalPoster" class="my-2 text-center" style="display: none;">
             <a id="posterAnchor" href="#" target="_blank" class="block group">
                 <img id="posterImg" src="" alt="Festival Alert" class="w-full max-w-lg mx-auto rounded-2xl border-2 border-amber-500/80 shadow-lg object-cover transition transform group-hover:scale-[1.01]">
@@ -315,10 +329,16 @@
                         }
                     }
 
+                    // ⏰ AUTO SCHEDULING FILTER LOGIC
+                    const currentTimestamp = Date.now();
+
                     if(rootData.posts) {
                         Object.keys(rootData.posts).forEach(cat => {
                             const catObj = rootData.posts[cat];
-                            siteData[cat] = Object.keys(catObj).map(key => catObj[key]).reverse();
+                            siteData[cat] = Object.keys(catObj)
+                                .map(key => catObj[key])
+                                .filter(post => !post.scheduledAt || post.scheduledAt <= currentTimestamp) // Filter out future scheduled posts
+                                .reverse();
                         });
                     }
 
