@@ -10,20 +10,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- High-Ranking SEO Meta Tags (Includes Typos for Google Search Matching) -->
-    <title>Gujarat Fast Alert - OJAS Bharti 2026, GPSC, News & Govt Schemes</title>
-    <meta name="description" content="Gujarat Fast Alert by Vanrajsinh Vaghela. Get fastest updates on OJAS Bharti 2026, GPSC, GSSSB Recruitment, Call Letters, Answer Keys, Results & Govt Schemes.">
-    <meta name="keywords" content="Gujarat Fast Alert, gujratfast, gujaratalrer, gujaratalretfast, gujrat fast alert, OJAS Gujarat 2026, GSSSB Bharti, GPSC Recruitment, OJAS Call Letter, Gujarat Govt Jobs, i-Khedut Scheme">
+    <!-- High-Ranking SEO Meta Tags (Includes Maru Gujarat, OJAS & Target Keywords) -->
+    <title>Gujarat Fast Alert - Maru Gujarat OJAS, Bharti 2026, GPSC, Call Letter & News</title>
+    <meta name="description" content="Gujarat Fast Alert by Vanrajsinh Vaghela. Get fastest updates on Maru Gujarat OJAS, Online Gujarat Bharti, Police Bharti, Anganwadi Bharti, Call Letters, Answer Keys & Results.">
+    <meta name="keywords" content="Gujarat Fast Alert, Maru Gujarat Ojas, Maru Gujarat OJAS Call Letter, Maru Gujarat Jobs, Maru Gujarat OJAS GPSC, Maru Gujarat Apply Online, Online gujarat bharti apply, Ojas Gujarat gov in Police bharti, Www ojas gujarat gov in bharti, Anganwadi bharti gujarat online apply, OJAS app, GSSSB OJAS">
     <meta name="author" content="Vanrajsinh Vaghela">
     <meta name="robots" content="index, follow">
 
-    <!-- Schema.org WebSite JSON-LD Markup for Google (With Alternate Typo Names) -->
+    <!-- Schema.org WebSite JSON-LD Markup for Google (With Maru Gujarat & OJAS Keywords) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Gujarat Fast Alert",
-      "alternateName": ["GujratFast", "Gujarat Alrer", "GujaratAlertFast", "Gujrat Fast Alert"],
+      "alternateName": ["GujratFast", "Maru Gujarat Ojas", "Gujarat OJAS Alert", "GujaratAlertFast", "Gujrat Fast Alert"],
       "url": "https://gujaratfastalert.in/",
       "publisher": {
         "@type": "Person",
@@ -248,7 +248,7 @@
     <footer class="w-full bg-slate-900 text-slate-400 py-10 px-6 text-xs text-center border-t border-slate-800 mt-12">
         <p class="font-extrabold text-slate-200 mb-1.5 text-sm">© 2026-27, Vanrajsinh Vaghela ®</p>
         <p class="opacity-75 max-w-md mx-auto mb-3 leading-relaxed">⚠️ Disclaimer: This site is an independent educational portal and is not affiliated with OJAS or any government agency.</p>
-        <p class="text-[10px] text-slate-500 mb-5 font-mono">Popular searches: Gujarat Fast Alert | GujratFast | Gujarat Alrer | GujaratAlertFast</p>
+        <p class="text-[10px] text-slate-500 mb-5 font-mono">Popular searches: Gujarat Fast Alert | Maru Gujarat Ojas | OJAS Call Letter | Online Gujarat Bharti</p>
         <div class="flex justify-center gap-3 text-slate-300 font-bold text-xs flex-wrap">
             <a href="./about.html" class="hover:text-orange-400">About Us</a><span>|</span>
             <a href="./contact.html" class="hover:text-orange-400">Contact Us</a><span>|</span>
@@ -308,7 +308,6 @@
                             document.getElementById('marqueeAlertText').innerText = "🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે!";
                         }
 
-                        // --- Dynamic Festival Poster Handling ---
                         const posterBox = document.getElementById('mainFestivalPoster');
                         const posterImg = document.getElementById('posterImg');
                         const posterAnchor = document.getElementById('posterAnchor');
@@ -331,7 +330,6 @@
                         }
                     }
 
-                    // ⏰ AUTO SCHEDULING FILTER LOGIC (100% Robust Cross-Browser Calculation)
                     const currentTimestamp = Date.now();
 
                     if(rootData.posts) {
@@ -340,29 +338,19 @@
                             siteData[cat] = Object.keys(catObj)
                                 .map(key => catObj[key])
                                 .filter(post => {
-                                    // 1. Agar koi scheduling date set nahi ki hai -> Direct live
                                     if (!post.scheduledAt) return true;
-
-                                    // 2. Parse value to Number
                                     let scheduledTime = Number(post.scheduledAt);
-
-                                    // 3. Agar date string format mein ho ("2026-07-26T21:30")
                                     if (isNaN(scheduledTime)) {
                                         let formattedDateStr = String(post.scheduledAt).replace(/-/g, "/").replace("T", " ");
                                         scheduledTime = new Date(formattedDateStr).getTime();
                                     }
-
-                                    // 4. Agar date invalid nikle -> Show post
                                     if (isNaN(scheduledTime)) return true;
-
-                                    // 5. Sirf wahi post dikhao jiska time aa chuka hai
                                     return scheduledTime <= currentTimestamp;
                                 })
                                 .reverse();
                         });
                     }
 
-                    // Render Main Live Boxes
                     renderMainList('schemes-list', 'schemes-list-container');
                     renderMainList('news-list', 'news-list-container');
                     renderMainList('latest-jobs-list', 'latest-jobs-list-container');
@@ -400,7 +388,6 @@
                     return; 
                 }
                 
-                // Show Top 5 Posts
                 const topPosts = posts.slice(0, 5);
                 const hiddenPosts = posts.slice(5);
 
@@ -417,7 +404,6 @@
                         </a>`;
                 });
 
-                // Expand / Collapse feature
                 if (hiddenPosts.length > 0) {
                     htmlContent += `<div id="${containerId}-extra" class="hidden divide-y divide-slate-100">`;
                     hiddenPosts.forEach((post) => {
