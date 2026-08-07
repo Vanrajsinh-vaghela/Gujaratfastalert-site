@@ -211,37 +211,39 @@
             let html = '';
             postsArr.forEach((post) => {
                 let orgName = post.org || post.department || 'Gujarat Recruitment Board';
-                
-                // Fallback logic for Last Date if explicitly stored or contained in meta text
                 let lastDateVal = post.lastDate || post.meta || '';
-                let lastDateStr = lastDateVal ? `📅 ${lastDateVal}` : '📅 Latest Update';
-                
+                let lastDateStr = lastDateVal ? `📅 Last Date: ${lastDateVal}` : '';
                 let vacancyStr = post.vacancies ? `👥 Vacancies: ${post.vacancies} Posts` : '';
                 let rawTag = post.tag ? post.tag.trim() : 'NEW';
                 let formattedTags = rawTag.split(',').map(t => t.trim().toUpperCase()).join(' • ');
 
                 html += `
-                    <div class="p-4 hover:bg-orange-50/50 transition border-b border-slate-100 last:border-none w-full group">
+                    <div class="p-3.5 hover:bg-orange-50/50 transition border-b border-slate-100 last:border-none w-full group">
                         <div class="flex justify-between items-start gap-2">
-                            <!-- Left: Title & Details -->
+                            <!-- Left: Title -->
                             <div class="pr-2 w-full">
-                                <a href="${fixLink(post.link)}" target="_blank" class="text-sm md:text-base font-extrabold text-slate-900 group-hover:text-blue-700 transition leading-[1.45] block">
+                                <a href="${fixLink(post.link)}" target="_blank" class="text-xs md:text-sm font-extrabold text-slate-900 group-hover:text-blue-700 transition leading-snug block">
                                     📌 ${post.title}
                                 </a>
-                                <div class="text-xs font-semibold text-slate-600 mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
-                                    <span>🏢 ${orgName}</span>
-                                    <span class="text-red-600 font-bold">${lastDateStr}</span>
-                                    ${vacancyStr ? `<span class="text-emerald-700 font-bold">${vacancyStr}</span>` : ''}
-                                </div>
                             </div>
-                            <!-- Right: Tag Pill -->
-                            <span class="text-[10px] bg-orange-100 text-orange-900 px-2 py-0.5 rounded-md font-extrabold shrink-0 tracking-wider shadow-sm uppercase mt-1">
+                            <!-- Right: Tag Pill (Compact) -->
+                            <span class="text-[9px] bg-orange-100 text-orange-900 px-2 py-0.5 rounded font-extrabold shrink-0 tracking-wider uppercase mt-0.5">
                                 ${formattedTags}
                             </span>
                         </div>
-                        <!-- Bottom CTA Action -->
-                        <div class="mt-3 flex justify-end">
-                            <a href="${fixLink(post.link)}" target="_blank" class="inline-flex items-center gap-1 text-xs font-extrabold text-orange-600 group-hover:text-blue-700 transition">
+
+                        <!-- Organization & Details below title -->
+                        <div class="text-[11px] font-semibold text-slate-600 mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-0.5">
+                            <span>🏢 ${orgName}</span>
+                            ${vacancyStr ? `<span class="text-emerald-700 font-bold">${vacancyStr}</span>` : ''}
+                        </div>
+
+                        <!-- Last Date right above View Details -->
+                        <div class="mt-2.5 flex justify-between items-center text-xs">
+                            <div>
+                                ${lastDateStr ? `<span class="text-red-600 font-extrabold text-[11px]">${lastDateStr}</span>` : '<span></span>'}
+                            </div>
+                            <a href="${fixLink(post.link)}" target="_blank" class="inline-flex items-center gap-1 font-extrabold text-orange-600 group-hover:text-blue-700 transition">
                                 View Details →
                             </a>
                         </div>
@@ -270,7 +272,6 @@
         function processAndRender() {
             let workingArr = [...globalPostsArr];
 
-            // Filter logic
             if(activeFilter === 'Latest') {
                 workingArr = workingArr.filter(p => p.tag && p.tag.toUpperCase().includes('NEW'));
             } else if(activeFilter === 'Closing Soon') {
@@ -282,7 +283,6 @@
                 );
             }
 
-            // Sort logic
             if(activeSort === 'lastdate') {
                 workingArr.sort((a, b) => (a.lastDate || a.meta || '').localeCompare(b.lastDate || b.meta || ''));
             } else if(activeSort === 'recent') {
