@@ -211,7 +211,11 @@
             let html = '';
             postsArr.forEach((post) => {
                 let orgName = post.org || post.department || 'Gujarat Recruitment Board';
-                let lastDateStr = post.lastDate ? `📅 Last Date: ${post.lastDate}` : '';
+                
+                // Fallback logic for Last Date if explicitly stored or contained in meta text
+                let lastDateVal = post.lastDate || post.meta || '';
+                let lastDateStr = lastDateVal ? `📅 ${lastDateVal}` : '📅 Latest Update';
+                
                 let vacancyStr = post.vacancies ? `👥 Vacancies: ${post.vacancies} Posts` : '';
                 let rawTag = post.tag ? post.tag.trim() : 'NEW';
                 let formattedTags = rawTag.split(',').map(t => t.trim().toUpperCase()).join(' • ');
@@ -226,7 +230,7 @@
                                 </a>
                                 <div class="text-xs font-semibold text-slate-600 mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
                                     <span>🏢 ${orgName}</span>
-                                    ${lastDateStr ? `<span class="text-red-600 font-bold">${lastDateStr}</span>` : ''}
+                                    <span class="text-red-600 font-bold">${lastDateStr}</span>
                                     ${vacancyStr ? `<span class="text-emerald-700 font-bold">${vacancyStr}</span>` : ''}
                                 </div>
                             </div>
@@ -270,7 +274,7 @@
             if(activeFilter === 'Latest') {
                 workingArr = workingArr.filter(p => p.tag && p.tag.toUpperCase().includes('NEW'));
             } else if(activeFilter === 'Closing Soon') {
-                workingArr = workingArr.filter(p => p.lastDate);
+                workingArr = workingArr.filter(p => p.lastDate || p.meta);
             } else if(activeFilter !== 'All') {
                 workingArr = workingArr.filter(p => 
                     (p.title && p.title.toUpperCase().includes(activeFilter.toUpperCase())) || 
@@ -280,7 +284,7 @@
 
             // Sort logic
             if(activeSort === 'lastdate') {
-                workingArr.sort((a, b) => (a.lastDate || '').localeCompare(b.lastDate || ''));
+                workingArr.sort((a, b) => (a.lastDate || a.meta || '').localeCompare(b.lastDate || b.meta || ''));
             } else if(activeSort === 'recent') {
                 workingArr.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
             } else {
