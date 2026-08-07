@@ -1,454 +1,1379 @@
 <!DOCTYPE html>
 <html lang="gu">
 <head>
-    <!-- Speed Optimization Preconnects -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://gujarat-fast-alert-default-rtdb.firebaseio.com" crossorigin>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- High-Ranking SEO Meta Tags (Includes Maru Gujarat, OJAS & Target Keywords) -->
-    <title>Gujarat Fast Alert - Maru Gujarat OJAS, Bharti 2026, GPSC, Call Letter & News</title>
-    <meta name="description" content="Gujarat Fast Alert by Vanrajsinh Vaghela. Get fastest updates on Maru Gujarat OJAS, Online Gujarat Bharti, Police Bharti, Anganwadi Bharti, Call Letters, Answer Keys & Results.">
-    <meta name="keywords" content="Gujarat Fast Alert, Maru Gujarat Ojas, Maru Gujarat OJAS Call Letter, Maru Gujarat Jobs, Maru Gujarat OJAS GPSC, Maru Gujarat Apply Online, Online gujarat bharti apply, Ojas Gujarat gov in Police bharti, Www ojas gujarat gov in bharti, Anganwadi bharti gujarat online apply, OJAS app, GSSSB OJAS">
+
+    <title>Gujarat Fast Alert - Maru Gujarat OJAS, Bharti 2026, GPSC, Call Letter & Results</title>
+
+    <meta name="description" content="Gujarat Fast Alert by Vanrajsinh Vaghela. Get latest Gujarat government jobs, OJAS, GPSC, GSSSB, Police Bharti, Call Letters, Answer Keys, Results, Scholarships and government scheme updates.">
     <meta name="author" content="Vanrajsinh Vaghela">
     <meta name="robots" content="index, follow">
 
-    <!-- Schema.org WebSite JSON-LD Markup for Google (With Maru Gujarat & OJAS Keywords) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Gujarat Fast Alert",
-      "alternateName": ["GujratFast", "Maru Gujarat Ojas", "Gujarat OJAS Alert", "GujaratAlertFast", "Gujrat Fast Alert"],
-      "url": "https://gujaratfastalert.in/",
-      "publisher": {
-        "@type": "Person",
-        "name": "Vanrajsinh Vaghela"
-      }
-    }
-    </script>
-
-    <!-- Fast Render CSS (No defer to prevent layout flickering) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Premium Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5297812051188062" crossorigin="anonymous"></script>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJN134J7EC"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ZJN134J7EC');
-    </script>
-    
-    <!-- Firebase SDK Links -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js" defer></script>
-    
+
     <style>
-        body { 
-            font-family: 'Plus Jakarta Sans', 'Noto Sans Gujarati', sans-serif; 
-            background-color: #f1f5f9; 
-            -webkit-tap-highlight-color: transparent; 
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Sans Gujarati', sans-serif;
+            background-color: #f1f5f9;
+            -webkit-tap-highlight-color: transparent;
         }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 20s linear infinite; }
-        .marquee-text:hover { animation-play-state: paused; }
-        
-        /* Modern Card Styling */
-        .grid-card { 
-            background: white; 
-            border-radius: 14px; 
-            padding: 14px 8px; 
-            text-align: center; 
-            cursor: pointer; 
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03); 
-            border: 1px solid #e2e8f0; 
-            transition: all 0.2s ease-in-out; 
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 22s linear infinite;
+        }
+
+        .marquee-text:hover {
+            animation-play-state: paused;
+        }
+
+        .grid-card {
+            background: white;
+            border-radius: 10px;
+            padding: 12px 6px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s ease-in-out;
             display: block;
         }
-        .grid-card:hover { 
-            border-color: #f97316; 
-            background: #fffaf5; 
-            transform: translateY(-2px); 
-            box-shadow: 0 4px 12px rgba(249,115,22,0.12);
+
+        .grid-card:hover {
+            border-color: #1e3a8a;
+            background: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(30,58,138,0.1);
         }
-        .premium-box {
+
+        .gov-box {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             overflow: hidden;
         }
+
+        .gov-top-bar {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            border-bottom: 3px solid #f59e0b;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col items-center pb-12">
 
-    <!-- Marquee Alert -->
-    <div class="w-full bg-gradient-to-r from-orange-500 to-amber-600 text-white py-2.5 text-xs md:text-sm font-bold overflow-hidden shadow-md z-50">
-        <div class="w-full flex items-center max-w-xl mx-auto px-4">
-            <span class="bg-red-600 text-white px-2.5 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider mr-3 shrink-0 animate-pulse shadow-sm">BREAKING</span>
-            <div class="overflow-hidden relative w-full h-5">
-                <div class="marquee-text absolute font-semibold text-amber-50" id="marqueeAlertText">
-                    🚨 Loading live updates...
-                </div>
-            </div>
-        </div>
-    </div>
+<body class="text-slate-900 min-h-screen flex flex-col items-center pb-8">
 
-    <!-- Header Section -->
-    <div class="text-center pt-7 pb-5 px-4 w-full max-w-xl">
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900" id="mainSiteTitle">
-            Gujarat <span class="text-blue-700">Fast Alert</span>
-        </h1>
-        <div class="mt-2.5">
-            <span class="text-xs md:text-sm font-extrabold text-orange-600 uppercase tracking-widest bg-orange-100/80 px-4 py-1.5 rounded-full border border-orange-200/80 shadow-sm inline-block">
-                BY VANRAJSINH VAGHELA 👑
+    <!-- TOP TRICOLOR BAR -->
+    <div class="w-full h-1.5 bg-gradient-to-r from-[#ff9933] via-white to-[#138808]"></div>
+
+    <!-- TOP BLUE BAR -->
+    <div class="w-full gov-top-bar text-white py-2 px-4 text-xs font-bold shadow">
+
+        <div class="max-w-xl mx-auto flex justify-between items-center">
+
+            <span class="tracking-wider">
+                ગુજરાત ફાસ્ટ એલર્ટ
             </span>
+
+            <span class="text-blue-200">
+                Gujarat Recruitment Updates
+            </span>
+
         </div>
-        <p class="text-xs md:text-sm text-slate-500 mt-2 font-semibold">Gujarat's No. 01 Private Educational News & Utility Portal</p>
+
     </div>
 
-    <!-- Social Joining Links -->
-    <div class="w-full max-w-lg grid grid-cols-2 gap-3.5 px-4 mb-6">
-        <a href="https://whatsapp.com/channel/0029VbDRw2SBqbr1248X841c" target="_blank" class="bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 rounded-2xl text-sm font-extrabold text-center flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition active:scale-95">
+    <!-- MAIN HEADER -->
+    <header class="w-full bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white py-3 px-4 shadow-md text-center border-b-4 border-amber-500">
+
+        <div class="max-w-xl mx-auto space-y-0.5">
+
+            <span class="text-[10px] md:text-[11px] font-extrabold text-amber-400 uppercase tracking-widest bg-slate-800 px-3 py-0.5 rounded-full border border-slate-700 inline-block">
+                ગુજરાતનું ઝડપી ભરતી અને એજ્યુકેશન અપડેટ્સ પોર્ટલ
+            </span>
+
+            <h1 class="text-2xl md:text-4xl font-black tracking-tight text-white mt-0.5">
+                Gujarat <span class="text-amber-400">Fast Alert</span>
+            </h1>
+
+            <p class="text-xs md:text-sm text-slate-300 font-medium">
+                Gujarat's Latest Jobs, Results & Exam Updates
+            </p>
+
+            <div class="pt-1.5 flex items-center justify-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+
+                <span class="bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-0.5 rounded text-[10px] font-bold shrink-0">
+                    OJAS
+                </span>
+
+                <span class="bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-0.5 rounded text-[10px] font-bold shrink-0">
+                    GPSC
+                </span>
+
+                <span class="bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-0.5 rounded text-[10px] font-bold shrink-0">
+                    GSSSB
+                </span>
+
+                <span class="bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-0.5 rounded text-[10px] font-bold shrink-0">
+                    Police
+                </span>
+
+                <span class="bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-0.5 rounded text-[10px] font-bold shrink-0">
+                    Bank
+                </span>
+
+                <span class="bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-0.5 rounded text-[10px] font-bold shrink-0">
+                    All Updates
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- LIVE UPDATE -->
+    <div class="w-full bg-amber-500 text-slate-950 py-2 text-xs md:text-sm font-bold overflow-hidden shadow-inner z-50">
+
+        <div class="w-full flex items-center max-w-xl mx-auto px-4">
+
+            <span class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider mr-2 shrink-0 animate-pulse shadow-sm">
+                LIVE
+            </span>
+
+            <div class="overflow-hidden relative w-full h-5">
+
+                <div
+                    class="marquee-text absolute font-bold text-slate-950"
+                    id="marqueeAlertText"
+                >
+                    📢 ગુજરાતમાં ફાસ્ટ નવીનતમ ભરતી અને પરીક્ષા અપડેટ્સ માટે અમારી સાથે જોડાઓ
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SOCIAL BUTTONS -->
+    <div class="w-full max-w-lg grid grid-cols-2 gap-3 px-4 my-3.5">
+
+        <a
+            href="https://whatsapp.com/channel/0029VbDRw2SBqbr1248X841c"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bg-[#25D366] hover:bg-[#20bd5a] text-white py-2.5 rounded-xl text-xs font-extrabold text-center flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
+        >
             💬 Join WhatsApp
         </a>
-        <a href="https://telegram.me/gujaratfastalert" target="_blank" class="bg-[#0088cc] hover:bg-[#0077b3] text-white py-3 rounded-2xl text-sm font-extrabold text-center flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition active:scale-95">
+
+        <a
+            href="https://telegram.me/gujaratfastalert"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bg-[#0088cc] hover:bg-[#0077b3] text-white py-2.5 rounded-xl text-xs font-extrabold text-center flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
+        >
             ✈ Join Telegram
         </a>
+
     </div>
 
-    <!-- Main Content Container -->
-    <div class="w-full max-w-lg px-4 space-y-6">
+    <!-- MAIN CONTENT -->
+    <div class="w-full max-w-lg px-4 space-y-3.5">
 
-        <!-- 🖼️ DYNAMIC FESTIVAL / HOLIDAY POSTER BANNER -->
-        <div id="mainFestivalPoster" class="my-2 text-center" style="display: none;">
-            <a id="posterAnchor" href="#" target="_blank" class="block group">
-                <img id="posterImg" src="" alt="Festival Alert" class="w-full max-w-lg mx-auto rounded-2xl border-2 border-amber-500/80 shadow-lg object-cover transition transform group-hover:scale-[1.01]">
+        <!-- DYNAMIC POSTER -->
+        <div id="mainFestivalPoster" class="text-center" style="display:none;">
+
+            <a
+                id="posterAnchor"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block group"
+            >
+
+                <img
+                    id="posterImg"
+                    src=""
+                    alt="Gujarat Fast Alert Latest Update"
+                    loading="lazy"
+                    class="w-full rounded-xl border-2 border-amber-500 shadow-md object-cover transition transform group-hover:scale-[1.01]"
+                >
+
             </a>
+
         </div>
 
-        <!-- 🔗 BOX 1: DIRECT ONLINE SERVICES & SCHEMES -->
-        <div class="premium-box">
-            <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
-                <span class="flex items-center gap-2">🔗 ડાયરેક્ટ ઓનલાઈન સેવાઓ અને યોજનાઓ</span>
-                <a href="./category.html?c=schemes-list" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0 transition">બધું જુઓ →</a>
+        <!-- EDUCATION & GOVERNMENT JOBS -->
+        <div class="gov-box p-3">
+
+            <h3 class="text-xs font-extrabold text-slate-700 mb-2 uppercase tracking-wide flex items-center gap-1.5">
+                🎓 શિક્ષણ અને સરકારી નોકરી
+            </h3>
+
+            <div class="grid grid-cols-4 gap-2 text-xs font-extrabold text-slate-700">
+
+                <a href="./category.html?c=govt-jobs" class="grid-card py-2">
+                    <div class="text-base mb-0.5">💼</div>
+                    <div class="mt-0.5">Govt. Jobs</div>
+                </a>
+
+                <a href="./category.html?c=syllabus" class="grid-card py-2">
+                    <div class="text-base mb-0.5">📋</div>
+                    <div class="mt-0.5">Syllabus</div>
+                </a>
+
+                <a href="./category.html?c=answer-key" class="grid-card py-2">
+                    <div class="text-base mb-0.5">🔑</div>
+                    <div class="mt-0.5">Answer Key</div>
+                </a>
+
+                <a href="./category.html?c=result" class="grid-card py-2">
+                    <div class="text-base mb-0.5">🏆</div>
+                    <div class="mt-0.5">Result</div>
+                </a>
+
+                <a href="./category.html?c=admit-card" class="grid-card py-2">
+                    <div class="text-base mb-0.5">🎟️</div>
+                    <div class="mt-0.5">Admit Card</div>
+                </a>
+
+                <a href="./category.html?c=prev-papers" class="grid-card py-2">
+                    <div class="text-base mb-0.5">📄</div>
+                    <div class="mt-0.5">Prev. Papers</div>
+                </a>
+
+                <a href="./category.html?c=scholarship" class="grid-card py-2">
+                    <div class="text-base mb-0.5">🎓</div>
+                    <div class="mt-0.5">Scholarship</div>
+                </a>
+
+                <a href="./category.html?c=edu-news" class="grid-card py-2">
+                    <div class="text-base mb-0.5">📰</div>
+                    <div class="mt-0.5">Edu News</div>
+                </a>
+
             </div>
-            <div id="schemes-list-container" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
-                <div class="p-5 text-slate-400 text-center font-semibold">Loading updates...</div>
-            </div>
+
         </div>
 
-        <!-- 📰 BOX 2: LATEST NEWS & TOP UPDATES -->
-        <div class="premium-box">
-            <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
-                <span class="flex items-center gap-2">📰 Latest News & Top Updates</span>
-                <a href="./category.html?c=news-list" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0 transition">View All →</a>
+        <!-- GOVERNMENT SCHEMES -->
+        <div class="gov-box p-3">
+
+            <h3 class="text-xs font-extrabold text-slate-700 mb-2 uppercase tracking-wide flex items-center gap-1.5">
+                🏛️ સરકારી યોજનાઓ
+            </h3>
+
+            <div class="grid grid-cols-2 gap-2 text-xs font-extrabold text-slate-700">
+
+                <a href="./category.html?c=govt-schemes" class="grid-card py-2.5">
+
+                    <div class="text-base mb-0.5">
+                        🏛️
+                    </div>
+
+                    <div class="mt-0.5">
+                        સરકારી યોજનાઓ
+                    </div>
+
+                </a>
+
+                <a href="./category.html?c=govt-schemes" class="grid-card py-2.5">
+
+                    <div class="text-base mb-0.5">
+                        🗣️
+                    </div>
+
+                    <div class="mt-0.5">
+                        ગુજરાતી યોજનાઓ
+                    </div>
+
+                </a>
+
             </div>
-            <div id="news-list-container" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
-                <div class="p-5 text-slate-400 text-center font-semibold">Loading news...</div>
-            </div>
+
         </div>
 
-        <!-- 🔥 BOX 3: LATEST GOVT JOBS SECTION -->
-        <div class="premium-box">
-            <div class="bg-gradient-to-r from-orange-500 via-rose-500 to-red-600 text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
-                <span class="flex items-center gap-2">🔥 લેટેસ્ટ સરકારી નોકરીઓ (OJAS / GPSC)</span>
-                <a href="./category.html?c=latest-jobs-list" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0 transition">બધું જુઓ →</a>
+        <!-- EXAM & EDUCATION UPDATES -->
+        <div class="gov-box p-3">
+
+            <h3 class="text-xs font-extrabold text-slate-700 mb-2 uppercase tracking-wide flex items-center gap-1.5">
+                📚 પરીક્ષા અને એજ્યુકેશન અપડેટ્સ
+            </h3>
+
+            <div class="grid grid-cols-2 gap-2 text-xs font-extrabold text-slate-700">
+
+                <a href="./category.html?c=current-affairs" class="grid-card py-2.5">
+
+                    <div class="text-base mb-0.5">
+                        📅
+                    </div>
+
+                    <div class="mt-0.5">
+                        Current Affairs
+                    </div>
+
+                </a>
+
+                <a href="./category.html?c=edu-news" class="grid-card py-2.5">
+
+                    <div class="text-base mb-0.5">
+                        📰
+                    </div>
+
+                    <div class="mt-0.5">
+                        Education News
+                    </div>
+
+                </a>
+
             </div>
-            <div id="latest-jobs-list-container" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
-                <div class="p-5 text-slate-400 text-center font-semibold">Loading updates...</div>
-            </div>
+
         </div>
 
-        <!-- CATEGORY GRIDS -->
-        <div>
-            <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">🎓 શિક્ષણ અને સરકારી નોકરી</h3>
-            <div class="grid grid-cols-4 gap-2.5 text-xs font-extrabold text-slate-700">
-                <a href="./category.html?c=govt-jobs" class="grid-card"><div class="text-base">💼</div><div class="mt-1">Govt Jobs</div></a>
-                <a href="./category.html?c=syllabus" class="grid-card"><div class="text-base">📋</div><div class="mt-1">Syllabus</div></a>
-                <a href="./category.html?c=answer-key" class="grid-card"><div class="text-base">🔑</div><div class="mt-1">Answer Key</div></a>
-                <a href="./category.html?c=result" class="grid-card"><div class="text-base">🏆</div><div class="mt-1">Result</div></a>
-                <a href="./category.html?c=admit-card" class="grid-card"><div class="text-base">🎟️</div><div class="mt-1">Admit Card</div></a>
-                <a href="./category.html?c=prev-papers" class="grid-card"><div class="text-base">📄</div><div class="mt-1">Prev. Papers</div></a>
-                <a href="./category.html?c=scholarship" class="grid-card"><div class="text-base">🎓</div><div class="mt-1">Scholarship</div></a>
-                <a href="./category.html?c=edu-news" class="grid-card"><div class="text-base">📰</div><div class="mt-1">Edu News</div></a>
+        <!-- USEFUL TOOLS -->
+        <div class="gov-box p-3">
+
+            <h3 class="text-xs font-extrabold text-slate-700 mb-2 uppercase tracking-wide flex items-center gap-1.5">
+                🛠️ ઉપયોગી Tools
+            </h3>
+
+            <div class="grid grid-cols-2 gap-2 text-xs font-extrabold text-slate-700">
+
+                <!-- PHOTO RESIZER -->
+                <a
+                    href="./tools/photo-resizer.html"
+                    class="grid-card py-2.5"
+                >
+
+                    <div class="text-base mb-0.5">
+                        🖼️
+                    </div>
+
+                    <div class="mt-0.5">
+                        Photo Resizer
+                    </div>
+
+                </a>
+
+                <!-- SIGNATURE RESIZER -->
+                <a
+                    href="./tools/signature-resizer.html"
+                    class="grid-card py-2.5"
+                >
+
+                    <div class="text-base mb-0.5">
+                        ✍️
+                    </div>
+
+                    <div class="mt-0.5">
+                        Signature Resizer
+                    </div>
+
+                </a>
+
             </div>
+
         </div>
 
-        <div>
-            <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">🏛️ યોજના અને સમાચાર</h3>
-            <div class="grid grid-cols-3 gap-2.5 text-xs font-extrabold text-slate-700">
-                <a href="./category.html?c=govt-schemes" class="grid-card"><div class="text-base">🏛️</div><div class="mt-1">સરકારી યોજના</div></a>
-                <a href="./category.html?c=current-affairs" class="grid-card"><div class="text-base">📅</div><div class="mt-1">Current Affairs</div></a>
-                <a href="./category.html?c=gujarati-news" class="grid-card"><div class="text-base">🗣️</div><div class="mt-1">Gujarati News</div></a>
+        <!-- TOP GOVERNMENT SCHEMES -->
+        <div class="gov-box p-3">
+
+            <h3 class="text-xs font-extrabold text-slate-700 mb-2 uppercase tracking-wide flex items-center gap-1.5">
+                🌱 ટોપ સરકારી યોજનાઓ
+            </h3>
+
+            <div class="grid grid-cols-2 gap-2 text-xs font-extrabold text-slate-700">
+
+                <a
+                    href="./category.html?c=govt-schemes"
+                    class="grid-card py-2.5 flex items-center gap-2 text-left px-3"
+                >
+                    <span class="text-base">🌾</span>
+
+                    <span class="text-slate-800 text-[11px] leading-tight">
+                        મુખ્યમંત્રી કિસાન યોજના
+                    </span>
+                </a>
+
+                <a
+                    href="./category.html?c=govt-schemes"
+                    class="grid-card py-2.5 flex items-center gap-2 text-left px-3"
+                >
+                    <span class="text-base">👧</span>
+
+                    <span class="text-slate-800 text-[11px] leading-tight">
+                        કન્યા કેળવણી યોજના
+                    </span>
+                </a>
+
+                <a
+                    href="./category.html?c=govt-schemes"
+                    class="grid-card py-2.5 flex items-center gap-2 text-left px-3"
+                >
+                    <span class="text-base">🚜</span>
+
+                    <span class="text-slate-800 text-[11px] leading-tight">
+                        પીએમ કિસાન યોજના
+                    </span>
+                </a>
+
+                <a
+                    href="./category.html?c=govt-schemes"
+                    class="grid-card py-2.5 flex items-center gap-2 text-left px-3"
+                >
+                    <span class="text-base">🩺</span>
+
+                    <span class="text-slate-800 text-[11px] leading-tight">
+                        આયુષ્માન ભારત યોજના
+                    </span>
+                </a>
+
             </div>
+
         </div>
 
-        <div>
-            <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">🛠️ ઉપયોગી ગાઈડ, ટૂલ્સ અને કેલ્ક્યુલેટર</h3>
-            <div class="grid grid-cols-3 gap-2.5 text-xs font-extrabold text-slate-700">
-                <a href="./tools/photo-resizer.html" class="grid-card"><div class="text-base">🖼️</div><div class="mt-1">Photo Resizer</div></a>
-                <a href="./tools/age-calculator.html" class="grid-card"><div class="text-base">🧮</div><div class="mt-1">Age Calculator</div></a>
-                <a href="./category.html?c=howto-guides" class="grid-card"><div class="text-base">ℹ️</div><div class="mt-1">How-to Guides</div></a>
-                <a href="./category.html?c=calculators" class="grid-card"><div class="text-base">🧮</div><div class="mt-1">Calculators</div></a>
-                <a href="./category.html?c=finance-tax" class="grid-card"><div class="text-base">💰</div><div class="mt-1">Finance & Tax</div></a>
+        <!-- SEARCH -->
+        <div class="relative w-full">
+
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                🔎
             </div>
+
+            <input
+                type="text"
+                id="siteSearchInput"
+                placeholder="Search Jobs, Result, Call Letter, Gujarat..."
+                autocomplete="off"
+                aria-label="Search Gujarat jobs, results and updates"
+                class="w-full pl-10 pr-4 bg-white border border-slate-300 rounded-xl text-xs md:text-sm font-medium text-slate-800 placeholder-slate-400 shadow-sm focus:outline-none focus:border-blue-800 focus:ring-1 focus:ring-blue-800 transition"
+                style="height:50px;"
+            >
+
         </div>
 
-        <div>
-            <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">💡 ઓનલાઈન બિલ પેમેન્ટ</h3>
-            <div class="grid grid-cols-4 gap-2.5 text-xs font-extrabold text-slate-700">
-                <a href="./category.html?c=ugvcl-bill" class="grid-card"><div class="text-base">💡</div><div class="mt-1">UGVCL Bill</div></a>
-                <a href="./category.html?c=gujarat-gas" class="grid-card"><div class="text-base">🔥</div><div class="mt-1">Gujarat Gas</div></a>
-                <a href="./category.html?c=pgvcl-bill" class="grid-card"><div class="text-base">⚡</div><div class="mt-1">PGVCL Bill</div></a>
-                <a href="./category.html?c=mgvcl-bill" class="grid-card"><div class="text-base">🔌</div><div class="mt-1">MGVCL Bill</div></a>
-            </div>
+        <!-- QUICK FILTERS -->
+        <div class="w-full overflow-x-auto no-scrollbar flex items-center gap-1.5 py-0.5">
+
+            <button
+                onclick="filterPosts('All')"
+                class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-900 text-white shrink-0 shadow-sm transition"
+            >
+                All
+            </button>
+
+            <button
+                onclick="filterPosts('OJAS')"
+                class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm transition"
+            >
+                OJAS
+            </button>
+
+            <button
+                onclick="filterPosts('GPSC')"
+                class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm transition"
+            >
+                GPSC
+            </button>
+
+            <button
+                onclick="filterPosts('GSSSB')"
+                class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm transition"
+            >
+                GSSSB
+            </button>
+
+            <button
+                onclick="filterPosts('Police')"
+                class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm transition"
+            >
+                Police
+            </button>
+
+            <button
+                onclick="filterPosts('Bank')"
+                class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm transition"
+            >
+                Bank
+            </button>
+
+            <button
+                onclick="filterPosts('Admit Card')"
+                class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm transition"
+            >
+                Admit Card
+            </button>
+
+            <button
+                onclick="filterPosts('Result')"
+                class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm transition"
+            >
+                Result
+            </button>
+
         </div>
 
-        <div>
-            <h3 class="text-sm md:text-base font-extrabold text-slate-800 mb-2.5 flex items-center gap-2">📺 મનોરંજન અને ટેકનોલોજી</h3>
-            <div class="grid grid-cols-4 gap-2.5 text-xs font-extrabold text-slate-700">
-                <a href="./category.html?c=tech-news" class="grid-card"><div class="text-base">🤖</div><div class="mt-1">Tech News</div></a>
-                <a href="./category.html?c=movie-ott" class="grid-card"><div class="text-base">🍿</div><div class="mt-1">Movie & OTT</div></a>
-                <a href="./category.html?c=web-series" class="grid-card"><div class="text-base">🎬</div><div class="mt-1">Web Series</div></a>
-                <a href="./category.html?c=auto-news" class="grid-card"><div class="text-base">🚗</div><div class="mt-1">Auto News</div></a>
-                <a href="./category.html?c=cricket-ipl" class="grid-card"><div class="text-base">🏏</div><div class="mt-1">Cricket / IPL</div></a>
-                <a href="./category.html?c=health-tips" class="grid-card"><div class="text-base">🍏</div><div class="mt-1">Health Tips</div></a>
-                <a href="./category.html?c=wishes-quotes" class="grid-card"><div class="text-base">🎉</div><div class="mt-1">Wishes</div></a>
+        <!-- LATEST GOVERNMENT JOBS -->
+        <div class="gov-box">
+
+            <div class="bg-blue-900 text-white py-2.5 px-3.5 flex justify-between items-center">
+
+                <div>
+
+                    <h2 class="text-sm font-black">
+                        🔥 ગુજરાતની લેટેસ્ટ સરકારી ભરતી 2026
+                    </h2>
+
+                    <p class="text-[10px] text-blue-200 mt-0.5">
+                        OJAS • GPSC • GSSSB • Police • Panchayat • Other Jobs
+                    </p>
+
+                </div>
+
+                <a
+                    href="./category.html?c=latest-jobs-list"
+                    class="text-xs font-bold text-blue-200 hover:text-white transition"
+                >
+                    બધી ભરતી →
+                </a>
+
             </div>
+
+            <div
+                id="latest-jobs-list-container"
+                class="divide-y divide-slate-100 text-sm font-bold text-slate-800"
+            >
+
+                <div class="p-3.5 text-slate-400 text-center font-semibold text-xs">
+                    નવી ભરતી લોડ થઈ રહી છે...
+                </div>
+
+            </div>
+
         </div>
 
-        <!-- AdSense Container -->
-        <div id="adsense-infeed-container" class="w-full my-3"></div>
-
-        <!-- 📰 BOX 4: LATEST ARTICLES SECTION -->
-        <div class="premium-box">
-            <div class="bg-gradient-to-r from-slate-800 via-slate-900 to-black text-white py-4 px-4 text-sm md:text-base font-extrabold flex justify-between items-center shadow-sm">
-                <span class="flex items-center gap-2">📰 લેટેસ્ટ માહિતી અને આર્ટિકલ્સ</span>
-                <a href="./category.html?c=articles-list" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full backdrop-blur-md shrink-0 transition">બધું જુઓ →</a>
-            </div>
-            <div id="articles-list-container" class="divide-y divide-slate-100 text-sm font-bold text-slate-800">
-                <div class="p-5 text-slate-400 text-center font-semibold">Loading articles...</div>
-            </div>
-        </div>
+        <!-- ADSENSE -->
+        <div
+            id="adsense-infeed-container"
+            class="w-full my-1"
+        ></div>
 
     </div>
 
-    <!-- Footer -->
-    <footer class="w-full bg-slate-900 text-slate-400 py-10 px-6 text-xs text-center border-t border-slate-800 mt-12">
-        <p class="font-extrabold text-slate-200 mb-1.5 text-sm">© 2026-27, Vanrajsinh Vaghela ®</p>
-        <p class="opacity-75 max-w-md mx-auto mb-3 leading-relaxed">⚠️ Disclaimer: This site is an independent educational portal and is not affiliated with OJAS or any government agency.</p>
-        <p class="text-[10px] text-slate-500 mb-5 font-mono">Popular searches: Gujarat Fast Alert | Maru Gujarat Ojas | OJAS Call Letter | Online Gujarat Bharti</p>
-        <div class="flex justify-center gap-3 text-slate-300 font-bold text-xs flex-wrap">
-            <a href="./about.html" class="hover:text-orange-400">About Us</a><span>|</span>
-            <a href="./contact.html" class="hover:text-orange-400">Contact Us</a><span>|</span>
-            <a href="./privacy.html" class="hover:text-orange-400">Privacy Policy</a><span>|</span>
-            <a href="./disclaimer.html" class="hover:text-orange-400">Disclaimer</a>
+    <!-- PROFESSIONAL FOOTER -->
+    <footer class="w-full bg-slate-900 text-slate-400 py-7 px-4 text-xs text-center border-t border-slate-800 mt-8">
+
+        <div class="max-w-xl mx-auto space-y-1.5">
+
+            <p class="font-bold text-slate-200 text-xs">
+                © 2026–27 Gujarat Fast Alert ®
+            </p>
+
+            <p class="text-slate-300 font-semibold text-[11px]">
+                Published & Managed by:
+                <span class="text-amber-400">
+                    Vanrajsinh Vaghela
+                </span>
+            </p>
+
+            <p class="text-cyan-400 font-medium text-[11px]">
+                💙 Built with dedication to help every aspirant stay informed.
+            </p>
+
+            <p class="opacity-75 leading-relaxed text-[10px]">
+                ⚠️ Disclaimer: Gujarat Fast Alert is an independent educational portal providing recruitment and exam updates. It is not officially affiliated with any government agency.
+            </p>
+
+            <div class="pt-2 flex justify-center gap-3 text-slate-300 font-bold text-[11px] flex-wrap">
+
+                <a href="./about.html" class="hover:text-amber-400 transition py-1">
+                    About Us
+                </a>
+
+                <span>|</span>
+
+                <a href="./contact.html" class="hover:text-amber-400 transition py-1">
+                    Contact Us
+                </a>
+
+                <span>|</span>
+
+                <a href="./privacy.html" class="hover:text-amber-400 transition py-1">
+                    Privacy Policy
+                </a>
+
+                <span>|</span>
+
+                <a href="./disclaimer.html" class="hover:text-amber-400 transition py-1">
+                    Disclaimer
+                </a>
+
+            </div>
+
         </div>
+
     </footer>
 
-    <!-- Optimized Firebase Execution -->
+    <!-- FIREBASE + UX LOGIC -->
     <script>
+
         document.addEventListener('DOMContentLoaded', () => {
+
             let siteData = {};
+            let currentFilter = 'All';
+            let searchQuery = '';
 
             const firebaseConfig = {
+
                 apiKey: "AIzaSyD40GV9eAeGiu-Tz0l09ZLifjzAQp3UFso",
+
                 authDomain: "gujarat-fast-alert.firebaseapp.com",
+
                 databaseURL: "https://gujarat-fast-alert-default-rtdb.firebaseio.com",
+
                 projectId: "gujarat-fast-alert",
+
                 storageBucket: "gujarat-fast-alert.firebasestorage.app",
+
                 messagingSenderId: "395130500748",
+
                 appId: "1:395130500748:web:e6589f3a57812efad6ada9",
+
                 measurementId: "G-ZJN134J7EC"
+
             };
 
+
             function initFirebase() {
+
                 if (typeof firebase !== 'undefined') {
+
                     firebase.initializeApp(firebaseConfig);
+
                     const database = firebase.database();
+
                     fetchLiveUpdates(database);
+
                 } else {
+
                     setTimeout(initFirebase, 100);
+
                 }
+
             }
+
 
             function fixLink(link) {
-                if (!link || link === '#') return '#';
-                let l = link.trim();
-                if (l.startsWith('http://') || l.startsWith('https://') || l.startsWith('./') || l.startsWith('/')) {
+
+                if (!link || link === '#') {
+                    return '#';
+                }
+
+                let l = String(link).trim();
+
+                if (
+                    l.startsWith('http://') ||
+                    l.startsWith('https://') ||
+                    l.startsWith('./') ||
+                    l.startsWith('/')
+                ) {
                     return l;
                 }
+
                 if (l.startsWith('gujaratfastalert.in')) {
-                    let cleaned = l.replace(/^gujaratfastalert\.in\.?\/?/, 'gujaratfastalert.in/');
+
+                    let cleaned = l.replace(
+                        /^gujaratfastalert\.in\.?\/?/,
+                        'gujaratfastalert.in/'
+                    );
+
                     return 'https://' + cleaned;
                 }
+
                 return './' + l;
+
             }
+
 
             function fetchLiveUpdates(database) {
+
                 database.ref().on('value', (snapshot) => {
+
                     const rootData = snapshot.val() || {};
+
                     siteData = {};
 
-                    if(rootData.settings) {
-                        if(rootData.settings.headerNotice && rootData.settings.headerNotice.trim() !== "") {
-                            document.getElementById('marqueeAlertText').innerText = rootData.settings.headerNotice;
+                    if (rootData.settings) {
+
+                        if (
+                            rootData.settings.headerNotice &&
+                            rootData.settings.headerNotice.trim() !== ""
+                        ) {
+
+                            document.getElementById('marqueeAlertText').innerText =
+                                rootData.settings.headerNotice;
+
                         } else {
-                            document.getElementById('marqueeAlertText').innerText = "🚨 ગુજરાત ફાસ્ટ એલર્ટ પોર્ટલ પર તમારું સ્વાગત છે!";
+
+                            document.getElementById('marqueeAlertText').innerText =
+                                "📢 ગુજરાતમાં ફાસ્ટ નવીનતમ ભરતી અને પરીક્ષા અપડેટ્સ માટે અમારી સાથે જોડાઓ";
+
                         }
 
-                        const posterBox = document.getElementById('mainFestivalPoster');
-                        const posterImg = document.getElementById('posterImg');
-                        const posterAnchor = document.getElementById('posterAnchor');
 
-                        if (posterBox && rootData.settings.festivalPoster) {
-                            const fp = rootData.settings.festivalPoster;
-                            if (fp.active && fp.imgUrl && fp.imgUrl.trim() !== "") {
-                                posterImg.src = fp.imgUrl.trim();
-                                if (fp.linkUrl && fp.linkUrl.trim() !== "") {
-                                    posterAnchor.href = fixLink(fp.linkUrl);
+                        const posterBox =
+                            document.getElementById('mainFestivalPoster');
+
+                        const posterImg =
+                            document.getElementById('posterImg');
+
+                        const posterAnchor =
+                            document.getElementById('posterAnchor');
+
+
+                        if (
+                            posterBox &&
+                            rootData.settings.festivalPoster
+                        ) {
+
+                            const fp =
+                                rootData.settings.festivalPoster;
+
+
+                            if (
+                                fp.active &&
+                                fp.imgUrl &&
+                                fp.imgUrl.trim() !== ""
+                            ) {
+
+                                posterImg.src =
+                                    fp.imgUrl.trim();
+
+
+                                if (
+                                    fp.linkUrl &&
+                                    fp.linkUrl.trim() !== ""
+                                ) {
+
+                                    posterAnchor.href =
+                                        fixLink(fp.linkUrl);
+
                                 } else {
+
                                     posterAnchor.removeAttribute('href');
+
                                 }
-                                posterBox.style.display = 'block';
+
+
+                                posterBox.style.display =
+                                    'block';
+
                             } else {
-                                posterBox.style.display = 'none';
+
+                                posterBox.style.display =
+                                    'none';
+
                             }
+
                         } else if (posterBox) {
-                            posterBox.style.display = 'none';
+
+                            posterBox.style.display =
+                                'none';
+
                         }
+
                     }
 
-                    const currentTimestamp = Date.now();
 
-                    if(rootData.posts) {
+                    const currentTimestamp =
+                        Date.now();
+
+
+                    if (rootData.posts) {
+
                         Object.keys(rootData.posts).forEach(cat => {
-                            const catObj = rootData.posts[cat];
-                            siteData[cat] = Object.keys(catObj)
-                                .map(key => catObj[key])
-                                .filter(post => {
-                                    if (!post.scheduledAt) return true;
-                                    let scheduledTime = Number(post.scheduledAt);
-                                    if (isNaN(scheduledTime)) {
-                                        let formattedDateStr = String(post.scheduledAt).replace(/-/g, "/").replace("T", " ");
-                                        scheduledTime = new Date(formattedDateStr).getTime();
-                                    }
-                                    if (isNaN(scheduledTime)) return true;
-                                    return scheduledTime <= currentTimestamp;
-                                })
-                                .reverse();
+
+                            const catObj =
+                                rootData.posts[cat];
+
+                            siteData[cat] =
+                                Object.keys(catObj)
+                                    .map(key => catObj[key])
+                                    .filter(post => {
+
+                                        if (!post.scheduledAt) {
+                                            return true;
+                                        }
+
+                                        let scheduledTime =
+                                            Number(post.scheduledAt);
+
+
+                                        if (isNaN(scheduledTime)) {
+
+                                            let formattedDateStr =
+                                                String(post.scheduledAt)
+                                                    .replace(/-/g, "/")
+                                                    .replace("T", " ");
+
+                                            scheduledTime =
+                                                new Date(formattedDateStr).getTime();
+
+                                        }
+
+
+                                        if (isNaN(scheduledTime)) {
+                                            return true;
+                                        }
+
+                                        return scheduledTime <= currentTimestamp;
+
+                                    })
+                                    .reverse();
+
                         });
+
                     }
 
-                    renderMainList('schemes-list', 'schemes-list-container');
-                    renderMainList('news-list', 'news-list-container');
-                    renderMainList('latest-jobs-list', 'latest-jobs-list-container');
-                    renderMainList('articles-list', 'articles-list-container');
+
+                    renderLatestJobsList();
+
                 }, (error) => {
-                    console.error("Firebase Sync Error:", error);
+
+                    console.error(
+                        "Firebase Sync Error:",
+                        error
+                    );
+
                 });
+
             }
 
-            function renderMainList(catName, containerId) {
-                const container = document.getElementById(containerId);
-                if(!container) return;
-                const posts = siteData[catName] || [];
-                
-                if(posts.length === 0) { 
-                    if(catName === 'schemes-list') {
-                        container.innerHTML = `
-                            <a href="https://ikhedut.gujarat.gov.in" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50 transition text-slate-800 font-extrabold border-b border-slate-100">
-                                <span class="flex items-center gap-2"><span class="text-emerald-600 text-base">🔗</span> i-Khedut & Digital Gujarat Services</span>
-                                <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">ONLINE</span>
-                            </a>`;
-                    } else if(catName === 'news-list') {
-                        container.innerHTML = `
-                            <div class="p-3.5 md:p-4 flex justify-between items-center text-slate-500 font-semibold">
-                                <span class="flex items-center gap-2">📰 Latest news loading...</span>
-                                <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">NEWS</span>
-                            </div>`;
-                    } else {
-                        container.innerHTML = `
-                            <a href="https://ojas.gujarat.gov.in" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50 transition text-slate-800 font-extrabold border-b border-slate-100">
-                                <span class="flex items-center gap-2"><span class="text-red-500 text-base">📌</span> OJAS Gujarat Online Application Portal Updates</span>
-                                <span class="text-[10px] bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-extrabold tracking-wide">OFFICIAL</span>
-                            </a>`; 
-                    }
-                    return; 
+
+            const searchInput =
+                document.getElementById('siteSearchInput');
+
+
+            if (searchInput) {
+
+                searchInput.addEventListener('input', (e) => {
+
+                    searchQuery =
+                        e.target.value
+                            .toLowerCase()
+                            .trim();
+
+                    renderLatestJobsList();
+
+                });
+
+            }
+
+
+            window.filterPosts = function(category) {
+
+                currentFilter =
+                    category;
+
+
+                document
+                    .querySelectorAll('.filter-btn')
+                    .forEach(btn => {
+
+                        if (
+                            btn.innerText.trim() === category
+                        ) {
+
+                            btn.className =
+                                "filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-900 text-white shrink-0 shadow-sm transition";
+
+                        } else {
+
+                            btn.className =
+                                "filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 shrink-0 shadow-sm transition";
+
+                        }
+
+                    });
+
+
+                renderLatestJobsList();
+
+            };
+
+
+            function renderLatestJobsList() {
+
+                const container =
+                    document.getElementById(
+                        'latest-jobs-list-container'
+                    );
+
+
+                if (!container) {
+                    return;
                 }
-                
-                const topPosts = posts.slice(0, 5);
-                const hiddenPosts = posts.slice(5);
+
+
+                let posts =
+                    siteData['latest-jobs-list'] ||
+                    siteData['news-list'] ||
+                    [];
+
+
+                /* SEARCH */
+
+                if (searchQuery !== '') {
+
+                    posts = posts.filter(post => {
+
+                        const title =
+                            String(post.title || '')
+                                .toLowerCase();
+
+                        const tag =
+                            String(post.tag || '')
+                                .toLowerCase();
+
+                        const category =
+                            String(post.category || '')
+                                .toLowerCase();
+
+                        const description =
+                            String(post.description || '')
+                                .toLowerCase();
+
+
+                        return (
+                            title.includes(searchQuery) ||
+                            tag.includes(searchQuery) ||
+                            category.includes(searchQuery) ||
+                            description.includes(searchQuery)
+                        );
+
+                    });
+
+                }
+
+
+                /* FILTER */
+
+                if (currentFilter !== 'All') {
+
+                    if (currentFilter === 'Admit Card') {
+
+                        posts = posts.filter(post => {
+
+                            const tag =
+                                String(post.tag || '')
+                                    .toUpperCase();
+
+                            const title =
+                                String(post.title || '')
+                                    .toUpperCase();
+
+
+                            return (
+                                tag.includes('ADMIT') ||
+                                title.includes('CALL LETTER') ||
+                                title.includes('ADMIT CARD')
+                            );
+
+                        });
+
+
+                    } else if (currentFilter === 'Result') {
+
+                        posts = posts.filter(post => {
+
+                            const tag =
+                                String(post.tag || '')
+                                    .toUpperCase();
+
+                            const title =
+                                String(post.title || '')
+                                    .toUpperCase();
+
+
+                            return (
+                                tag.includes('RESULT') ||
+                                title.includes('RESULT')
+                            );
+
+                        });
+
+
+                    } else {
+
+                        posts = posts.filter(post => {
+
+                            const title =
+                                String(post.title || '')
+                                    .toUpperCase();
+
+                            const tag =
+                                String(post.tag || '')
+                                    .toUpperCase();
+
+
+                            return (
+                                title.includes(
+                                    currentFilter.toUpperCase()
+                                ) ||
+                                tag.includes(
+                                    currentFilter.toUpperCase()
+                                )
+                            );
+
+                        });
+
+                    }
+
+                }
+
+
+                /* EMPTY STATE */
+
+                if (posts.length === 0) {
+
+                    container.innerHTML = `
+
+                        <div class="p-3.5 text-slate-400 text-center font-semibold text-xs">
+
+                            કોઈ પરિણામ મળ્યું નથી.
+
+                            <br>
+
+                            <span class="text-[10px]">
+                                No matching updates found
+                            </span>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                const topPosts =
+                    posts.slice(0, 6);
+
+                const hiddenPosts =
+                    posts.slice(6);
 
                 let htmlContent = '';
 
+
+                /* TOP POSTS */
+
                 topPosts.forEach((post) => {
+
+                    const title =
+                        String(post.title || 'Latest Update');
+
+                    const jobTag =
+                        post.tag
+                            ? String(post.tag).trim().toUpperCase()
+                            : 'NEW';
+
+
+                    const lastDateHTML =
+                        post.lastDate
+                            ? `
+                                <span class="text-red-600 font-extrabold">
+                                    Last Date: ${post.lastDate}
+                                </span>
+                              `
+                            : '';
+
+
                     htmlContent += `
-                        <a href="${fixLink(post.link)}" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50/80 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 last:border-none w-full group">
-                            <div class="pr-2 leading-snug flex items-start gap-2 font-extrabold text-sm md:text-base">
-                                <span class="text-blue-600 shrink-0 mt-0.5">📌</span>
-                                <span class="group-hover:translate-x-0.5 transition-transform">${post.title}</span>
+
+                        <a
+                            href="${fixLink(post.link)}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="p-3 flex justify-between items-center hover:bg-slate-50/80 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 last:border-none w-full group"
+                        >
+
+                            <div class="pr-2 leading-snug flex items-start gap-2 font-extrabold text-xs md:text-sm">
+
+                                <span class="text-blue-700 shrink-0 mt-0.5">
+                                    📌
+                                </span>
+
+                                <div>
+
+                                    <span class="group-hover:translate-x-0.5 transition-transform block">
+                                        ${title}
+                                    </span>
+
+                                    <span class="text-[10px] text-slate-500 font-medium block mt-1">
+
+                                        ${jobTag}
+
+                                        ${
+                                            lastDateHTML
+                                                ? ' • ' + lastDateHTML
+                                                : ''
+                                        }
+
+                                    </span>
+
+                                </div>
+
                             </div>
-                            <span class="text-[10px] bg-blue-100/90 text-blue-800 px-2.5 py-1 rounded-full font-extrabold shrink-0 tracking-wider shadow-sm ml-2">${post.tag || 'NEW'}</span>
-                        </a>`;
+
+
+                            <div class="flex items-center gap-1.5 shrink-0 ml-2">
+
+                                <span class="text-[9px] bg-blue-100 text-blue-900 px-2 py-0.5 rounded font-extrabold tracking-wider uppercase">
+                                    ${jobTag}
+                                </span>
+
+                                <span class="text-slate-400 group-hover:translate-x-1 transition-transform">
+                                    →
+                                </span>
+
+                            </div>
+
+                        </a>
+
+                    `;
+
                 });
 
+
+                /* EXTRA POSTS */
+
                 if (hiddenPosts.length > 0) {
-                    htmlContent += `<div id="${containerId}-extra" class="hidden divide-y divide-slate-100">`;
-                    hiddenPosts.forEach((post) => {
-                        htmlContent += `
-                            <a href="${fixLink(post.link)}" target="_blank" class="p-3.5 md:p-4 flex justify-between items-center hover:bg-slate-50/80 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 w-full group">
-                                <div class="pr-2 leading-snug flex items-start gap-2 font-extrabold text-sm md:text-base">
-                                    <span class="text-blue-600 shrink-0 mt-0.5">📌</span>
-                                    <span class="group-hover:translate-x-0.5 transition-transform">${post.title}</span>
-                                </div>
-                                <span class="text-[10px] bg-blue-100/90 text-blue-800 px-2.5 py-1 rounded-full font-extrabold shrink-0 tracking-wider shadow-sm ml-2">${post.tag || 'NEW'}</span>
-                            </a>`;
-                    });
-                    htmlContent += `</div>`;
 
                     htmlContent += `
-                        <button onclick="toggleExpand('${containerId}-extra', this)" class="w-full py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs text-center border-t border-slate-200/80 flex items-center justify-center gap-1.5 transition active:scale-98">
-                            <span class="btn-text">વધુ જુઓ (+${hiddenPosts.length} વધારે)</span>
-                            <span class="arrow-icon text-sm">🔽</span>
-                        </button>`;
+
+                        <div
+                            id="latest-jobs-list-container-extra"
+                            class="hidden divide-y divide-slate-100"
+                        >
+                    `;
+
+
+                    hiddenPosts.forEach((post) => {
+
+                        const title =
+                            String(post.title || 'Latest Update');
+
+                        const jobTag =
+                            post.tag
+                                ? String(post.tag).trim().toUpperCase()
+                                : 'NEW';
+
+
+                        const lastDateHTML =
+                            post.lastDate
+                                ? `
+                                    <span class="text-red-600 font-extrabold">
+                                        Last Date: ${post.lastDate}
+                                    </span>
+                                  `
+                                : '';
+
+
+                        htmlContent += `
+
+                            <a
+                                href="${fixLink(post.link)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="p-3 flex justify-between items-center hover:bg-slate-50/80 transition text-slate-800 hover:text-blue-700 border-b border-slate-100 last:border-none w-full group"
+                            >
+
+                                <div class="pr-2 leading-snug flex items-start gap-2 font-extrabold text-xs md:text-sm">
+
+                                    <span class="text-blue-700 shrink-0 mt-0.5">
+                                        📌
+                                    </span>
+
+                                    <div>
+
+                                        <span class="group-hover:translate-x-0.5 transition-transform block">
+                                            ${title}
+                                        </span>
+
+                                        <span class="text-[10px] text-slate-500 font-medium block mt-1">
+
+                                            ${jobTag}
+
+                                            ${
+                                                lastDateHTML
+                                                    ? ' • ' + lastDateHTML
+                                                    : ''
+                                            }
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="flex items-center gap-1.5 shrink-0 ml-2">
+
+                                    <span class="text-[9px] bg-blue-100 text-blue-900 px-2 py-0.5 rounded font-extrabold tracking-wider uppercase">
+                                        ${jobTag}
+                                    </span>
+
+                                    <span class="text-slate-400 group-hover:translate-x-1 transition-transform">
+                                        →
+                                    </span>
+
+                                </div>
+
+                            </a>
+
+                        `;
+
+                    });
+
+
+                    htmlContent += `
+                        </div>
+                    `;
+
+
+                    htmlContent += `
+
+                        <button
+                            onclick="toggleExpand('latest-jobs-list-container-extra', this)"
+                            class="w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs text-center border-t border-slate-200 flex items-center justify-center gap-1.5 transition"
+                        >
+
+                            <span class="btn-text">
+                                વધુ જુઓ (+${hiddenPosts.length} વધારે)
+                            </span>
+
+                            <span class="arrow-icon text-sm">
+                                🔽
+                            </span>
+
+                        </button>
+
+                    `;
+
                 }
 
-                container.innerHTML = htmlContent;
+
+                container.innerHTML =
+                    htmlContent;
+
             }
 
-            window.toggleExpand = function(extraDivId, btnElement) {
-                const extraDiv = document.getElementById(extraDivId);
-                if (!extraDiv) return;
 
-                const isHidden = extraDiv.classList.contains('hidden');
-                const arrowSpan = btnElement.querySelector('.arrow-icon');
-                const textSpan = btnElement.querySelector('.btn-text');
+            window.toggleExpand =
+                function(extraDivId, btnElement) {
 
-                if (isHidden) {
-                    extraDiv.classList.remove('hidden');
-                    if(arrowSpan) arrowSpan.innerText = '🔼';
-                    if(textSpan) textSpan.innerText = 'ઓછું બતાવો';
-                } else {
-                    extraDiv.classList.add('hidden');
-                    if(arrowSpan) arrowSpan.innerText = '🔽';
-                    if(textSpan) textSpan.innerText = `વધુ જુઓ (+${extraDiv.children.length} વધારે)`;
-                }
-            };
+                    const extraDiv =
+                        document.getElementById(
+                            extraDivId
+                        );
+
+                    if (!extraDiv) {
+                        return;
+                    }
+
+
+                    const isHidden =
+                        extraDiv.classList.contains('hidden');
+
+
+                    const arrowSpan =
+                        btnElement.querySelector(
+                            '.arrow-icon'
+                        );
+
+
+                    const textSpan =
+                        btnElement.querySelector(
+                            '.btn-text'
+                        );
+
+
+                    if (isHidden) {
+
+                        extraDiv.classList.remove(
+                            'hidden'
+                        );
+
+                        if (arrowSpan) {
+                            arrowSpan.innerText = '🔼';
+                        }
+
+                        if (textSpan) {
+                            textSpan.innerText =
+                                'ઓછું બતાવો';
+                        }
+
+                    } else {
+
+                        extraDiv.classList.add(
+                            'hidden'
+                        );
+
+                        if (arrowSpan) {
+                            arrowSpan.innerText = '🔽';
+                        }
+
+                        if (textSpan) {
+
+                            textSpan.innerText =
+                                `વધુ જુઓ (+${extraDiv.children.length} વધારે)`;
+
+                        }
+
+                    }
+
+                };
+
 
             initFirebase();
+
         });
+
     </script>
+
 </body>
 </html>
